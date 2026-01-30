@@ -18,29 +18,29 @@ const Carousel = ({ images }) => {
 
     return (
         <div className="carousel">
-        <img
-            src={images[currentIndex]}
-            alt="carousel"
-            className="carousel-image w-full h-full object-cover"
-        />
-
-        <button className="nav left" onClick={handlePrevious}>
-            ‹
-        </button>
-
-        <button className="nav right" onClick={handleNext}>
-            ›
-        </button>
-
-        <div className="indicator">
-            {images.map((_, index) => (
-            <span
-                key={index}
-                className={`dot ${currentIndex === index ? "active" : ""}`}
-                onClick={() => setCurrentIndex(index)}
+            <img
+                src={images[currentIndex]}
+                alt="carousel"
+                className="carousel-image"
             />
-            ))}
-        </div>
+
+            <button className="nav left" onClick={handlePrevious}>
+                ‹
+            </button>
+
+            <button className="nav right" onClick={handleNext}>
+                ›
+            </button>
+
+            <div className="indicator">
+                {images.map((_, index) => (
+                <span
+                    key={index}
+                    className={`dot ${currentIndex === index ? "active" : ""}`}
+                    onClick={() => setCurrentIndex(index)}
+                />
+                ))}
+            </div>
     </div>
     );
 };
