@@ -34,7 +34,7 @@ function HeaderComponent({ scrollToSection, refs }) {
     };
 
     return (
-    <header className="header h-16.25 w-screen shadow-md bg-[#3F4E45] flex items-center justify-between text-white fixed left-0 top-0 z-15  lg:justify-center">
+    <header className="header h-16.25 w-screen shadow-md bg-[#3E6143] flex items-center justify-between text-white fixed left-0 top-0 z-15  lg:justify-center">
         <div
             className={`fixed inset-0 bg-[rgba(0,0,0,.45)] z-10 
             ${menuOpen ? "block" : "hidden"} lg:hidden`}
@@ -44,7 +44,7 @@ function HeaderComponent({ scrollToSection, refs }) {
         <div className=" w-full h-full justify-between flex flex-row lg:w-5xl lg:justify-between lg:items-center">
             <div className="header-title flex flex-row items-center gap-2 ml-5">
             
-            <h4 className="text-[1.1rem] md:text-[1rem] lg:text-[1.1rem]">
+            <h4 className="titles text-[1.1rem] md:text-[1rem] lg:text-[1.1rem]">
                 Lo nuestro
             </h4>
         </div>
@@ -59,7 +59,7 @@ function HeaderComponent({ scrollToSection, refs }) {
         </div>
 
         <nav
-            className={`fixed top-0 left-0 z-20 h-screen w-62.5 bg-[#3F4E45]
+            className={`fixed top-0 left-0 z-20 h-screen w-62.5 bg-[#3E6143]
             transition-transform duration-300 ease-in-out
             ${menuOpen ? "translate-x-0" : "-translate-x-full"}
             md:w-80
@@ -68,23 +68,23 @@ function HeaderComponent({ scrollToSection, refs }) {
         >
             <ul className="nav-list flex flex-col p-0 lg:flex-row lg:gap-4 lg:p-0 lg:h-full lg:items-center">
                 <li 
-                    className="nav-list-item cursor-pointer lg:hover:bg-[#37413b] rounded-[25px] lg:text-[1rem] my-3.75 mx-1.25 pl-3" >
+                    className="titles nav-list-item cursor-pointer lg:hover:bg-[#355039] rounded-[25px] lg:text-[1rem] my-3.75 mx-1.25 pl-3" >
                     Inicio
                 </li>
                 <li 
-                    className="nav-list-item cursor-pointer lg:hover:bg-[#37413b] rounded-[25px] lg:text-[1rem] my-3.75 mx-1.25 pl-3" >
+                    className="titles nav-list-item cursor-pointer lg:hover:bg-[#355039] rounded-[25px] lg:text-[1rem] my-3.75 mx-1.25 pl-3" >
                     Sobre el complejo
                 </li>
                 <li 
-                    className="nav-list-item cursor-pointer lg:hover:bg-[#37413b] rounded-[25px] lg:text-[1rem] my-3.75 mx-1.25 pl-3" >
+                    className="titles nav-list-item cursor-pointer lg:hover:bg-[#355039] rounded-[25px] lg:text-[1rem] my-3.75 mx-1.25 pl-3" >
                     Alojamientos
                 </li>
                 <li 
-                    className="nav-list-item cursor-pointer lg:hover:bg-[#37413b] rounded-[25px] lg:text-[1rem] my-3.75 mx-1.25 pl-3" >
+                    className="titles nav-list-item cursor-pointer lg:hover:bg-[#355039] rounded-[25px] lg:text-[1rem] my-3.75 mx-1.25 pl-3" >
                     Galeria
                 </li>
                 <li 
-                    className="nav-list-item cursor-pointer lg:hover:bg-[#37413b] rounded-[25px] lg:text-[1rem] my-3.75 mx-1.25 pl-3" >
+                    className="titles nav-list-item cursor-pointer lg:hover:bg-[#355039] rounded-[25px] lg:text-[1rem] my-3.75 mx-1.25 pl-3" >
                     Contacto
                 </li>
             </ul>
