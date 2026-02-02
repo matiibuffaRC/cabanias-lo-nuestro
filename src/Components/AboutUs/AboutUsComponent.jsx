@@ -29,13 +29,13 @@ function AboutUsComponent() {
     }, []);
 
     return (
-        <div className="bg-[#F1F3EE] min-h-[calc(100vh-65px)] w-full flex items-center justify-center">
-            <div ref={sectionRef} className="bg-white mx-5 lg:w-5xl rounded-[25px] py-6 px-4 md:py-10 md:px-15">
+        <div className="bg-[#F1F3EE] min-h-screen w-full flex flex-col gap-10 items-center justify-center ">
 
+            <div ref={sectionRef} className="bg-white mx-5 lg:w-5xl rounded-[25px] py-6 px-4 md:py-10 lg:px-15 shadow-xl">
                 <div className="mb-5 md:flex md:gap-2.5 md:items-center">
-                    <h2 className="titles text-[1.4rem] uppercase fade-down">Complejo de cabañas</h2>
-                    <h2 className="titles hidden md:block uppercase fade-down">-</h2>
-                    <h2 className="titles text-[1.4rem] uppercase fade-down">Lo nuestro</h2>
+                    <h2 className="text-center md:text-start titles text-[1.4rem] uppercase fade-down">Complejo</h2>
+                    <h2 className="text-center md:text-start titles hidden md:block uppercase fade-down">-</h2>
+                    <h2 className="text-center md:text-start titles text-[1.4rem] uppercase fade-down">Lo nuestro</h2>
                 </div>
 
                 <div className="flex flex-col md:flex-row gap-2 md:gap-4">
@@ -45,11 +45,11 @@ function AboutUsComponent() {
                             <img
                                 src={ImgFrente}
                                 alt="Complejo"
-                                className="rounded-[25px] h-full object-cover"
+                                className="rounded-[25px] w-full h-full object-cover shadow-xl"
                             />
                         </div>
 
-                        <div className="bg-[#F2F3EE] rounded-[25px] p-3 flex-1 fade-down-about delay-2">
+                        <div className="bg-[#F2F3EE] rounded-[25px] shadow-lg p-3 flex-1 fade-down-about delay-2">
                             <h2 className="titles text-[1.3rem]">Cabañas familiares</h2>
                             <h3>Diseñadas para brindar una experiencia única en el valle de traslasierras.</h3>
                         </div>
@@ -57,20 +57,22 @@ function AboutUsComponent() {
 
                     <div className="p-3 fade-down-about delay-3">
                         <h2 className="titles text-[1.2rem] lg:text-[1.3rem]">Ubicación</h2>
-                            <h3 className="md:text-[.7rem] lg:text-[1rem]">Nos encontramos a la entrada de la ciudad de Mina Clavero desde las Altas Cumbres, con cercanía con el centro de la ciudad, principal supermercado y principales ríos de la misma.</h3>
+                            <h3 className="md:text-[.7rem] lg:text-[1rem]">Nos encontramos a la entrada de la ciudad de Mina Clavero desde las Altas Cumbres, con cercanía con el centro de la ciudad, principales ríos y supermercados de la misma.</h3>
                             <h4 className="text-[.9rem] md:text-[.7rem] lg:text-[1rem] pl-3 md:pt-3"> - 2 cuadras de estación GNC.</h4>
                             <h4 className="text-[.9rem] md:text-[.7rem] lg:text-[1rem] pl-3 md:pt-1"> - 8 cuadras del centro.</h4>
                             <h4 className="text-[.9rem] md:text-[.7rem] lg:text-[1rem] pl-3 md:pt-1"> - 10 cuadras del rio Mina Clavero.</h4>
                             <h4 className="text-[.9rem] md:text-[.7rem] lg:text-[1rem] pl-3 md:pt-1"> - 10 cuadras del rio San Sebastián.</h4>
-                            <h4 className="text-[.9rem] md:text-[.7rem] lg:text-[1rem] pl-3 md:pt-1"> - 2 cuadras de la rotonda.</h4>
+                            <h4 className="text-[.9rem] md:text-[.7rem] lg:text-[1rem] pl-3 md:pt-1"> - 2 cuadras de la rotonda de ingreso.</h4>
                         </div>
                     </div>
 
-                    <div className="md:flex-1 flex justify-center fade-down-about delay-4">
-                        <Carousel images={carouselImages} />
+                    <div className="md:flex-1 shadow-xl rounded-[25px] flex justify-center fade-down-about delay-4">
+                        <Carousel images={carouselImages}/>
                     </div>
                 </div>
             </div>
+
+            
         </div>
     );
 }

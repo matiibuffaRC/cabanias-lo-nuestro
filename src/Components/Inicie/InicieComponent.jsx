@@ -31,32 +31,32 @@ function InicieComponent() {
                 </div>
             </div>
             <div className="hidden w-full md:mx-5 md:max-w-3xl md:flex md:flex-row gap-5 mt-8 rounded-[20px] lg:max-w-5xl text-[#3E6143] font-bold">
-                <div className="container-hover flex-1 flex flex-col items-start justify-start bg-white rounded-[10px] p-4 pb-2 hover:bg-[#3E6143] hover:text-white cursor-pointer fade-down">
+                <div className="container-hover flex-1 flex flex-col items-start justify-start bg-white rounded-[10px] p-4 pb-2 hover:bg-[#3E6143] hover:text-white cursor-pointer fade-down shadow-lg">
                     <img src={BedIcon} alt="bed" className="text-[#3E6143] hover-img"/>
                     <h4 className="text-[.8rem] mt-1">Confort</h4>
                     <h4 className="text-[.7rem]">Habitaciones cómodas.</h4>
                 </div>
-                <div className="container-hover flex-1 flex flex-col items-start justify-start bg-white rounded-[10px] p-4 pb-2 hover:bg-[#3E6143] hover:text-white cursor-pointer fade-down">
+                <div className="container-hover flex-1 flex flex-col items-start justify-start bg-white rounded-[10px] p-4 pb-2 hover:bg-[#3E6143] hover:text-white cursor-pointer fade-down shadow-lg">
                     <img src={WifiIcon} alt="wifi" className="text-[#3E6143] hover-img"/>
                     <h4 className="text-[.8rem] mt-1">Wifi</h4>
                     <h4 className="text-[.7rem]">Internet gratis</h4>
                 </div>
-                <div className="container-hover flex-1 flex flex-col items-start justify-start bg-white rounded-[10px] p-4 pb-2 hover:bg-[#3E6143] hover:text-white cursor-pointer fade-down">
+                <div className="container-hover flex-1 flex flex-col items-start justify-start bg-white rounded-[10px] p-4 pb-2 hover:bg-[#3E6143] hover:text-white cursor-pointer fade-down shadow-lg">
                     <img src={CarIcon} alt="car" className="text-[#3E6143] hover-img"/>
                     <h4 className="text-[.8rem] mt-1">Vehículos</h4>
                     <h4 className="text-[.7rem]">Estacionamiento individual</h4>
                 </div>
-                <div className="container-hover flex-1 flex flex-col items-start justify-start bg-white rounded-[10px] p-4 pb-2 hover:bg-[#3E6143] hover:text-white cursor-pointer fade-down">
+                <div className="container-hover flex-1 flex flex-col items-start justify-start bg-white rounded-[10px] p-4 pb-2 hover:bg-[#3E6143] hover:text-white cursor-pointer fade-down shadow-lg">
                     <img src={GrillIcon} alt="grill" className="text-[#3E6143] hover-img"/>
                     <h4 className="text-[.8rem] mt-1">Comidas</h4>
                     <h4 className="text-[.7rem]">Parrillas</h4>
                 </div>
-                <div className="container-hover flex-1 flex flex-col items-start justify-start bg-white rounded-[10px] p-4 pb-2 hover:bg-[#3E6143] hover:text-white cursor-pointer fade-down">
+                <div className="container-hover flex-1 flex flex-col items-start justify-start bg-white rounded-[10px] p-4 pb-2 hover:bg-[#3E6143] hover:text-white cursor-pointer fade-down shadow-lg">
                     <img src={AirIcon} alt="air" className="text-[#3E6143] hover-img"/>
                     <h4 className="text-[.8rem] mt-1">Comodidad</h4>
                     <h4 className="text-[.7rem]">Aire acondicionado</h4>
                 </div>
-                <div className="container-hover flex-1 flex flex-col items-start justify-start bg-white rounded-[10px] p-4 pb-2 hover:bg-[#3E6143] hover:text-white cursor-pointer fade-down">
+                <div className="container-hover flex-1 flex flex-col items-start justify-start bg-white rounded-[10px] p-4 pb-2 hover:bg-[#3E6143] hover:text-white cursor-pointer fade-down shadow-lg">
                     <img src={TvIcon}alt="tv" className="text-[#3E6143] hover-img"/>
                     <h4 className="text-[.8rem] mt-1">Diversión</h4>
                     <h4 className="text-[.7rem]">Television</h4>
