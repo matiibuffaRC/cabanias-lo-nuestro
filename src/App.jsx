@@ -4,13 +4,14 @@ import AboutUsComponent from './Components/AboutUs/AboutUsComponent';
 import AccomodationsComponent from './Components/Accomodations/AccomodationsComponent';
 import GalleryComponent from './Components/Gallery/GalleryComponent';
 import ContactComponent from './Components/Contact/ContactComponent';
+import FooterComponent from './Components/Footer/FooterComponent';
 
 import './App.css'
 
 function App() {
 
   return (
-    <div>
+    <div className='flex flex-col'>
       <HeaderComponent></HeaderComponent>
       <main className='main-layout'>
         <InicieComponent></InicieComponent>
@@ -19,6 +20,7 @@ function App() {
         <GalleryComponent></GalleryComponent>
         <ContactComponent></ContactComponent>
       </main>
+      <FooterComponent></FooterComponent>
     </div>
   )
 }

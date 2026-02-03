@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     width: 100%;
-    height: 100dvh;
+    min-height: 100dvh;
     background-color: #F1F3EE;
     padding-top: 65px;
 }

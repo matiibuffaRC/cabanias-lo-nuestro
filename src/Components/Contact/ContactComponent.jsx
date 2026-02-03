@@ -39,7 +39,7 @@ function ContactComponent() {
     })
 
     return (
-        <div className="min-h-[calc(100vh-65px)] bg-[#F1F3EE] m-0 ">
+        <div className="min-h-[calc(60vh-65px)] bg-[#F1F3EE] m-0 ">
             <div className="bg-white mx-4 md:p-2 py-3 rounded-[25px]">
                 <div className="bg-[#3E6143] m-2 md:flex md:flex-row-reverse justify-center items-center md:rounded-[25px] rounded-b-[25px] md:m-5">
                     <div className="mapa md:pr-3">

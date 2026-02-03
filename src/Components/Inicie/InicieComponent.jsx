@@ -10,7 +10,7 @@ import TvIcon from "../../icons/TvIcon.svg";
 
 function InicieComponent() {
     return (  
-        <div className="h-full flex flex-col justify-center items-center mx-0 px-5">
+        <div className="min-h-[calc(100vh-65px)] flex flex-col justify-center items-center mx-0 px-5">
             <div className="bg-[#3E6143] text-white  rounded-[15px] flex flex-col justify-center shadow-xl md:max-w-3xl md:flex-row-reverse  md:p-0 lg:max-w-5xl fade-down">
                 <div>
                     <img src={ImgPatio} alt="" className="rounded-t-[15px] md:rounded-none md:rounded-r-[15px] md:h-full md:object-cover"/>
