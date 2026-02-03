@@ -3,6 +3,7 @@ import InicieComponent from './Components/Inicie/InicieComponent';
 import AboutUsComponent from './Components/AboutUs/AboutUsComponent';
 import AccomodationsComponent from './Components/Accomodations/AccomodationsComponent';
 import GalleryComponent from './Components/Gallery/GalleryComponent';
+import ContactComponent from './Components/Contact/ContactComponent';
 
 import './App.css'
 
@@ -16,6 +17,7 @@ function App() {
         <AboutUsComponent></AboutUsComponent>
         <AccomodationsComponent></AccomodationsComponent>
         <GalleryComponent></GalleryComponent>
+        <ContactComponent></ContactComponent>
       </main>
     </div>
   )

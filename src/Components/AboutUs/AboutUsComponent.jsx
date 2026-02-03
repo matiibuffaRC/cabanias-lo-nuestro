@@ -49,7 +49,7 @@ function AboutUsComponent() {
                             />
                         </div>
 
-                        <div className="bg-[#F2F3EE] rounded-[25px] shadow-lg p-3 flex-1 fade-down-about delay-2">
+                        <div className="bg-[#F2F3EE] rounded-[25px] shadow-md p-3 flex-1 fade-down-about delay-2">
                             <h2 className="titles text-[1.3rem]">Cabañas familiares</h2>
                             <h3>Diseñadas para brindar una experiencia única en el valle de traslasierras.</h3>
                         </div>
