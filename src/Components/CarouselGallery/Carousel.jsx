@@ -16,12 +16,13 @@ const Carousel = ({ images }) => {
         );
     };
 
+
     return (
-        <div className="carousel">
+        <div className="carousel-gallery">
             <img
                 src={images[currentIndex]}
                 alt="carousel"
-                className="carousel-image"
+                className="carousel-image-gallery"
             />
 
             <button className="nav left" onClick={handlePrevious}>
@@ -32,7 +33,7 @@ const Carousel = ({ images }) => {
                 ›
             </button>
 
-            <div className="indicator">
+            <div className="indicator-gallery">
                 {images.map((_, index) => (
                 <span
                     key={index}
