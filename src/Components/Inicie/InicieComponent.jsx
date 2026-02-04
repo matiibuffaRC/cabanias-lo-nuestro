@@ -16,10 +16,10 @@ function InicieComponent() {
                     <img src={ImgPatio} alt="" className="rounded-t-[15px] md:rounded-none md:rounded-r-[15px] md:h-full md:object-cover"/>
                 </div>
 
-                <div className="py-4 flex flex-col items-center md:w-[50%] justify-center md:px-2.5 lg:w-[40%]">
+                <div className="py-4 flex flex-col items-center md:w-[70%] justify-center md:px-2.5 lg:w-[40%]">
                     <h1 className="titles text-[1.5rem] text-center md:text-[1.7rem] lg:text-[2rem]">Complejo Lo Nuestro</h1>
                     <h2 className="titles text-[1.5rem] text-center pb-1 md:text-[1.7rem] lg:text-[2rem]">Mina Clavero</h2>
-                    <h3 className="text-[#ddd] text-[1rem] text-center p-2 md:p-0">Desde 2015, nuestro complejo de alojamiento abre sus puertas para ofrecer una experiencia única de descanso y confort. Pensado para quienes buscan tranquilidad, comodidad y un descanso merecido en las sierras cordobesas.</h3>
+                    <h3 className="text-[#ddd] text-[.9rem] lg:text-[1rem] text-center p-2 md:p-0">Desde 2015, nuestro complejo de alojamiento abre sus puertas para ofrecer una experiencia única de descanso y confort. Pensado para quienes buscan tranquilidad, comodidad y un descanso merecido en las sierras cordobesas.</h3>
                     <div className="md:w-full flex flex-row justify-center mt-3">
                         <a href="https://wa.me/5493564507240" target="__blank" className="flex flex-row gap-1.5 my-2 items-center justify-center bg-[#344d38] w-45 py-2.5 border rounded-[25px] border-white">
                             <img src={whatsappIcon}
@@ -30,6 +30,7 @@ function InicieComponent() {
                     </div>
                 </div>
             </div>
+
             <div className="hidden w-full md:mx-5 md:max-w-3xl md:flex md:flex-row gap-5 mt-8 rounded-[20px] lg:max-w-5xl text-[#3E6143] font-bold">
                 <div className="container-hover flex-1 flex flex-col items-start justify-start bg-white rounded-[10px] p-4 pb-2 hover:bg-[#3E6143] hover:text-white cursor-pointer fade-down shadow-lg">
                     <img src={BedIcon} alt="bed" className="text-[#3E6143] hover-img"/>

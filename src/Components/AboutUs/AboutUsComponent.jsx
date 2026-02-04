@@ -51,18 +51,18 @@ function AboutUsComponent() {
 
                         <div className="bg-[#F2F3EE] rounded-[25px] shadow-md p-3 flex-1 fade-down-about delay-2">
                             <h2 className="titles text-[1.3rem]">Cabañas familiares</h2>
-                            <h3>Diseñadas para brindar una experiencia única en el valle de traslasierras.</h3>
+                            <h3 className="text-[.9rem]">Diseñadas para brindar una experiencia única en el valle de traslasierras.</h3>
                         </div>
                     </div>
 
                     <div className="p-3 fade-down-about delay-3">
                         <h2 className="titles text-[1.2rem] lg:text-[1.3rem]">Ubicación</h2>
-                            <h3 className="md:text-[.7rem] lg:text-[1rem]">Nos encontramos a la entrada de la ciudad de Mina Clavero desde las Altas Cumbres, con cercanía con el centro de la ciudad, principales ríos y supermercados de la misma.</h3>
-                            <h4 className="text-[.9rem] md:text-[.7rem] lg:text-[1rem] pl-3 md:pt-3"> - 2 cuadras de estación GNC.</h4>
-                            <h4 className="text-[.9rem] md:text-[.7rem] lg:text-[1rem] pl-3 md:pt-1"> - 8 cuadras del centro.</h4>
-                            <h4 className="text-[.9rem] md:text-[.7rem] lg:text-[1rem] pl-3 md:pt-1"> - 10 cuadras del rio Mina Clavero.</h4>
-                            <h4 className="text-[.9rem] md:text-[.7rem] lg:text-[1rem] pl-3 md:pt-1"> - 10 cuadras del rio San Sebastián.</h4>
-                            <h4 className="text-[.9rem] md:text-[.7rem] lg:text-[1rem] pl-3 md:pt-1"> - 2 cuadras de la rotonda de ingreso.</h4>
+                            <h3 className="md:text-[.8rem] lg:text-[1rem]">Nos encontramos a la entrada de la ciudad de Mina Clavero desde las Altas Cumbres, con cercanía con el centro de la ciudad, principales ríos y supermercados de la misma.</h3>
+                            <h4 className="text-[.9rem] md:text-[.8rem] lg:text-[1rem] pl-3 md:pt-3"> - 2 cuadras de estación GNC.</h4>
+                            <h4 className="text-[.9rem] md:text-[.8rem] lg:text-[1rem] pl-3 md:pt-1"> - 8 cuadras del centro.</h4>
+                            <h4 className="text-[.9rem] md:text-[.8rem] lg:text-[1rem] pl-3 md:pt-1"> - 10 cuadras del rio Mina Clavero.</h4>
+                            <h4 className="text-[.9rem] md:text-[.8rem] lg:text-[1rem] pl-3 md:pt-1"> - 10 cuadras del rio San Sebastián.</h4>
+                            <h4 className="text-[.9rem] md:text-[.8rem] lg:text-[1rem] pl-3 md:pt-1"> - 2 cuadras de la rotonda de ingreso.</h4>
                         </div>
                     </div>
 

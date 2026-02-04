@@ -32,17 +32,17 @@ function ContactComponent() {
             <div key={contact.id} className="text-white px-1 my-1">
                 <a href={contact.url} className="flex flex-row items-center justify-center md:justify-start gap-2 py-1 text-[1rem]" target="_blank">
                     <img src={contact.icon} alt="" className={`w-6 h-6 ${contact.id < 3 ? "invert" : ""}`}/>
-                    <span className="titles text-[1.2rem] md:text-[1.3em]">{contact.name}</span>
+                    <span className="titles text-[1.2rem] md:text-[1.2rem]">{contact.name}</span>
                 </a>
             </div>
         )
     })
 
     return (
-        <div className="min-h-[calc(60vh-65px)] bg-[#F1F3EE] m-0 ">
-            <div className="bg-white mx-4 md:p-2 py-3 rounded-[25px]">
-                <div className="bg-[#3E6143] m-2 md:flex md:flex-row-reverse justify-center items-center md:rounded-[25px] rounded-b-[25px] md:m-5">
-                    <div className="mapa md:pr-3">
+        <div className="min-h-[calc(60vh-65px)] bg-[#F1F3EE] m-0 flex flex-col items-center justify-center">
+            <div className="bg-white mx-4 md:p-2 py-3 rounded-[35px] lg:w-full lg:max-w-5xl lg:mx-0 ">
+                <div className="bg-[#3E6143] m-2 md:flex md:flex-row-reverse justify-center items-center md:rounded-[35px] rounded-b-[35px] md:m-3 md:p-2 lg:gap-5">
+                    <div className="mapa md:pr-3 flex flex-row justify-center items-center ">
                         <div className=" bg-white p-1">
                             <Mapa></Mapa>
                         </div>

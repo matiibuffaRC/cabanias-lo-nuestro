@@ -1,3 +1,4 @@
+import { useRef} from "react";
 import HeaderComponent from './Components/Header/HeaderComponent';
 import InicieComponent from './Components/Inicie/InicieComponent';
 import AboutUsComponent from './Components/AboutUs/AboutUsComponent';
@@ -10,15 +11,40 @@ import './App.css'
 
 function App() {
 
+  const inicieRef = useRef(null);
+  const aboutUsRef = useRef(null);
+  const accomodationsRef = useRef(null);
+  const galleryRef = useRef(null);
+  const contactRef = useRef(null);
+
+
+  const scrollToSection = (ref) =>{
+    ref.current?.scrollIntoView({behavior : 'smooth'});
+  }
+
   return (
-    <div className='flex flex-col'>
-      <HeaderComponent></HeaderComponent>
+    <div>
+      <HeaderComponent scrollToSection={scrollToSection} refs={{inicieRef, aboutUsRef, accomodationsRef, galleryRef, contactRef}}></HeaderComponent>
       <main className='main-layout'>
-        <InicieComponent></InicieComponent>
-        <AboutUsComponent></AboutUsComponent>
-        <AccomodationsComponent></AccomodationsComponent>
-        <GalleryComponent></GalleryComponent>
-        <ContactComponent></ContactComponent>
+        
+        <div ref={inicieRef}>
+          <InicieComponent></InicieComponent>
+        </div>
+        <div ref={aboutUsRef}>
+          <AboutUsComponent></AboutUsComponent>
+        </div>
+        <div ref={accomodationsRef}>
+          <AccomodationsComponent ></AccomodationsComponent>
+          </div>
+        <div ref={galleryRef}>
+          <GalleryComponent ></GalleryComponent>
+          </div>
+        <div ref={contactRef}>
+          <ContactComponent ></ContactComponent>
+          </div>
+        
+        
+        
       </main>
       <FooterComponent></FooterComponent>
     </div>

@@ -2,7 +2,7 @@ import "./HeaderComponent.css"
 import { useState, useEffect } from "react";
 import menuIcon from "../../icons/Menu.svg";
 
-function HeaderComponent({ scrollToSection, refs }) {
+function HeaderComponent({ scrollToSection , refs }) {
 
     const [menuOpen, setMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 1024); // lg
@@ -68,23 +68,23 @@ function HeaderComponent({ scrollToSection, refs }) {
         >
             <ul className="nav-list flex flex-col p-0 lg:flex-row lg:gap-4 lg:p-0 lg:h-full lg:items-center">
                 <li 
-                    className="titles nav-list-item cursor-pointer lg:hover:bg-[#355039] rounded-[25px] lg:text-[1rem] my-3.75 mx-1.25 pl-3" >
+                    className="titles nav-list-item cursor-pointer lg:hover:bg-[#355039] rounded-[25px] lg:text-[1rem] my-3.75 mx-1.25 pl-3" onClick={()=>handleNavClick(refs.inicieRef)}>
                     Inicio
                 </li>
                 <li 
-                    className="titles nav-list-item cursor-pointer lg:hover:bg-[#355039] rounded-[25px] lg:text-[1rem] my-3.75 mx-1.25 pl-3" >
+                    className="titles nav-list-item cursor-pointer lg:hover:bg-[#355039] rounded-[25px] lg:text-[1rem] my-3.75 mx-1.25 pl-3" onClick={()=>handleNavClick(refs.aboutUsRef)}>
                     Sobre el complejo
                 </li>
                 <li 
-                    className="titles nav-list-item cursor-pointer lg:hover:bg-[#355039] rounded-[25px] lg:text-[1rem] my-3.75 mx-1.25 pl-3" >
+                    className="titles nav-list-item cursor-pointer lg:hover:bg-[#355039] rounded-[25px] lg:text-[1rem] my-3.75 mx-1.25 pl-3" onClick={()=>handleNavClick(refs.accomodationsRef)}>
                     Alojamientos
                 </li>
                 <li 
-                    className="titles nav-list-item cursor-pointer lg:hover:bg-[#355039] rounded-[25px] lg:text-[1rem] my-3.75 mx-1.25 pl-3" >
+                    className="titles nav-list-item cursor-pointer lg:hover:bg-[#355039] rounded-[25px] lg:text-[1rem] my-3.75 mx-1.25 pl-3" onClick={()=>handleNavClick(refs.galleryRef)}>
                     Galeria
                 </li>
                 <li 
-                    className="titles nav-list-item cursor-pointer lg:hover:bg-[#355039] rounded-[25px] lg:text-[1rem] my-3.75 mx-1.25 pl-3" >
+                    className="titles nav-list-item cursor-pointer lg:hover:bg-[#355039] rounded-[25px] lg:text-[1rem] my-3.75 mx-1.25 pl-3" onClick={()=>handleNavClick(refs.contactRef)}>
                     Contacto
                 </li>
             </ul>
