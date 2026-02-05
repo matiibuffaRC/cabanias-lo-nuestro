@@ -7,4 +7,5 @@ import imagen7 from "../imgs/cochera.jpg";
 import imagen8 from "../imgs/dormi.jpg";
 import imagen9 from "../imgs/habitacion6Carrusel.jpg";
 
+
 export const carouselImages2 = [imagen1, imagen2, imagen3, imagen4, imagen6, imagen7, imagen8, imagen9];
