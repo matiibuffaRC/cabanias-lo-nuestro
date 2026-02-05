@@ -1,4 +1,3 @@
-import "./ContactComponent.css";
 import whatsappIcon from "../../icons/whatsappIcon.svg";
 import GmailIcon from "../../icons/gmail.svg";
 import FacebookIcon from "../../icons/icons8-facebook.svg";
