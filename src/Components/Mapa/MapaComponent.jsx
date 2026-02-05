@@ -12,6 +12,7 @@ function MapaComponent() {
             allowFullScreen
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
+            title="Mapa de la región"
             />
     </div>
     );
