@@ -1,6 +1,6 @@
 import presentationImage from "../../imgs/piletaConDormis.jpg";
 import frenteImage from "../../imgs/frente2.jpg";
-import patioImage from "../../imgs/patioBIen.jpg";
+import patioImage from "../../imgs/patioBien.jpg";
 import patioImage2 from "../../imgs/patio3.jpg";
 
 import homeIcon from "../../icons/HomeIcon.svg";
