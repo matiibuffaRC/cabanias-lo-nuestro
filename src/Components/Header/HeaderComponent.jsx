@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
 import menuIcon from "../../icons/Menu.svg";
 
 function HeaderComponent({ scrollToSection , refs }) {
@@ -51,9 +53,9 @@ function HeaderComponent({ scrollToSection , refs }) {
 
         <div className=" w-full h-full justify-between flex flex-row lg:w-5xl lg:justify-between lg:items-center">
             <div className="header-title flex flex-row items-center gap-2 ml-5">
-                <h4 className="title text-[1.2rem] md:text-[1rem] lg:text-[1.1rem]">
+                <Link to="/" className="title text-[1.2rem] md:text-[1rem] lg:text-[1.1rem]">
                     Lo nuestro
-                </h4>
+                </Link>
             </div>
 
             <div className="header-btns flex flex-row items-center lg:hidden mr-5">

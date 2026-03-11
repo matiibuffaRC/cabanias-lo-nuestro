@@ -1,7 +1,14 @@
 import { useRef} from "react";
 import HeaderComponent from './Components/Header/HeaderComponent';
-import InicieComponent from './Components/Inicie/InicieComponent';
-import './App.css'
+import FooterComponent from "./Components/Footer/FooterComponent";
+import './App.css';
+import { BrowserRouter ,Routes, Route } from "react-router-dom";
+
+// Importamos las pages
+
+import HomePage from "./Pages/HomePage";
+import AccommodationsPage from "./Pages/AccommodationsPage";
+
 
 function App() {
 
@@ -17,21 +24,14 @@ function App() {
   }
 
   return (
-    <div>
-      {/* <HeaderComponent scrollToSection={scrollToSection} refs={{inicieRef, aboutUsRef, accomodationsRef, galleryRef, contactRef}}></HeaderComponent> */}
-      <HeaderComponent scrollToSection={scrollToSection} refs={{ inicieRef }}></HeaderComponent>
-      <main>
-        
-        <div ref={inicieRef}>
-          <InicieComponent></InicieComponent>
-        </div>
-        
-        
-        
-        
-      </main>
-      {/* <FooterComponent></FooterComponent> */}
-    </div>
+    <>
+      <HeaderComponent></HeaderComponent>
+      <Routes>
+        <Route path="/" element={<HomePage />}></Route>
+        <Route path="/alojamiento/:tipo" element={<AccommodationsPage />}></Route>
+      </Routes>
+      <FooterComponent></FooterComponent>
+    </>
   )
 }
 
