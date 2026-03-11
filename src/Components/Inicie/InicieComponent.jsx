@@ -1,70 +1,145 @@
-import "./InicieComponent.css"
-import ImgPatio from "../../imgs/patio.jpg"
-import whatsappIcon from "../../icons/whatsappIcon.svg";
-import BedIcon from "../../icons/BedIcon.svg";
-import WifiIcon from "../../icons/WifiIcon.svg";
-import CarIcon from "../../icons/CarIcon.svg";
-import GrillIcon from "../../icons/GrillIcon.svg";
-import AirIcon from "../../icons/AirIcon.svg";
-import TvIcon from "../../icons/TvIcon.svg";
+import presentationImage from "../../imgs/piletaConDormis.jpg";
+import frenteImage from "../../imgs/frente2.jpg";
+import patioImage from "../../imgs/patioBIen.jpg";
+import patioImage2 from "../../imgs/patio3.jpg";
+
+import homeIcon from "../../icons/HomeIcon.svg";
+import carIcon from "../../icons/CarIcon.svg";
+import wifiIcon from "../../icons/WifiIcon.svg";
+import tvIcon from "../../icons/TvIcon.svg";
+import grillIcon from "../../icons/GrillIcon.svg";
+import airIcon from "../../icons/AirIcon.svg";
+
+import "../Animations/animations.css";
+
+import { useState, useRef, useEffect } from "react";
 
 function InicieComponent() {
-    return (  
-        <div className="min-h-[calc(100vh-65px)] flex flex-col justify-center items-center mx-0 px-5">
-            <div className="bg-[#3E6143] text-white  rounded-[15px] flex flex-col justify-center shadow-xl md:max-w-3xl md:flex-row-reverse  md:p-0 lg:max-w-5xl fade-down">
-                <div>
-                    <img src={ImgPatio} alt="" className="rounded-t-[15px] md:rounded-none md:rounded-r-[15px] md:h-full md:object-cover"/>
-                </div>
 
-                <div className="py-4 flex flex-col items-center md:w-[70%] justify-center md:px-2.5 lg:w-[40%]">
-                    <h1 className="titles text-[1.5rem] text-center md:text-[1.7rem] lg:text-[2rem]">Complejo Lo Nuestro</h1>
-                    <h2 className="titles text-[1.5rem] text-center pb-1 md:text-[1.7rem] lg:text-[2rem]">Mina Clavero</h2>
-                    <h3 className="text-[#ddd] text-[.9rem] lg:text-[1rem] text-center p-2 md:p-0">Desde 2015, nuestro complejo de alojamiento abre sus puertas para ofrecer una experiencia única de descanso y confort. Pensado para quienes buscan tranquilidad, comodidad y un descanso merecido en las sierras cordobesas.</h3>
-                    <div className="md:w-full flex flex-row justify-center mt-3">
-                        <a href="https://wa.me/5493564507240" target="__blank" className="flex flex-row gap-1.5 my-2 items-center justify-center bg-[#344d38] w-45 py-2.5 border rounded-[25px] border-white">
-                            <img src={whatsappIcon}
-                            alt="Whatsapp" 
-                            className="cursor-pointer w-5 h-5 invert"/>
-                            Contactanos
-                        </a>
-                    </div>
+    const services = [
+        { img: homeIcon, title: "+6", description: "Cabañas y dormis" },
+        { img: carIcon, title: "Estacionamiento", description: "individual" },
+        { img: wifiIcon, title: "Conexión", description: "wifi" },
+        { img: tvIcon, title: "Diversión", description: "para comodidad" },
+        { img: grillIcon, title: "Parrillas", description: "individuales" },
+        { img: airIcon, title: "Confort", description: "acondicionamiento" }
+    ];
+
+    const sections = [
+        {
+            img: frenteImage,
+            title: "Complejo Lo Nuestro",
+            description:
+                "Un lugar ideal, en la entrada de Mina Clavero para visitar los principales atractivos de la zona y vivir unas vacaciones inolvidables",
+        },
+        {
+            img: patioImage,
+            title: "Cabañas y dormis",
+            description:
+                "Disponemos de 2 cabañas y 3 dormis para brindar una cómoda estadía en el complejo de cabañas. Cada unidad fue diseñada y pensada para ofrecer alojamiento a grupos de 4 personas.",
+        },
+        {
+            img: patioImage2,
+            title: "Complejo Lo Nuestro",
+            description:
+                "Un lugar ideal, en la entrada de Mina Clavero para visitar los principales atractivos de la zona y vivir unas vacaciones inolvidables.",
+        },
+    ];
+
+    const [showServices, setShowServices] = useState(false);
+    const servicesRef = useRef(null);
+
+    useEffect(() => {
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    setShowServices(true);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        if (servicesRef.current) observer.observe(servicesRef.current);
+
+        return () => observer.disconnect();
+
+    }, []);
+
+    const printServices = () => {
+        return services.map((service, index) => {
+
+            const delay =
+                window.innerWidth >= 768 ? `${index * 0.15}s` : "0s";
+
+            return (
+                <div key={service.title} style={{ animationDelay: delay }} className={`flex flex-col items-center my-5 md:my-0  ${showServices ? "fade-down" : "opacity-0"}`}>
+                    <img src={service.img} alt="" className="h-12 w-12" />
+                    <h3 className="font-bold text-[1.1rem] md:text-[.9rem] lg:text-[1.1rem]">
+                        {service.title}
+                    </h3>
+                    <h3 className="text-[.9rem] md:text-[.7rem] lg:text-[.9rem] text-center">
+                        {service.description}
+                    </h3>
                 </div>
+            );
+        });
+    };
+
+    return (
+        <div className="pt-16 bg-[#F1F3EE] flex flex-col items-center">
+            <div className="h-135 relative w-full">
+                <img
+                    src={presentationImage}
+                    alt="Patio de atras"
+                    className="w-full h-full object-cover object-center"
+                />
             </div>
 
-            <div className="hidden w-full md:mx-5 md:max-w-3xl md:flex md:flex-row gap-5 mt-8 rounded-[20px] lg:max-w-5xl text-[#3E6143] font-bold">
-                <div className="container-hover flex-1 flex flex-col items-start justify-start bg-white rounded-[10px] p-4 pb-2 hover:bg-[#3E6143] hover:text-white cursor-pointer fade-down shadow-lg">
-                    <img src={BedIcon} alt="bed" className="text-[#3E6143] hover-img"/>
-                    <h4 className="text-[.8rem] mt-1">Confort</h4>
-                    <h4 className="text-[.7rem]">Habitaciones cómodas.</h4>
-                </div>
-                <div className="container-hover flex-1 flex flex-col items-start justify-start bg-white rounded-[10px] p-4 pb-2 hover:bg-[#3E6143] hover:text-white cursor-pointer fade-down shadow-lg">
-                    <img src={WifiIcon} alt="wifi" className="text-[#3E6143] hover-img"/>
-                    <h4 className="text-[.8rem] mt-1">Wifi</h4>
-                    <h4 className="text-[.7rem]">Internet gratis</h4>
-                </div>
-                <div className="container-hover flex-1 flex flex-col items-start justify-start bg-white rounded-[10px] p-4 pb-2 hover:bg-[#3E6143] hover:text-white cursor-pointer fade-down shadow-lg">
-                    <img src={CarIcon} alt="car" className="text-[#3E6143] hover-img"/>
-                    <h4 className="text-[.8rem] mt-1">Vehículos</h4>
-                    <h4 className="text-[.7rem]">Estacionamiento individual</h4>
-                </div>
-                <div className="container-hover flex-1 flex flex-col items-start justify-start bg-white rounded-[10px] p-4 pb-2 hover:bg-[#3E6143] hover:text-white cursor-pointer fade-down shadow-lg">
-                    <img src={GrillIcon} alt="grill" className="text-[#3E6143] hover-img"/>
-                    <h4 className="text-[.8rem] mt-1">Comidas</h4>
-                    <h4 className="text-[.7rem]">Parrillas</h4>
-                </div>
-                <div className="container-hover flex-1 flex flex-col items-start justify-start bg-white rounded-[10px] p-4 pb-2 hover:bg-[#3E6143] hover:text-white cursor-pointer fade-down shadow-lg">
-                    <img src={AirIcon} alt="air" className="text-[#3E6143] hover-img"/>
-                    <h4 className="text-[.8rem] mt-1">Comodidad</h4>
-                    <h4 className="text-[.7rem]">Aire acondicionado</h4>
-                </div>
-                <div className="container-hover flex-1 flex flex-col items-start justify-start bg-white rounded-[10px] p-4 pb-2 hover:bg-[#3E6143] hover:text-white cursor-pointer fade-down shadow-lg">
-                    <img src={TvIcon}alt="tv" className="text-[#3E6143] hover-img"/>
-                    <h4 className="text-[.8rem] mt-1">Diversión</h4>
-                    <h4 className="text-[.7rem]">Television</h4>
-                </div>
+            <div className="my-10 p-4 max-w-150 fade-down">
+                <h2 className="titles-and-subtitles font-bold text-center text-[1.9rem] text-[#3E6143] py-4">
+                    Lo Nuestro, complejo de alojamiento en traslasierras
+                </h2>
+
+                <h3 className="titles-and-subtitles text-center text-[1.1rem] text-[#757575] px-10">
+                    Somos un complejo vacacional único ubicado a la entrada de Mina Clavero desde el Valle de Traslasierras.
+                </h3>
             </div>
+
+            {/* Servicios que ofrecemos */}
+
+            <div ref={servicesRef} className="mb-10 grid grid-cols-2 md:grid-cols-6 md:mx-10 gap-5 p-2">
+                {printServices()}
+            </div>
+
+            
+            <div className="w-full flex flex-col gap-2">
+                {sections.map((section, index) => {
+                    const isLeft = index % 2 === 0;
+                    return (
+                        <div key={index} className="h-135 relative w-full">
+                            <img src={section.img} alt="" className="w-full h-full object-cover object-center"/>
+
+                            <div className={`absolute w-[90%] top-10 bg-[#3E6143]/50 p-5 text-white rounded-3xl md:max-w-1/2 ${isLeft? "left-1/2 -translate-x-1/2 md:left-10 md:translate-x-0": "right-1/2 translate-x-1/2 md:right-10 md:translate-x-0"}`}>
+                                <h2 className="titles-and-subtitles text-[1.8rem] font-bold py-2">
+                                    {section.title}
+                                </h2>
+                                <h3 className="titles-and-subtitles text-[1rem] md:text-[.9rem] lg:text-[1rem]">
+                                    {section.description}
+                                </h3>
+                                <div className="my-5">
+                                    <a href="#" className="titles-and-subtitles font-bold bg-[#446b4a] border border-[#3E6143] py-2 px-3 rounded-xl">
+                                        Saber más
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })}
+
+            </div>
+
         </div>
-    ) 
+    );
 }
 
-export default InicieComponent  
+export default InicieComponent;
