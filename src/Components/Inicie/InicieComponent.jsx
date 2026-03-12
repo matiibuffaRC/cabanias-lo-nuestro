@@ -139,7 +139,21 @@ function InicieComponent() {
 
             {/* Botón de WhatsApp */}
 
-            <div className={`bg-white rounded-xl z-60 right-7.5 h-55 w-[80%] md:w-90 fixed bottom-20 ${!hasInteracted? "hidden": openMenuWhatsapp? "fade-top-menu": "fadeOutDown"}`}>
+            <div className="fixed bottom-3 right-7.5 flex flex-row gap-2 z-50">
+            
+                <div className={`bg-[#F5F7F9] p-2 rounded-lg ${!hasInteracted ? "" : openMenuWhatsapp ? "fadeOutDown" : "fade-top-menu"}`}>
+                    <h3 className="text-defect text-[.8rem]">Consultas y reservas?</h3>
+                    <h3 className="text-defect text-[.8rem] font-bold">Hablemos!</h3>
+                </div>
+            
+                <div className="bg-[#2DB742] h-13 w-13 z-70 flex flex-col justify-center items-center rounded-[50%] relative cursor-pointer" onClick={handleClickWhatsapp}>
+                    <img src={WhatsAppIcon} alt="" className={`w-8 h-8 invert transition-all duration-300 absolute ${openMenuWhatsapp? "rotate-180 opacity-0": "rotate-0 opacity-100"}`}/>
+                    <img src={crossIcon} alt="" className={`w-8 h-8 invert transition-all duration-300 ${openMenuWhatsapp? "rotate-0 opacity-100": "-rotate-180 opacity-0"}`}/>
+                </div>
+            
+                {/* MENÚ WHATSAPP */}
+            
+                <div className={`bg-white rounded-xl z-60 right-7.5 h-55 w-[80%] md:w-90 fixed bottom-20 ${!hasInteracted? "hidden": openMenuWhatsapp? "fade-top-menu": "fadeOutDown"}`}>
                     <div className="bg-[#2DB742] rounded-t-xl p-3 flex flex-row text-[#F5F7F9] font-bold text-defect gap-2">
                         <div className="flex flex-col justify-center p-1">
                             <img src={WhatsAppIcon} alt="" className="w-9 h-9 invert"/>
@@ -151,19 +165,19 @@ function InicieComponent() {
                             </h4>
                         </div>
                     </div>
-
+            
                     <div>
                         {/* OPCIÓN 1 */}
-
+            
                         <a href="https://wa.me/549XXXXXXXXXX?text=Hola%20quisiera%20consultar%20los%20precios%20de%20las%20caba%C3%B1as" target="_blank" rel="noopener noreferrer" className={`rounded-xl flex flex-row justify-start items-center p-3 gap-2 m-3 bg-[#ddd] border-l-5 border-[#2DB742] cursor-pointer ${openMenuWhatsapp ? "fade-down" : ""}`} style={{ animationDelay: "0.5s" }} >
                             <img src={WhatsAppIcon} alt="" className="w-8 h-8"/>
                             <h3 className="text-defect text-[1.1rem]">
                                 Consultar precios
                             </h3>
                         </a>
-
+            
                         {/* OPCIÓN 2 */}
-
+            
                         <a href="https://wa.me/5493564507240?text=Hola%20quisiera%20consultar%20la%20disponibilidad" target="_blank" className={`rounded-xl flex flex-row justify-start items-center p-3 gap-2 m-3 bg-[#ddd] border-l-5 border-[#2DB742] cursor-pointer ${openMenuWhatsapp ? "fade-down" : ""}`} style={{ animationDelay: "0.65s" }} >
                             <img src={WhatsAppIcon} alt="" className="w-8 h-8"/>
                             <h3 className="text-defect text-[1.1rem]">
@@ -172,6 +186,7 @@ function InicieComponent() {
                         </a>
                     </div>
                 </div>
+            </div>
         </div>
     );
 }

@@ -17,7 +17,7 @@ function HeaderComponent({ scrollToSection , refs }) {
         { text: "Como llegar", link:"/comoLlegar"}
     ];
 
-    const liClasses = "titles mt-5 md:my-2.5 md:py-1.25 md:px-3.75 lg:my-7.5 cursor-pointer lg:hover:bg-[#355039] rounded-[25px] text-[1.2rem] lg:text-[1rem] my-3.75 mx-1.25 pl-3";
+    const liClasses = "titles mt-5 md:my-2.5 md:py-1.25 lg:my-7.5 cursor-pointer lg:hover:bg-[#355039] rounded-[25px] text-[1.2rem] lg:text-[1rem] my-3.75 px-1.5 lg:mx-1.25";
 
     useEffect(() => {
         const handleResize = () => {
@@ -64,10 +64,10 @@ function HeaderComponent({ scrollToSection , refs }) {
             </div>
 
             <nav className={`fixed top-0 left-0 z-20 h-screen w-62.5 bg-[#3E6143] transition-transform duration-300 ease-in-out ${menuOpen ? "translate-x-0" : "-translate-x-full"} md:w-80 lg:static lg:h-full lg:w-auto lg:bg-transparent lg:translate-x-0 lg:transition-none lg:flex lg:items-center`}>
-                <ul className="md:mr-5 flex flex-col p-0 lg:flex-row lg:gap-2 lg:h-full lg:items-center">
+                <ul className="ml-3 pt-5 lg:pt-0 flex flex-col p-0 lg:flex-row lg:gap-2 lg:h-full lg:items-center">
                     {navItems.map((item) => (
-                    <li key={item.text}  onClick={() => handleNavClick(item.ref)}>
-                        <Link to={item.link} className={liClasses}>{item.text}</Link>
+                    <li key={item.text} className="my-3.5 ml-3 border-l-2 border-white lg:my-0 lg:border-none lg:ml-0"  onClick={() => handleNavClick(item.ref)}>
+                        <Link to={item.link} className={liClasses} onClick={()=>{openMenu()}}>{item.text}</Link>
                     </li>
                     ))}
                 </ul>
