@@ -1,4 +1,5 @@
 import ServiceItemComponent from "../ServiceItem/ServiceItemComponent";
+import "../Animations/animations.css";
 
 import presentationImage from "../../imgs/piletaConDormis.jpg";
 import frenteImage from "../../imgs/frente2.jpg";
@@ -11,11 +12,14 @@ import wifiIcon from "../../icons/WifiIcon.svg";
 import tvIcon from "../../icons/TvIcon.svg";
 import grillIcon from "../../icons/GrillIcon.svg";
 import airIcon from "../../icons/AirIcon.svg";
+import WhatsAppIcon from "../../icons/whatsappIcon.svg";
+import crossIcon from "../../icons/crossIcon.svg";
 
-import "../Animations/animations.css";
+import LogoMinaClavero from "../../icons/MinaClaveroLogo.png";
 
-import { useState, useRef, useEffect } from "react";
+
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 function InicieComponent() {
 
@@ -28,6 +32,13 @@ function InicieComponent() {
         { img: airIcon, title: "Confort", description: "acondicionamiento" }
     ];
 
+
+    const [openMenuWhatsapp, setOpenMenuWhatsapp] = useState(false);
+
+    const handleClickWhatsapp = () => {
+        setOpenMenuWhatsapp(prev => !prev);
+        
+    }
 
     const sections = [
         {
@@ -64,7 +75,7 @@ function InicieComponent() {
             sections.map((section, index) => {
                 const isLeft = index % 2 === 0;
                 return (
-                    <div key={index} className="h-135 relative w-full fade-down" style={{ animationDelay: `${index * 0.15}s` }}>
+                    <div key={index} className="h-135 lg:h-150 relative w-full fade-down" style={{ animationDelay: `${index * 0.15}s` }}>
                         <img src={section.img} alt="" className="w-full h-full object-cover object-center"/>
 
                         <div className={`absolute w-[90%] top-10 bg-[#3E6143]/50 p-5 text-white rounded-3xl md:max-w-1/2 ${isLeft? "left-1/2 -translate-x-1/2 md:left-10 md:translate-x-0": "right-1/2 translate-x-1/2 md:right-10 md:translate-x-0"}`}>
@@ -87,7 +98,7 @@ function InicieComponent() {
     };
 
     return (
-        <div className="pt-16 bg-[#F1F3EE] flex flex-col items-center">
+        <div className="pt-16 bg-[#F1F3EE] flex flex-col items-center relative">
             <div className="h-135 relative w-full">
                 <img
                     src={presentationImage}
@@ -113,10 +124,45 @@ function InicieComponent() {
             </div>
 
             
-            <div className="w-full flex flex-col gap-2 my-10">
+            <div className="w-full flex flex-col gap-2 mt-10">
                 {printSections()}
             </div>
+            <div>
+                <img src={LogoMinaClavero} alt="Mina Clavero ciudad" className="w-60 h-60 md:w-100 md:h-100"/>
+            </div>
 
+            <div className={`fixed bottom-3 right-7.5 flex flex-row gap-2 z-50`}>
+                <div className={`bg-[#F5F7F9] p-2 rounded-lg fade-down ${openMenuWhatsapp? "fadeOutDown" : "fade-top-menu"}`}>
+                    <h3 className="text-defect text-[.8rem]">Consultas y reservas?</h3>
+                    <h3 className="text-defect text-[.8rem] font-bold">Hablemos!</h3>
+                </div>
+                <div className="bg-[#2DB742] h-13 w-13 flex flex-col justify-center items-center rounded-[50%]" onClick={()=>{handleClickWhatsapp()}}>
+                    <img src={WhatsAppIcon} alt="" className={`w-8 h-8 invert  ${openMenuWhatsapp ? "rotate-90 opacity-0 hidden" : "rotate-0 opacity-100"}`}/>
+                    <img src={crossIcon} alt="" className={`w-8 h-8 invert ${openMenuWhatsapp ? "rotate-0 opacity-100" : "-rotate-90 opacity-0 hidden"}`}/>
+                </div>
+                {<div className={` bg-white rounded-xl right-7.5 h-80 w-[80%] fixed bottom-20   ${openMenuWhatsapp? "fade-top-menu" : "fadeOutDown"}`}>
+                    <div className="bg-[#2DB742] rounded-t-xl p-3 flex flex-row text-[#F5F7F9] font-bold text-defect gap-2">
+                        <div className="flex flex-col justify-center p-1">
+                            <img src={WhatsAppIcon} alt="" className="w-9 h-9 invert"/>
+                        </div>
+                        <div className=" flex flex-col justify-center">
+                            <h3>Hablemos!</h3>
+                            <h4 className="text-[.7rem]">Hace click abajo para comunicarte.</h4>
+                        </div>
+                    </div>
+                    <div>
+                        <div className="rounded-xl flex flex-row justify-start items-center p-3 gap-2 m-3 bg-[#ddd] border-l-5 border-[#2DB742]">
+                            <img src={WhatsAppIcon} alt="WhatsApp icon" className="w-8 h-8"/>
+                            <h3 className="text-defect text-[1.1rem]">Consultar precios</h3>
+                        </div>
+                        <div className="rounded-xl flex flex-row justify-start items-center p-3 gap-2 m-3 bg-[#ddd] border-l-5 border-[#2DB742]">
+                            <img src={WhatsAppIcon} alt="WhatsApp icon" className="w-8 h-8"/>
+                            <h3 className="text-defect text-[1.1rem]">Consultar disponibilidad</h3>
+                        </div>
+                        
+                    </div>
+                </div>}
+            </div>
         </div>
     );
 }

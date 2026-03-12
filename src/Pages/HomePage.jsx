@@ -1,4 +1,3 @@
-import React from 'react';
 import InicieComponent from "../Components/Inicie/InicieComponent";
 
 function HomePage() {

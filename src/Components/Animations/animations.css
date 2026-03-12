@@ -5,9 +5,52 @@
     will-change: transform, opacity;
 }
 
+.fade-top {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeDown 0.6s ease-out forwards;
+    will-change: transform, opacity;
+}
+
+.fade-top-menu {
+    opacity: 1;
+    transform: translateY(200px);
+    animation: fadeDown 0.6s ease-out forwards;
+    will-change: transform, opacity;
+}
+
 @keyframes fadeDown {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+.fade-side-to-right {
+    opacity: 0;
+    transform: translatex(-20px);
+    animation: fadeDown 0.6s ease-out forwards;
+    will-change: transform, opacity;
+}
+
+.fade-side-to-left {
+    opacity: 0;
+    transform: translatex(20px);
+    animation: fadeDown 0.6s ease-out forwards;
+    will-change: transform, opacity;
+}
+
+.fadeOutDown{
+    animation: fade-Out-Down 0.6s ease-out forwards;
+}
+
+@keyframes fade-Out-Down {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(20px);
     }
 }

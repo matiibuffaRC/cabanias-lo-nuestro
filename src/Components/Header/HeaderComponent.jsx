@@ -16,7 +16,7 @@ function HeaderComponent({ scrollToSection , refs }) {
         { text: "Contacto", ref: refs?.contactRef }
     ];
 
-    const liClasses = "titles mt-7.5 md:my-2.5 md:py-1.25 md:px-3.75 lg:my-7.5 cursor-pointer lg:hover:bg-[#355039] rounded-[25px] text-[1.2rem] lg:text-[1rem] my-3.75 mx-1.25 pl-3";
+    const liClasses = "titles mt-5 md:my-2.5 md:py-1.25 md:px-3.75 lg:my-7.5 cursor-pointer lg:hover:bg-[#355039] rounded-[25px] text-[1.2rem] lg:text-[1rem] my-3.75 mx-1.25 pl-3";
 
     useEffect(() => {
         const handleResize = () => {
@@ -44,7 +44,7 @@ function HeaderComponent({ scrollToSection , refs }) {
     };
 
     return (
-    <header className="titles-and-subtitles header h-16.25 w-screen shadow-md bg-[#3E6143] flex items-center justify-between text-white fixed left-0 top-0 z-15  lg:justify-center">
+    <header className="titles-and-subtitles header h-16.25 w-screen shadow-md bg-[#3E6143] flex items-center justify-between text-white fixed left-0 top-0 z-105  lg:justify-center">
         <div
             className={`fixed inset-0 bg-[rgba(0,0,0,.45)] z-10 
             ${menuOpen ? "block" : "hidden"} lg:hidden`}
@@ -72,7 +72,7 @@ function HeaderComponent({ scrollToSection , refs }) {
                 </ul>
             </nav>
         </div>
-
+        
     </header>
     );
 }
