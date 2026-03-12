@@ -14,7 +14,7 @@
 
 .fade-top-menu {
     opacity: 1;
-    transform: translateY(200px);
+    transform: translateY(40px);
     animation: fadeDown 0.6s ease-out forwards;
     will-change: transform, opacity;
 }

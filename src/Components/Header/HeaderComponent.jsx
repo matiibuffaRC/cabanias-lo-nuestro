@@ -9,11 +9,12 @@ function HeaderComponent({ scrollToSection , refs }) {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 1024); // lg
 
     const navItems = [
-        { text: "Inicio", ref: refs?.inicieRef },
-        { text: "Sobre el complejo", ref: refs?.aboutUsRef },
-        { text: "Alojamientos", ref: refs?.accomodationsRef },
-        { text: "Galeria", ref: refs?.galleryRef },
-        { text: "Contacto", ref: refs?.contactRef }
+        { text: "Inicio", link:"/" },
+        { text: "Complejo", link:"/alojamiento/complejo" },
+        { text: "Cabañas", link:"/alojamiento/cabins"},
+        { text: "Dormis", link:"/alojamiento/dormis"},
+        { text: "Contacto", link:"/contact" },
+        { text: "Como llegar", link:"/comoLlegar"}
     ];
 
     const liClasses = "titles mt-5 md:my-2.5 md:py-1.25 md:px-3.75 lg:my-7.5 cursor-pointer lg:hover:bg-[#355039] rounded-[25px] text-[1.2rem] lg:text-[1rem] my-3.75 mx-1.25 pl-3";
@@ -65,8 +66,8 @@ function HeaderComponent({ scrollToSection , refs }) {
             <nav className={`fixed top-0 left-0 z-20 h-screen w-62.5 bg-[#3E6143] transition-transform duration-300 ease-in-out ${menuOpen ? "translate-x-0" : "-translate-x-full"} md:w-80 lg:static lg:h-full lg:w-auto lg:bg-transparent lg:translate-x-0 lg:transition-none lg:flex lg:items-center`}>
                 <ul className="md:mr-5 flex flex-col p-0 lg:flex-row lg:gap-2 lg:h-full lg:items-center">
                     {navItems.map((item) => (
-                    <li key={item.text} className={liClasses} onClick={() => handleNavClick(item.ref)}>
-                        {item.text}
+                    <li key={item.text}  onClick={() => handleNavClick(item.ref)}>
+                        <Link to={item.link} className={liClasses}>{item.text}</Link>
                     </li>
                     ))}
                 </ul>

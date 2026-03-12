@@ -19,7 +19,7 @@ import LogoMinaClavero from "../../icons/MinaClaveroLogo.png";
 
 
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function InicieComponent() {
 
@@ -32,10 +32,16 @@ function InicieComponent() {
         { img: airIcon, title: "Confort", description: "acondicionamiento" }
     ];
 
-
     const [openMenuWhatsapp, setOpenMenuWhatsapp] = useState(false);
+    const [hasInteracted, setHasInteracted] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
 
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+    
     const handleClickWhatsapp = () => {
+        setHasInteracted(true);
         setOpenMenuWhatsapp(prev => !prev);
         
     }
@@ -78,11 +84,11 @@ function InicieComponent() {
                     <div key={index} className="h-135 lg:h-150 relative w-full fade-down" style={{ animationDelay: `${index * 0.15}s` }}>
                         <img src={section.img} alt="" className="w-full h-full object-cover object-center"/>
 
-                        <div className={`absolute w-[90%] top-10 bg-[#3E6143]/50 p-5 text-white rounded-3xl md:max-w-1/2 ${isLeft? "left-1/2 -translate-x-1/2 md:left-10 md:translate-x-0": "right-1/2 translate-x-1/2 md:right-10 md:translate-x-0"}`}>
-                            <h2 className="titles-and-subtitles text-[1.8rem] font-bold py-2">
+                        <div className={`absolute w-[90%] top-10  lg:w-150 bg-[#3E6143]/50 p-5 text-white rounded-3xl md:max-w-1/2 ${isLeft? "left-1/2 -translate-x-1/2 md:left-10 md:translate-x-0": "right-1/2 translate-x-1/2 md:right-10 md:translate-x-0"}`}>
+                            <h2 className="titles-and-subtitles text-[1.8rem] lg:text-[2rem] font-bold py-2">
                                 {section.title}
                             </h2>
-                            <h3 className="titles-and-subtitles text-[1rem] md:text-[.9rem] lg:text-[1rem]">
+                            <h3 className="titles-and-subtitles text-[1rem] md:text-[.9rem] lg:text-[1.2rem]">
                                 {section.description}
                             </h3>
                             <div className="my-5">
@@ -131,38 +137,41 @@ function InicieComponent() {
                 <img src={LogoMinaClavero} alt="Mina Clavero ciudad" className="w-60 h-60 md:w-100 md:h-100"/>
             </div>
 
-            <div className={`fixed bottom-3 right-7.5 flex flex-row gap-2 z-50`}>
-                <div className={`bg-[#F5F7F9] p-2 rounded-lg fade-down ${openMenuWhatsapp? "fadeOutDown" : "fade-top-menu"}`}>
-                    <h3 className="text-defect text-[.8rem]">Consultas y reservas?</h3>
-                    <h3 className="text-defect text-[.8rem] font-bold">Hablemos!</h3>
-                </div>
-                <div className="bg-[#2DB742] h-13 w-13 flex flex-col justify-center items-center rounded-[50%]" onClick={()=>{handleClickWhatsapp()}}>
-                    <img src={WhatsAppIcon} alt="" className={`w-8 h-8 invert  ${openMenuWhatsapp ? "rotate-90 opacity-0 hidden" : "rotate-0 opacity-100"}`}/>
-                    <img src={crossIcon} alt="" className={`w-8 h-8 invert ${openMenuWhatsapp ? "rotate-0 opacity-100" : "-rotate-90 opacity-0 hidden"}`}/>
-                </div>
-                {<div className={` bg-white rounded-xl right-7.5 h-80 w-[80%] fixed bottom-20   ${openMenuWhatsapp? "fade-top-menu" : "fadeOutDown"}`}>
+            {/* Botón de WhatsApp */}
+
+            <div className={`bg-white rounded-xl z-60 right-7.5 h-55 w-[80%] md:w-90 fixed bottom-20 ${!hasInteracted? "hidden": openMenuWhatsapp? "fade-top-menu": "fadeOutDown"}`}>
                     <div className="bg-[#2DB742] rounded-t-xl p-3 flex flex-row text-[#F5F7F9] font-bold text-defect gap-2">
                         <div className="flex flex-col justify-center p-1">
                             <img src={WhatsAppIcon} alt="" className="w-9 h-9 invert"/>
                         </div>
-                        <div className=" flex flex-col justify-center">
+                        <div className="flex flex-col justify-center">
                             <h3>Hablemos!</h3>
-                            <h4 className="text-[.7rem]">Hace click abajo para comunicarte.</h4>
+                            <h4 className="text-[.7rem]">
+                                Hace click abajo para comunicarte.
+                            </h4>
                         </div>
                     </div>
+
                     <div>
-                        <div className="rounded-xl flex flex-row justify-start items-center p-3 gap-2 m-3 bg-[#ddd] border-l-5 border-[#2DB742]">
-                            <img src={WhatsAppIcon} alt="WhatsApp icon" className="w-8 h-8"/>
-                            <h3 className="text-defect text-[1.1rem]">Consultar precios</h3>
-                        </div>
-                        <div className="rounded-xl flex flex-row justify-start items-center p-3 gap-2 m-3 bg-[#ddd] border-l-5 border-[#2DB742]">
-                            <img src={WhatsAppIcon} alt="WhatsApp icon" className="w-8 h-8"/>
-                            <h3 className="text-defect text-[1.1rem]">Consultar disponibilidad</h3>
-                        </div>
-                        
+                        {/* OPCIÓN 1 */}
+
+                        <a href="https://wa.me/549XXXXXXXXXX?text=Hola%20quisiera%20consultar%20los%20precios%20de%20las%20caba%C3%B1as" target="_blank" rel="noopener noreferrer" className={`rounded-xl flex flex-row justify-start items-center p-3 gap-2 m-3 bg-[#ddd] border-l-5 border-[#2DB742] cursor-pointer ${openMenuWhatsapp ? "fade-down" : ""}`} style={{ animationDelay: "0.5s" }} >
+                            <img src={WhatsAppIcon} alt="" className="w-8 h-8"/>
+                            <h3 className="text-defect text-[1.1rem]">
+                                Consultar precios
+                            </h3>
+                        </a>
+
+                        {/* OPCIÓN 2 */}
+
+                        <a href="https://wa.me/5493564507240?text=Hola%20quisiera%20consultar%20la%20disponibilidad" target="_blank" className={`rounded-xl flex flex-row justify-start items-center p-3 gap-2 m-3 bg-[#ddd] border-l-5 border-[#2DB742] cursor-pointer ${openMenuWhatsapp ? "fade-down" : ""}`} style={{ animationDelay: "0.65s" }} >
+                            <img src={WhatsAppIcon} alt="" className="w-8 h-8"/>
+                            <h3 className="text-defect text-[1.1rem]">
+                                Consultar disponibilidad
+                            </h3>
+                        </a>
                     </div>
-                </div>}
-            </div>
+                </div>
         </div>
     );
 }

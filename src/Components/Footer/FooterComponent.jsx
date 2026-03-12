@@ -36,7 +36,7 @@ function FooterComponent() {
             <div className='flex flex-row justify-around md:justify-center md:gap-20 items-start border-b border-t m-5 border-[#F1F3EE] py-5 '>
                 <div className={`text-[#F1F3EE] ${isVisible ? "fade-side-to-right" : "opacity-0" }`}>
                     <h3 className='titles-and-subtitles font-bold text-[1.1rem] md:text-[1.4rem]'>Lo nuestro</h3>
-                    <div className='flex flex-col'>
+                    <div className='flex flex-col text-center'>
                         <Link to="/alojamiento/complejo" className='text-defect text-[.9rem] md:text-[1rem] cursor-pointer'>Complejo</Link>
                         <Link to="/alojamiento/cabins" className='text-defect text-[.9rem] md:text-[1rem] cursor-pointer'>Cabañas</Link>
                         <Link to="/alojamiento/dormis" className='text-defect text-[.9rem] md:text-[1rem] cursor-pointer'>Dormis</Link>
@@ -44,9 +44,9 @@ function FooterComponent() {
                 </div>
                 <div className={`text-[#F1F3EE] flex flex-col justify-start ${isVisible ? "fade-side-to-left" : "opacity-0" }`}>
                     <h3 className='titles-and-subtitles font-bold text-[1.1rem] md:text-[1.4rem]'>Sobre nosotros</h3>
-                    <div>
-                        <h4 className='text-defect text-[.9rem] md:text-[1rem] cursor-pointer'>Como llegar</h4>
-                        <h4 className='text-defect text-[.9rem] md:text-[1rem] cursor-pointer'>Contacto</h4>
+                    <div className='flex flex-col text-center'>
+                        <Link to="/comoLlegar" className='text-defect text-[.9rem] md:text-[1rem] cursor-pointer'>Como llegar</Link>
+                        <Link to="/contact" className='text-defect text-[.9rem] md:text-[1rem] cursor-pointer'>Contacto</Link>
                         <h4 className='text-defect text-[.9rem] md:text-[1rem] text-transparent'>hola</h4>
                         
                     </div>

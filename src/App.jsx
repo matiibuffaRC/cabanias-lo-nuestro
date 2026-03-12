@@ -3,12 +3,14 @@ import HeaderComponent from './Components/Header/HeaderComponent';
 import FooterComponent from "./Components/Footer/FooterComponent";
 import './App.css';
 import { BrowserRouter ,Routes, Route } from "react-router-dom";
+import ScrollToTop from "../src/Components/ScrollToTop/ScrollToTopComponent";
 
 // Importamos las pages
 
 import HomePage from "./Pages/HomePage";
 import AccommodationsPage from "./Pages/AccommodationsPage";
-
+import MapPage from "./Pages/MapPage";
+import ContactPage from "./Pages/ContactPage";
 
 function App() {
 
@@ -26,9 +28,12 @@ function App() {
   return (
     <>
       <HeaderComponent></HeaderComponent>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
         <Route path="/alojamiento/:tipo" element={<AccommodationsPage />}></Route>
+        <Route path="/comoLlegar" element={<MapPage />}></Route>
+        <Route path="/contact" element={<ContactPage />}></Route>
       </Routes>
       <FooterComponent></FooterComponent>
     </>
