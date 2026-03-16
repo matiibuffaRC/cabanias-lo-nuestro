@@ -17,7 +17,7 @@ function HeaderComponent({ scrollToSection , refs }) {
         { text: "Como llegar", link:"/comoLlegar"}
     ];
 
-    const liClasses = "titles mt-5 md:my-2.5 md:py-1.25 lg:my-7.5 cursor-pointer lg:hover:bg-[#355039] rounded-[25px] text-[1.2rem] lg:text-[1rem] my-3.75 px-1.5 lg:mx-1.25";
+    const liClasses = "titles mt-5 md:my-2.5 md:py-2 lg:px-4 lg:my-7.5 cursor-pointer lg:hover:bg-[#355039] rounded-[25px] text-[1.2rem] lg:text-[1rem] my-3.75 px-1.5 lg:mx-1.25";
 
     useEffect(() => {
         const handleResize = () => {
