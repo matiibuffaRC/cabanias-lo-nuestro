@@ -46,7 +46,7 @@ function MapPage() {
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1008.7774544157692!2d-65.0038206407185!3d-31.740215244786018!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x942d260a3142f657%3A0x5fb0905c56f4d3a1!2sCruz%20Del%20Eje%202080%2C%20X5889%20C%C3%B3rdoba!5e0!3m2!1sen!2sar!4v1773323933919!5m2!1sen!2sar" 
                             width="350" 
                             height="250" 
-                            className='rounded-2xl md:h-65 md:w-[95%]'
+                            className='rounded-2xl md:h-65 md:w-[95%] lg:h-70 lg:w-105'
                             style={{ border: 0 }}
                             allowFullScreen
                             loading="lazy"
@@ -63,7 +63,7 @@ function MapPage() {
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d848.2773267131151!2d-65.00391871550505!3d-31.740217264151354!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x942d260a2e3be031%3A0x4412eb98c3c0c23c!2sTanti%202085%2C%20X5889%20C%C3%B3rdoba!5e0!3m2!1sen!2sar!4v1773324731315!5m2!1sen!2sar"  
                             width="350" 
                             height="250" 
-                            className='rounded-2xl md:h-65 md:w-[95%]'
+                            className='rounded-2xl md:h-65 md:w-[95%] lg:h-70 lg:w-105'
                             style={{ border: 0 }}
                             allowFullScreen
                             loading="lazy"
