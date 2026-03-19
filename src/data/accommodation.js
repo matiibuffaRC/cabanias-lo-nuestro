@@ -19,54 +19,56 @@ import swimmingPoolIcon from "../icons/SwimmingPoolIcon.svg";
 import ToysIcon from "../icons/ToysIcon.svg";
 import CookingIcon from "../icons/CookingIcon.svg";
 
-
 export const accommodation = [
     {
         slug: "complejo",
         title: "El Complejo",
-        description: "Nuestro complejo vacacional está a la entrada de la ciudad de Mina Clavero, a 5 minutos del centro de la ciudad y los principales ríos y supermercados de la misma. Contamos con 2 cabañas y 3 dormis para brindar el alojamiento que estás buscando",
-        informationText:"Ofrecemos diferentes servicios generales para nuestros huespedes y particulares dependiendo del alojamiento si es una cabaña o un dormitorio",
+        description:
+            "Nuestro complejo vacacional está en la entrada de la ciudad de Mina Clavero, a 5 minutos del centro y de los principales ríos y supermercados de la zona. Contamos con 2 cabañas y 3 dormis para brindarte el alojamiento que estás buscando.",
+        informationText:
+                "Ofrecemos diferentes servicios generales para nuestros huéspedes, así como servicios particulares según el tipo de alojamiento, ya sea cabaña o dormitorio.",
         services: [
-            {img: carIcon, title:"Estacionamiento"},
-            {img: wifiIcon, title:"Wifi"},
-            {img: tvIcon,  title:"DirecTV",},
-            {img: airIcon, title:"Aire condicionado"},
-            {img: grillIcon, title:"Parrillas"},
-            {img: swimmingPoolIcon, title:"Pileta"},
-
+            { img: carIcon, title: "Estacionamiento" },
+            { img: wifiIcon, title: "Wifi" },
+            { img: tvIcon, title: "DirecTV" },
+            { img: airIcon, title: "Aire acondicionado" },
+            { img: grillIcon, title: "Parrillas" },
+            { img: swimmingPoolIcon, title: "Pileta" },
         ],
-        photos: [complejoPhotoFrente, complejoPhotoPatio, complejoPhotoPileta]
+        photos: [complejoPhotoFrente, complejoPhotoPatio, complejoPhotoPileta],
     },
     {
-        slug: "cabins", 
+        slug: "cabins",
         title: "Cabañas",
-        description: "Nuestras cabañas se enecuentran con salida a la calle Cruz del Eje, sobre la cual van a tener salida directa a la ruta de ingreso a la ciudad.",
-        informationText:"En nuestras cabañas encontrarás una cocina-comedor equipada con frigobar y la vajilla necesaria para hasta cuatro personas. Además, cada cabaña cuenta con cochera individual, asador y un tender de ropa privado para mayor comodidad durante tu estadía.",
+        description:
+            "Nuestras cabañas se encuentran con salida a la calle Cruz del Eje, desde donde tendrán acceso directo a la ruta de ingreso a la ciudad.",
+        informationText:
+            "En nuestras cabañas encontrarás una cocina-comedor equipada con frigobar y la vajilla necesaria para hasta cuatro personas. Además, cada cabaña cuenta con cochera individual, asador y un tender de ropa privado para mayor comodidad durante tu estadía.",
         services: [
-            {img: carIcon, title:"Estacionamiento"},
-            {img: wifiIcon, title:"Wifi"},
-            {img: tvIcon,  title:"DirecTV",},
-            {img: airIcon, title:"Aire condicionado"},
-            {img: grillIcon, title:"Parrilla privada"},
-            {img: swimmingPoolIcon, title:"Acceso a la pileta"},
-            {img: CookingIcon, title:"Cocina privada"},
-            {img: ToysIcon, title:"Juegos para los mas chicos"}
+            { img: carIcon, title: "Estacionamiento" },
+            { img: wifiIcon, title: "Wifi" },
+            { img: tvIcon, title: "DirecTV" },
+            { img: airIcon, title: "Aire acondicionado" },
+            { img: grillIcon, title: "Parrilla privada" },
+            { img: swimmingPoolIcon, title: "Acceso a la pileta" },
+            { img: CookingIcon, title: "Cocina privada" },
+            { img: ToysIcon, title: "Juegos para los más chicos" },
         ],
-        photos: [cabaniaPhotoGarage, cabaniaPhotoIndoor, cabaniaPhotoIndoor2]
+        photos: [cabaniaPhotoGarage, cabaniaPhotoIndoor, cabaniaPhotoIndoor2],
     },
     {
         slug: "dormis",
         title: "Dormis",
-        description: "Nuestros dormis se encuentra con salida a la calle Tanti, paralela a la Cruz del Eje, siendo una zona tranquila de muy poco transito debido a las pocas salidas de la misma.",
-        description: "Nuestros dormis tienen capacidad para hasta cuatro personas y cuentan con la vajilla necesaria para disfrutar los desayunos dentro del complejo. Además, los huéspedes pueden utilizar el quincho y los asadores compartidos, así como los tendedores y el acceso a la pileta del complejo.",
-        informationText:"",
+        description:
+            "Nuestros dormis se encuentran con salida a la calle Tanti, paralela a la Cruz del Eje, en una zona tranquila con muy poco tránsito debido a sus pocas salidas. Tienen capacidad para hasta cuatro personas y cuentan con la vajilla necesaria para disfrutar los desayunos dentro del complejo. Además, los huéspedes pueden utilizar el quincho y los asadores compartidos, así como los tendederos y el acceso a la pileta.",
+        zinformationText: "",
         services: [
-            {img: carIcon, title:"Estacionamiento"},
-            {img: wifiIcon, title:"Wifi"},
-            {img: tvIcon,  title:"DirecTV",},
-            {img: airIcon, title:"Aire condicionado"},
-            {img: swimmingPoolIcon, title:"Acceso a la pileta"}
+            { img: carIcon, title: "Estacionamiento" },
+            { img: wifiIcon, title: "Wifi" },
+            { img: tvIcon, title: "DirecTV" },
+            { img: airIcon, title: "Aire acondicionado" },
+            { img: swimmingPoolIcon, title: "Acceso a la pileta" },
         ],
-        photos: [dormiPhoto, dormiPhoto2, dormiPhoto3]
-    }
-]
+        photos: [dormiPhoto, dormiPhoto2, dormiPhoto3],
+    },
+];
