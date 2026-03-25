@@ -75,7 +75,7 @@ function ContactPage() {
 
                 {/* Menú de opciones */}
 
-                <div className={`bg-white rounded-xl z-60 right-7.5 h-55 w-[80%] md:w-90 fixed bottom-20 ${!hasInteracted? "hidden": openMenuWhatsapp? "fade-top-menu": "fadeOutDown"}`}>
+                <div className={`bg-white rounded-xl z-60 right-7.5 h-55 w-[80%] md:w-90 fixed bottom-20 ${!hasInteracted ? "hidden" : openMenuWhatsapp ? "fade-top-menu pointer-events-auto" : "fadeOutDown pointer-events-none"}`}>
                     <div className="bg-[#2DB742] rounded-t-xl p-3 flex flex-row text-[#F5F7F9] font-bold text-defect gap-2">
                         <div className="flex flex-col justify-center p-1">
                             <img src={WhatsAppIcon} alt="" className="w-9 h-9 invert"/>
