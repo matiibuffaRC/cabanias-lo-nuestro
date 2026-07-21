@@ -105,7 +105,7 @@ function InicieComponent() {
 
     return (
         <div className="pt-16 bg-[#F1F3EE] flex flex-col items-center relative">
-            <div className="h-135 relative w-full">
+            <div className="h-120 relative w-full">
                 <img
                     src={presentationImage}
                     alt="Patio de atras"
