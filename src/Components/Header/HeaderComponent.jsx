@@ -70,7 +70,7 @@ function HeaderComponent({ scrollToSection, refs }) {
                 {/* Logo */}
                 <div className="header-title flex flex-row items-center gap-2 ml-5">
                     <Link to="/" className="title text-[1.2rem] md:text-[1rem] lg:text-[1.1rem]">
-                        Lo nuesdsfstro
+                        Lo nuestro
                     </Link>
                 </div>
 
