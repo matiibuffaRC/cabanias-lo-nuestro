@@ -1,4 +1,3 @@
-import React from 'react'
 import { Link } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 
@@ -6,11 +5,48 @@ import GmailIcon from "../../icons/gmail.svg";
 import WhatsAppIcon from "../../icons/whatsappIcon.svg";
 import FacebookIcon from "../../icons/facebookIcon.svg";
 
+// Datos fuera del componente: son estáticos, no dependen de props ni estado.
+const FOOTER_COLUMNS = [
+    {
+        title: "Lo nuestro",
+        links: [
+            { label: "Complejo", to: "/alojamiento/complejo" },
+            { label: "Cabañas", to: "/alojamiento/cabins" },
+            { label: "Dormis", to: "/alojamiento/dormis" },
+        ],
+    },
+    {
+        title: "Sobre nosotros",
+        links: [
+            { label: "Inicio", to: "/" },
+            { label: "Cómo llegar", to: "/comoLlegar" },
+            { label: "Contacto", to: "/contact" },
+        ],
+    },
+];
+
+const SOCIALS = [
+    {
+        icon: GmailIcon,
+        title: "Gmail",
+        href: "#",
+    },
+    {
+        icon: WhatsAppIcon,
+        title: "WhatsApp",
+        href: "https://wa.me/5493564507240",
+    },
+    {
+        icon: FacebookIcon,
+        title: "Facebook",
+        href: "#",
+    },
+];
 
 function FooterComponent() {
     const [isVisible, setIsVisible] = useState(false);
     const ref = useRef(null);
-    
+
     useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
@@ -21,55 +57,83 @@ function FooterComponent() {
             },
             { threshold: 0.3 }
         );
-    
+
         if (ref.current) observer.observe(ref.current);
-    
+
         return () => observer.disconnect();
     }, []);
-    
-    
+
     return (
-        <div className='bg-[#3E6143]' ref={ref}>
-            <div>
-                <h2 className='titles-and-subtitles font-bold text-[2rem] text-[#F1F3EE] text-center pt-5'>Lo Nuestro</h2>
-            </div>
-            <div className='flex flex-row justify-around md:justify-center md:gap-20 items-start border-b border-t m-5 border-[#F1F3EE] py-5 '>
-                <div className={`text-[#F1F3EE] ${isVisible ? "fade-side-to-right" : "opacity-0" }`}>
-                    <h3 className='titles-and-subtitles font-bold text-[1.1rem] md:text-[1.4rem]'>Lo nuestro</h3>
-                    <div className='flex flex-col text-center'>
-                        <Link to="/alojamiento/complejo" className='text-defect text-[.9rem] md:text-[1rem] cursor-pointer'>Complejo</Link>
-                        <Link to="/alojamiento/cabins" className='text-defect text-[.9rem] md:text-[1rem] cursor-pointer'>Cabañas</Link>
-                        <Link to="/alojamiento/dormis" className='text-defect text-[.9rem] md:text-[1rem] cursor-pointer'>Dormis</Link>
+        <footer className="bg-[#3E6143]" ref={ref}>
+            <h2 className="titles-and-subtitles font-bold text-[2rem] text-[#F1F3EE] text-center pt-5">
+                Lo Nuestro
+            </h2>
+
+            <nav
+                aria-label="Enlaces del sitio"
+                className="flex flex-row justify-around md:justify-center md:gap-24 items-start border-b border-t m-5 border-[#F1F3EE]/30 py-6"
+            >
+                {FOOTER_COLUMNS.map((column, index) => (
+                    <div
+                        key={column.title}
+                        className={`text-[#F1F3EE] text-center ${
+                            isVisible
+                                ? index === 0
+                                    ? "fade-side-to-right"
+                                    : "fade-side-to-left"
+                                : "opacity-0"
+                        }`}
+                    >
+                        <h3 className="titles-and-subtitles font-bold text-[1.1rem] md:text-[1.4rem]">
+                            {column.title}
+                        </h3>
+                        <ul className="flex flex-col gap-1 mt-2">
+                            {column.links.map((link) => (
+                                <li key={link.label}>
+                                    <Link
+                                        to={link.to}
+                                        className="text-defect text-[.9rem] md:text-[1rem] text-[#F1F3EE]/85 hover:text-[#F1F3EE] transition-colors cursor-pointer"
+                                    >
+                                        {link.label}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
-                </div>
-                <div className={`text-[#F1F3EE] flex flex-col justify-start ${isVisible ? "fade-side-to-left" : "opacity-0" }`}>
-                    <h3 className='titles-and-subtitles font-bold text-[1.1rem] md:text-[1.4rem]'>Sobre nosotros</h3>
-                    <div className='flex flex-col text-center'>
-                        <Link to="/comoLlegar" className='text-defect text-[.9rem] md:text-[1rem] cursor-pointer'>Como llegar</Link>
-                        <Link to="/contact" className='text-defect text-[.9rem] md:text-[1rem] cursor-pointer'>Contacto</Link>
-                        <h4 className='text-defect text-[.9rem] md:text-[1rem] text-transparent'>hola</h4>
-                        
-                    </div>
-                </div>
-            </div>
-            <div className='titles-and-subtitles pb-5 font-bold text-center text-[1.2rem] text-[#F1F3EE] flex flex-col items-center justify-center'>
+                ))}
+            </nav>
+
+            <div className="titles-and-subtitles pb-5 font-bold text-center text-[1.2rem] text-[#F1F3EE] flex flex-col items-center justify-center">
                 <h3>Sigamos conectados!</h3>
-                <div className={`flex flex-row justify-center gap-5 m-3 ${isVisible ? "fade-top" : "opacity-0" }`}>
-                    <a href="#">
-                        <img src={GmailIcon} alt="" className='w-7 h-7 invert'/>
-                    </a>
-                    <a href="#">
-                        <img src={WhatsAppIcon} alt="" className='w-7 h-7 invert'/>
-                    </a>
-                    <a href="#">
-                        <img src={FacebookIcon} alt="" className='w-7 h-7 invert'/>
-                    </a>
+
+                <div
+                    className={`flex flex-row justify-center gap-4 m-3 ${
+                        isVisible ? "fade-top" : "opacity-0"
+                    }`}
+                >
+                    {SOCIALS.map((social) => (
+                        <a
+                            key={social.title}
+                            href={social.href}
+                            target={social.href.startsWith("http") ? "_blank" : undefined}
+                            rel={social.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                            aria-label={social.title}
+                            className="footer-social-icon w-11 h-11 rounded-full flex items-center justify-center bg-[#F1F3EE]/10 hover:bg-[#F1F3EE]/20 transition-colors"
+                        >
+                            <img src={social.icon} alt="" className="w-5 h-5 invert" />
+                        </a>
+                    ))}
                 </div>
-                <h4 className='text-[.8rem] pt-1'>Sitio diseñado y desarrollador por MatíasBuffa</h4>
-                <h4 className='text-[.7rem] pb-1'>2026</h4>
+
+                <h4 className="text-[.8rem] pt-1 font-normal text-[#F1F3EE]/80">
+                    Sitio diseñado y desarrollado por Matías Buffa
+                </h4>
+                <h4 className="text-[.7rem] pb-1 font-normal text-[#F1F3EE]/60">
+                    © {new Date().getFullYear()} Lo Nuestro
+                </h4>
             </div>
-        </div>
-    )
+        </footer>
+    );
 }
 
-export default FooterComponent
+export default FooterComponent;

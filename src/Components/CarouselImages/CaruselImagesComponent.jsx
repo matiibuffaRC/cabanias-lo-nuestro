@@ -18,7 +18,7 @@ function CaruselImagesComponent({ images }) {
                         <img
                             src={image}
                             alt=""
-                            className='h-full w-full object-cover object-center'
+                            className='hero-image h-full w-full object-cover object-center'
                         />
                     </IgrCarouselSlide>
                 ))}

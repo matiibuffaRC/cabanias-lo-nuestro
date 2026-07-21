@@ -216,7 +216,7 @@ function AccommodationsPage() {
                 className={`wa-menu bg-white z-60 right-7.5 w-[85%] md:w-90 fixed bottom-20 ${menuTransitionClass}`}
             >
                 <div className="wa-menu-header p-4 flex flex-row items-center gap-3">
-                    <div className="wa-avatar h-11 w-11 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="wa-avatar h-11 w-11 rounded-full flex items-center justify-center shrink-0">
                         <img src={WhatsAppIcon} alt="" className="w-6 h-6 invert" />
                     </div>
                     <div className="flex flex-col text-white">
