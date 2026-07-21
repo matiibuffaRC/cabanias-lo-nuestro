@@ -92,7 +92,7 @@ function ContactPage() {
                     alt="Patio de atrás"
                     className="hero-image w-full h-full object-cover object-center"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#2A4530]/25 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-[#2A4530]/25 via-transparent to-transparent" />
             </div>
 
             <div className="text-center py-10 px-5">
@@ -138,15 +138,27 @@ function ContactPage() {
             </div>
 
             {/* Botón flotante */}
-            <div className="fixed bottom-3 right-7.5 flex flex-row gap-2 z-50 items-end">
-                <div className={`chat-bubble bg-[#F5F7F9] p-3 rounded-lg ${bubbleTransitionClass}`}>
+            <div className="fixed bottom-3 right-7.5 z-50 flex flex-row items-center gap-3">
+                <div
+                    className={`chat-bubble relative bg-[#F5F7F9] p-3 rounded-lg max-w-50 ${bubbleTransitionClass}`}
+                    style={{ transformOrigin: "right center" }}
+                >
                     <h3 className="text-defect text-[.8rem]">¿Consultas y reservas?</h3>
                     <h3 className="text-defect text-[.8rem] font-bold text-[#3E6143]">¡Hablemos!</h3>
+
+                    {/* Triángulo apuntando al ícono */}
+                    <span
+                        className="absolute top-1/2 -right-2 -translate-y-1/2 w-0 h-0
+                                border-t-8 border-t-transparent
+                                border-b-8 border-b-transparent
+                                border-l-[9px] border-l-[#F5F7F9]"
+                        aria-hidden="true"
+                    />
                 </div>
 
                 <div
                     ref={buttonRef}
-                    className={`whatsapp-btn ${!hasInteracted ? "whatsapp-pulse" : ""} bg-[#2DB742] h-13 w-13 z-70 flex items-center justify-center rounded-full relative cursor-pointer`}
+                    className={`whatsapp-btn ${!hasInteracted ? "whatsapp-pulse" : ""} bg-[#2DB742] h-13 w-13 z-70 flex items-center justify-center rounded-full relative cursor-pointer shrink-0`}
                     onClick={handleClickWhatsapp}
                     role="button"
                     aria-expanded={openMenuWhatsapp}
@@ -215,7 +227,7 @@ function ContactPage() {
                             </div>
 
                             <svg
-                                className="wa-chevron w-4 h-4 flex-shrink-0"
+                                className="wa-chevron w-4 h-4 shrink-0"
                                 viewBox="0 0 24 24"
                                 fill="none"
                                 stroke="currentColor"

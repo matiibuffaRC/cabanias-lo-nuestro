@@ -129,16 +129,6 @@
     position: relative;
     box-shadow: var(--shadow-soft);
 }
-.chat-bubble::after {
-    content: '';
-    position: absolute;
-    bottom: -6px;
-    right: 18px;
-    width: 12px;
-    height: 12px;
-    background: #F5F7F9;
-    transform: rotate(45deg);
-}
 
 /* ===== Menú de WhatsApp ===== */
 
