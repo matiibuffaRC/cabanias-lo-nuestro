@@ -16,7 +16,7 @@ const CONTACTS = [
 
 const WHATSAPP_OPTIONS = [
     {
-        href: "https://wa.me/5493564507240?text=Hola%20quisiera%20consultar%20los%20precios%20de%20las%20caba%C3%B1as",
+        href: "https://wa.me/5493564507240?text=a%20quisiera%20consultar%20los%20precios%20de%20las%20caba%C3%B1as",
         title: "Consultar precios",
         subtitle: "Tarifas y promociones",
         variant: "accent",
