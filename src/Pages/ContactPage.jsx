@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import presentationImage from "../imgs/piletaConDormis.jpg";
 
 import crossIcon from "../icons/crossIcon.svg";
@@ -6,51 +6,83 @@ import WhatsAppIcon from "../icons/whatsappIcon.svg";
 import FacebookIcon from "../icons/facebookIcon.svg";
 import GmailIcon from "../icons/gmail.svg";
 
+// Se movieron fuera del componente: son estáticos y no dependen de
+// props ni de estado, así que no tiene sentido recrearlos en cada render.
+const CONTACTS = [
+    { icon: WhatsAppIcon, title: "WhatsApp", name: "Cristian", href: "https://wa.me/5493564507240" },
+    { icon: FacebookIcon, title: "Facebook", name: "Lo Nuestro", href: "#" },
+    { icon: GmailIcon, title: "Gmail", name: "Lo Nuestro", href: "#" },
+];
+
+const WHATSAPP_OPTIONS = [
+    {
+        href: "https://wa.me/5493564507240?text=Hola%20quisiera%20consultar%20los%20precios%20de%20las%20caba%C3%B1as",
+        title: "Consultar precios",
+        subtitle: "Tarifas y promociones",
+        variant: "accent",
+        delay: "0.12s",
+    },
+    {
+        href: "https://wa.me/5493564507240?text=Hola%20quisiera%20consultar%20la%20disponibilidad",
+        title: "Consultar disponibilidad",
+        subtitle: "Fechas libres para tu estadía",
+        variant: "primary",
+        delay: "0.22s",
+    },
+];
+
 function ContactPage() {
     const [openMenuWhatsapp, setOpenMenuWhatsapp] = useState(false);
     const [hasInteracted, setHasInteracted] = useState(false);
 
-    const handleClickWhatsapp = () => {
+    const menuRef = useRef(null);
+    const buttonRef = useRef(null);
+
+    const handleClickWhatsapp = useCallback(() => {
         setHasInteracted(true);
         setOpenMenuWhatsapp((prev) => !prev);
-    };
+    }, []);
 
-    const contacts = [
-        { icon: WhatsAppIcon, title: "WhatsApp", name: "Cristian", href: "https://wa.me/5493564507240" },
-        { icon: FacebookIcon, title: "Facebook", name: "Lo Nuestro", href: "#" },
-        { icon: GmailIcon, title: "Gmail", name: "Lo Nuestro", href: "#" },
-    ];
+    const closeMenu = useCallback(() => setOpenMenuWhatsapp(false), []);
 
-    const whatsappOptions = [
-        {
-            href: "https://wa.me/5493564507240?text=Hola%20quisiera%20consultar%20los%20precios%20de%20las%20caba%C3%B1as",
-            title: "Consultar precios",
-            subtitle: "Tarifas y promociones",
-            iconVariant: "accent",
-            delay: "0.15s",
-            icon: (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                    <path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z" />
-                    <circle cx="7.5" cy="7.5" r="1.5" />
-                </svg>
-            ),
-        },
-        {
-            href: "https://wa.me/5493564507240?text=Hola%20quisiera%20consultar%20la%20disponibilidad",
-            title: "Consultar disponibilidad",
-            subtitle: "Fechas libres para tu estadía",
-            iconVariant: "primary",
-            delay: "0.3s",
-            icon: (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                    <rect x="3" y="4" width="18" height="18" rx="2" />
-                    <path d="M16 2v4" />
-                    <path d="M8 2v4" />
-                    <path d="M3 10h18" />
-                </svg>
-            ),
-        },
-    ];
+    // Mejora de UX: cerrar el menú al hacer click afuera o al presionar Escape.
+    // Antes solo se podía cerrar volviendo a tocar el botón flotante.
+    useEffect(() => {
+        if (!openMenuWhatsapp) return;
+
+        const handlePointerDown = (event) => {
+            if (
+                menuRef.current?.contains(event.target) ||
+                buttonRef.current?.contains(event.target)
+            ) {
+                return;
+            }
+            closeMenu();
+        };
+
+        const handleKeyDown = (event) => {
+            if (event.key === "Escape") closeMenu();
+        };
+
+        document.addEventListener("mousedown", handlePointerDown);
+        document.addEventListener("keydown", handleKeyDown);
+        return () => {
+            document.removeEventListener("mousedown", handlePointerDown);
+            document.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [openMenuWhatsapp, closeMenu]);
+
+    const menuTransitionClass = !hasInteracted
+        ? "hidden"
+        : openMenuWhatsapp
+        ? "fade-top-menu pointer-events-auto"
+        : "fadeOutDown pointer-events-none";
+
+    const bubbleTransitionClass = !hasInteracted
+        ? ""
+        : openMenuWhatsapp
+        ? "fadeOutDown"
+        : "fade-top-menu";
 
     return (
         <div className="pt-16.25 bg-[#F1F3EE]">
@@ -75,9 +107,9 @@ function ContactPage() {
                 </p>
 
                 <div className="flex flex-col md:flex-row justify-center md:gap-8 gap-6 my-5 md:my-10">
-                    {contacts.map((contact, index) => (
+                    {CONTACTS.map((contact, index) => (
                         <div
-                            key={index}
+                            key={contact.title}
                             className="flex flex-row justify-center fade-down"
                             style={{ animationDelay: `${0.2 + index * 0.15}s` }}
                         >
@@ -107,23 +139,25 @@ function ContactPage() {
 
             {/* Botón flotante */}
             <div className="fixed bottom-3 right-7.5 flex flex-row gap-2 z-50 items-end">
-                <div
-                    className={`chat-bubble bg-[#F5F7F9] p-3 rounded-lg ${
-                        !hasInteracted ? "" : openMenuWhatsapp ? "fadeOutDown" : "fade-top-menu"
-                    }`}
-                >
+                <div className={`chat-bubble bg-[#F5F7F9] p-3 rounded-lg ${bubbleTransitionClass}`}>
                     <h3 className="text-defect text-[.8rem]">¿Consultas y reservas?</h3>
                     <h3 className="text-defect text-[.8rem] font-bold text-[#3E6143]">¡Hablemos!</h3>
                 </div>
 
                 <div
+                    ref={buttonRef}
                     className={`whatsapp-btn ${!hasInteracted ? "whatsapp-pulse" : ""} bg-[#2DB742] h-13 w-13 z-70 flex items-center justify-center rounded-full relative cursor-pointer`}
                     onClick={handleClickWhatsapp}
                     role="button"
                     aria-expanded={openMenuWhatsapp}
                     aria-label="Abrir opciones de WhatsApp"
                     tabIndex={0}
-                    onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") handleClickWhatsapp(); }}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            handleClickWhatsapp();
+                        }
+                    }}
                 >
                     <img
                         src={WhatsAppIcon}
@@ -144,13 +178,8 @@ function ContactPage() {
 
             {/* Menú WhatsApp */}
             <div
-                className={`wa-menu bg-white z-60 right-7.5 w-[85%] md:w-90 fixed bottom-20 ${
-                    !hasInteracted
-                        ? "hidden"
-                        : openMenuWhatsapp
-                        ? "fade-top-menu pointer-events-auto"
-                        : "fadeOutDown pointer-events-none"
-                }`}
+                ref={menuRef}
+                className={`wa-menu bg-white z-60 right-7.5 w-[85%] md:w-90 fixed bottom-20 ${menuTransitionClass}`}
             >
                 <div className="wa-menu-header p-4 flex flex-row items-center gap-3">
                     <div className="wa-avatar h-11 w-11 rounded-full flex items-center justify-center flex-shrink-0">
@@ -165,31 +194,35 @@ function ContactPage() {
                 </div>
 
                 <div className="py-2">
-                    {whatsappOptions.map((opt, i) => (
+                    {WHATSAPP_OPTIONS.map((opt) => (
                         <a
-                            key={i}
+                            key={opt.title}
                             href={opt.href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className={`wa-option flex flex-row items-center gap-3 px-4 py-3 cursor-pointer ${
+                            className={`wa-option wa-option--${opt.variant} flex flex-row items-center gap-3 px-5 py-3.5 cursor-pointer ${
                                 openMenuWhatsapp ? "fade-down" : ""
                             }`}
                             style={{ animationDelay: opt.delay }}
                         >
-                            <div className={`wa-option-icon wa-option-icon--${opt.iconVariant} h-10 w-10 rounded-full flex items-center justify-center flex-shrink-0`}>
-                                {opt.icon}
-                            </div>
-
                             <div className="flex flex-col flex-1 min-w-0">
                                 <h3 className="text-defect text-[.95rem] font-bold text-[#2A4530] leading-tight truncate">
                                     {opt.title}
                                 </h3>
-                                <p className="text-[.75rem] text-[#3E6143]/60 leading-tight truncate">
+                                <p className="text-[.78rem] text-[#3E6143]/60 leading-tight truncate">
                                     {opt.subtitle}
                                 </p>
                             </div>
 
-                            <svg className="wa-chevron w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="#3E6143" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <svg
+                                className="wa-chevron w-4 h-4 flex-shrink-0"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
                                 <path d="M9 18l6-6-6-6" />
                             </svg>
                         </a>
