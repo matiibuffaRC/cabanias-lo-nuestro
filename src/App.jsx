@@ -5,6 +5,9 @@ import './App.css';
 import { BrowserRouter ,Routes, Route } from "react-router-dom";
 import ScrollToTop from "../src/Components/ScrollToTop/ScrollToTopComponent";
 
+// Modularizar componente del botton de whatsapp y mejorar estructura de todos los componentes, para que sean más legibles y fáciles de mantener.
+
+
 // Importamos las pages
 
 import HomePage from "./Pages/HomePage";
