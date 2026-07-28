@@ -28,10 +28,10 @@ function ContactPage() {
                 </p>
 
                 {/* Mobile: filas horizontales */}
-                <div className="flex flex-col gap-3 my-6 max-w-md mx-auto md:hidden">
+                <div className="flex flex-col md:flex-row md:max-w-3xl md:justify-center gap-3 my-6 max-w-md mx-auto">
                     {CONTACTS.map((contact, index) => (
-                        <a key={contact.title} href={contact.href} target={contact.href.startsWith("http") ? "_blank" : undefined} rel={contact.href.startsWith("http") ? "noopener noreferrer" : undefined} aria-label={`${contact.title} - ${contact.name}`} className="fade-down flex flex-row items-center gap-4 bg-white rounded-2xl p-4 shadow-sm border border-[#3E6143]/10 transition-transform duration-200 active:scale-[0.98]" style={{ animationDelay: `${0.2 + index * 0.15}s` }} >
-                            <div className="h-12 w-12 rounded-full bg-[#3E6143]/10 flex items-center justify-center flex-shrink-0">
+                        <a key={contact.title} href={contact.href} target={contact.href.startsWith("http") ? "_blank" : undefined} rel={contact.href.startsWith("http") ? "noopener noreferrer" : undefined} aria-label={`${contact.title} - ${contact.name}`} className="fade-down flex flex-row items-center gap-4 bg-white rounded-2xl p-4 hover:scale-102 shadow-sm border border-[#3E6143]/10 transition-transform duration-200 active:scale-[0.98]" style={{ animationDelay: `${0.2 + index * 0.15}s` }} >
+                            <div className="h-12 w-12 rounded-full bg-[#3E6143]/10 flex items-center justify-center flex-shrink-0 ">
                                 <img src={contact.icon} alt="" className="w-6 h-6" />
                             </div>
                             <div className="flex flex-col text-left min-w-0">
@@ -49,22 +49,6 @@ function ContactPage() {
                     ))}
                 </div>
 
-                {/* Desktop / tablet: tarjetas originales */}
-                <div className="hidden md:flex md:flex-row justify-center md:gap-8 my-10">
-                    {CONTACTS.map((contact, index) => (
-                        <div key={contact.title} className="flex flex-row justify-center fade-down" style={{ animationDelay: `${0.2 + index * 0.15}s` }}>
-                            <a href={contact.href} target={contact.href.startsWith("http") ? "_blank" : undefined} rel={contact.href.startsWith("http") ? "noopener noreferrer" : undefined} aria-label={`${contact.title} - ${contact.name}`} className="contact-card flex flex-col items-center">
-                                <img src={contact.icon} alt="" className="contact-card-icon w-8 h-8" />
-                                <h3 className="titles-and-subtitles font-bold text-[1.1rem] pt-2 text-[#3E6143]">
-                                    {contact.title}
-                                </h3>
-                                <h3 className="titles-and-subtitles text-[#3E6143]/70">
-                                    {contact.name}
-                                </h3>
-                            </a>
-                        </div>
-                    ))}
-                </div>
             </div>
 
             <WhatsAppFloatingButton />
