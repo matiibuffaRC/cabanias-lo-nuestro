@@ -1,5 +1,5 @@
 import ServiceItemComponent from "../ServiceItem/ServiceItemComponent";
-import WhatsAppFloatingButton from "../WhatsAppButton/WhatsAppFloatingButton";
+import WhatsAppFloatingButton from "../WhatsappButton/WhatsAppFloatingButton";
 import "../Animations/animations.css";
 
 import presentationImage from "../../imgs/piletaConDormis.jpg";
