@@ -213,3 +213,7 @@
     }
     .whatsapp-pulse::after { animation: none !important; display: none !important; }
 }
+
+.section-card:hover .section-card-img {
+    transform: scale(1.04);
+}

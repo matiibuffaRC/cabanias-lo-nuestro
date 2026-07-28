@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import menuIcon from "../../icons/Menu.svg";
+import crossIcon from "../../icons/crossIcon.svg";
 
-function HeaderComponent({ scrollToSection, refs }) {
+function HeaderComponent() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
     const location = useLocation();
@@ -13,102 +14,98 @@ function HeaderComponent({ scrollToSection, refs }) {
         { text: "Complejo", link: "/alojamiento/complejo" },
         { text: "Cabañas", link: "/alojamiento/cabins" },
         { text: "Dormis", link: "/alojamiento/dormis" },
+        { text: "Como llegar", link: "/comoLlegar" },
         { text: "Contacto", link: "/contact" },
-        { text: "Como llegar", link: "/comoLlegar" }
     ];
 
-    // 👉 NUEVO HOVER CON LÍNEA ANIMADA
     const liClasses = (isActive) => `
-        relative titles py-0.5 md:py-1 
-        lg:px-3 lg:my-4 cursor-pointer 
-        text-white text-[1rem] lg:text-[0.95rem] px-1.5
+        relative titles py-2 px-3 my-0.5
+        block rounded-lg cursor-pointer
+        text-white text-[1rem] lg:text-[0.95rem]
+        transition-colors duration-200
 
-        after:content-[''] after:absolute after:left-1/2 after:-bottom-0.5
-        after:h-[1.5px] after:bg-white
-        after:transition-all after:duration-200
-        after:-translate-x-1/2
+        lg:py-1 lg:my-4 lg:rounded-none lg:px-3
 
-        ${isActive ? 'after:w-1/2' : 'after:w-0 hover:after:w-1/2'}
-        `;
+        md:after:content-[''] md:after:absolute md:after:left-1/2 md:after:-bottom-0.5
+        md:after:h-[1.5px] md:after:bg-white
+        md:after:transition-all md:after:duration-200
+        md:after:-translate-x-1/2
+
+        ${isActive
+            ? "bg-white/10 lg:bg-transparent md:after:w-1/2"
+            : "hover:bg-white/10 lg:hover:bg-transparent md:after:w-0 md:hover:after:w-1/2"
+        }
+    `;
 
     useEffect(() => {
         const handleResize = () => {
             const mobile = window.innerWidth < 1024;
             setIsMobile(mobile);
-
-            if (!mobile) {
-                setMenuOpen(false);
-            }
+            if (!mobile) setMenuOpen(false);
         };
 
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-    const openMenu = () => {
+    // Bloquea el scroll del body mientras el menú mobile está abierto
+    useEffect(() => {
+        document.body.style.overflow = menuOpen ? "hidden" : "";
+        return () => {
+            document.body.style.overflow = "";
+        };
+    }, [menuOpen]);
+
+    const toggleMenu = () => {
         if (!isMobile) return;
-        setMenuOpen(prev => !prev);
+        setMenuOpen((prev) => !prev);
     };
 
-    const handleNavClick = (ref) => {
-        scrollToSection(ref);
-        setMenuOpen(false);
-    };
+    const closeMenu = () => setMenuOpen(false);
 
     return (
         <header className="titles-and-subtitles header h-16.25 w-screen shadow-md bg-[#3E6143] flex items-center justify-between text-white fixed left-0 top-0 z-105 lg:justify-center">
-            
+
             {/* Overlay mobile */}
-            <div
-                className={`fixed inset-0 bg-[rgba(0,0,0,.45)] z-10 
-                ${menuOpen ? "block" : "hidden"} lg:hidden`}
-                onClick={openMenu}
-            />
+            <div className={`fixed inset-0 bg-black/50 backdrop-blur-[1px] z-10 transition-opacity duration-300 ${ menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none" } lg:hidden`} onClick={closeMenu} />
 
             <div className="w-full h-full justify-between flex flex-row lg:w-5xl lg:justify-between lg:items-center">
-                
+
                 {/* Logo */}
                 <div className="header-title flex flex-row items-center gap-2 ml-5">
-                    <Link to="/" className="title text-[1.2rem] md:text-[1rem] lg:text-[1.1rem]">
+                    <Link to="/" className="title text-[1.2rem] md:text-[1rem] lg:text-[1.15rem] font-bold tracking-wide lg:tracking-wider" onClick={closeMenu} >
                         Lo nuestro
                     </Link>
                 </div>
 
-                {/* Botón mobile */}
+                {/* Botón mobile (hamburguesa animada) */}
                 <div className="header-btns flex flex-row items-center lg:hidden mr-5">
-                    <img
-                        src={menuIcon}
-                        alt="Menú"
-                        className="cursor-pointer w-7 h-7 invert"
-                        onClick={openMenu}
-                    />
+                    <div className="cursor-pointer w-8 h-8 relative" onClick={toggleMenu} role="button" aria-expanded={menuOpen} aria-label="Abrir menú de navegación" tabIndex={0} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleMenu(); } }} >
+                        <img src={menuIcon} alt="" className={`w-7 h-7 invert absolute inset-0 m-auto transition-all duration-300 ${ menuOpen ? "opacity-0 rotate-90" : "opacity-100 rotate-0" }`} />
+                        <img src={crossIcon} alt="" className={`w-7 h-7 invert absolute inset-0 m-auto transition-all duration-300 ${ menuOpen ? "opacity-100 rotate-0" : "opacity-0 -rotate-90" }`} />
+                    </div>
                 </div>
 
                 {/* Nav */}
-                <nav
-                    className={`fixed top-0 left-0 z-20 h-screen w-62.5 bg-[#3E6143] transition-transform duration-300 ease-in-out ${
-                        menuOpen ? "translate-x-0" : "-translate-x-full"
-                    } 
-                    md:w-80 
-                    lg:static lg:h-full lg:w-auto lg:bg-transparent 
-                    lg:translate-x-0 lg:transition-none lg:flex lg:items-center`}
-                >
-                    <ul className="ml-3 pt-5 lg:pt-0 flex flex-col p-0 lg:flex-row lg:gap-2 lg:h-full lg:items-center">
-                        {navItems.map((item) => (
-                            <li
-                                key={item.text}
-                                className="my-3.5 lg:my-0 lg:border-none lg:ml-0"
-                                onClick={() => handleNavClick(item.ref)}
-                            >
-                                <Link
-                                    to={item.link}
-                                    className={liClasses(location.pathname === item.link)}
-                                    onClick={() => openMenu()}
-                                >
-                                    {item.text}
-                                </Link>
-                            </li>
-                        ))}
+                <nav className={`fixed top-0 left-0 z-20 h-screen w-62.5 bg-[#3E6143] shadow-2xl transition-transform duration-300 ease-in-out ${ menuOpen ? "translate-x-0" : "-translate-x-full" } md:w-80 lg:static lg:h-full lg:w-auto lg:bg-transparent lg:shadow-none lg:translate-x-0 lg:transition-none lg:flex lg:items-center`} >
+                    <div className="flex items-center justify-between px-5 pt-5 lg:hidden">
+                        <span className="title text-[1.1rem] font-bold">Lo nuestro</span>
+                        <img src={crossIcon} alt="Cerrar menú" className="w-5 h-5 invert cursor-pointer" onClick={closeMenu} />
+                    </div>
+
+                    <span className="block h-px bg-white/15 mx-5 mt-4 lg:hidden" />
+
+                    <ul className="px-3 pt-3 lg:pt-0 flex flex-col gap-0.5 lg:flex-row lg:gap-1 lg:h-full lg:items-center">
+                        {navItems.map((item) => {
+                            const isContact = item.link === "/contact";
+                            return (
+                                <li key={item.text} className="lg:my-0">
+                                    <Link to={item.link} className={ isContact ? "hidden lg:inline-flex titles items-center text-[.9rem] font-bold bg-white text-[#3E6143] py-1.5 px-4 rounded-full ml-2 hover:bg-white/90 transition-colors duration-200" : liClasses(location.pathname === item.link) } onClick={closeMenu} >
+                                        {item.text}
+                                    </Link>
+                                </li>
+                            );
+                        })}
                     </ul>
                 </nav>
             </div>
