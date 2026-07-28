@@ -96,17 +96,33 @@ function HeaderComponent() {
                     <span className="block h-px bg-white/15 mx-5 mt-4 lg:hidden" />
 
                     <ul className="px-3 pt-3 lg:pt-0 flex flex-col gap-0.5 lg:flex-row lg:gap-1 lg:h-full lg:items-center">
-                        {navItems.map((item) => {
-                            const isContact = item.link === "/contact";
+                    {navItems.map((item) => {
+                        const isContact = item.link === "/contact";
+
+                        if (isContact) {
                             return (
                                 <li key={item.text} className="lg:my-0">
-                                    <Link to={item.link} className={ isContact ? "hidden lg:inline-flex titles items-center text-[.9rem] font-bold bg-white text-[#3E6143] py-1.5 px-4 rounded-full ml-2 hover:bg-white/90 transition-colors duration-200" : liClasses(location.pathname === item.link) } onClick={closeMenu} >
+                                    {/* Mobile: mismo estilo que el resto de los ítems */}
+                                    <Link to={item.link} className={`lg:hidden ${liClasses(location.pathname === item.link)}`} onClick={closeMenu} >
+                                        {item.text}
+                                    </Link>
+
+                                    {/* Desktop: botón píldora */}
+                                    <Link to={item.link} className="hidden lg:inline-flex titles items-center text-[.9rem] font-bold bg-white text-[#3E6143] py-1.5 px-4 rounded-full ml-2 hover:bg-white/90 transition-colors duration-200" onClick={closeMenu} >
                                         {item.text}
                                     </Link>
                                 </li>
                             );
-                        })}
-                    </ul>
+                        }
+                        return (
+                            <li key={item.text} className="lg:my-0">
+                                <Link to={item.link} className={liClasses(location.pathname === item.link)} onClick={closeMenu} >
+                                    {item.text}
+                                </Link>
+                            </li>
+                        );
+                    })}
+                </ul>
                 </nav>
             </div>
         </header>
