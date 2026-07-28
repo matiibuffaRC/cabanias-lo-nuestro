@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-import menuIcon from "../../icons/Menu.svg";
-import crossIcon from "../../icons/crossIcon.svg";
-
 function HeaderComponent() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
@@ -80,17 +77,39 @@ function HeaderComponent() {
 
                 {/* Botón mobile (hamburguesa animada) */}
                 <div className="header-btns flex flex-row items-center lg:hidden mr-5">
-                    <div className="cursor-pointer w-8 h-8 relative" onClick={toggleMenu} role="button" aria-expanded={menuOpen} aria-label="Abrir menú de navegación" tabIndex={0} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleMenu(); } }} >
-                        <img src={menuIcon} alt="" className={`w-7 h-7 invert absolute inset-0 m-auto transition-all duration-300 ${ menuOpen ? "opacity-0 rotate-90" : "opacity-100 rotate-0" }`} />
-                        <img src={crossIcon} alt="" className={`w-7 h-7 invert absolute inset-0 m-auto transition-all duration-300 ${ menuOpen ? "opacity-100 rotate-0" : "opacity-0 -rotate-90" }`} />
-                    </div>
+                    <button
+                        type="button"
+                        onClick={toggleMenu}
+                        aria-expanded={menuOpen}
+                        aria-label="Abrir menú de navegación"
+                        className="relative w-5 h-6 cursor-pointer"
+                    >
+                        <span
+                            className={`absolute left-0 w-full h-0.5 bg-white rounded-full transition-all duration-300 ${
+                                menuOpen ? "top-1/2 -translate-y-1/2 rotate-45 opacity-0" : "top-1.5"
+                            }`}
+                        />
+                        <span
+                            className={`absolute left-0 w-full h-0.5 bg-white rounded-full transition-all duration-300 ${
+                                menuOpen ? "opacity-0" : "top-1/2 -translate-y-1/2"
+                            }`}
+                        />
+                        <span
+                            className={`absolute left-0 w-full h-0.5 bg-white rounded-full transition-all duration-300 ${
+                                menuOpen ? "top-1/2 -translate-y-1/2 -rotate-45 opacity-0" : "bottom-1.5"
+                            }`}
+                        />
+                    </button>
                 </div>
 
                 {/* Nav */}
                 <nav className={`fixed top-0 left-0 z-20 h-screen w-62.5 bg-[#3E6143] shadow-2xl transition-transform duration-300 ease-in-out ${ menuOpen ? "translate-x-0" : "-translate-x-full" } md:w-80 lg:static lg:h-full lg:w-auto lg:bg-transparent lg:shadow-none lg:translate-x-0 lg:transition-none lg:flex lg:items-center`} >
                     <div className="flex items-center justify-between px-5 pt-5 lg:hidden">
                         <span className="title text-[1.1rem] font-bold">Lo nuestro</span>
-                        <img src={crossIcon} alt="Cerrar menú" className="w-5 h-5 invert cursor-pointer" onClick={closeMenu} />
+                        <button type="button" onClick={closeMenu} aria-label="Cerrar menú de navegación" className="relative w-5 h-5 cursor-pointer" >
+                            <span className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 bg-white rounded-full rotate-45" />
+                            <span className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 bg-white rounded-full -rotate-45" />
+                        </button>
                     </div>
 
                     <span className="block h-px bg-white/15 mx-5 mt-4 lg:hidden" />

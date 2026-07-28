@@ -32,21 +32,21 @@ const SECTIONS = [
         img: patioImage,
         title: "Complejo Lo Nuestro",
         description:
-            "Un lugar ideal, en la entrada de Mina Clavero para visitar los principales atractivos de la zona y vivir unas vacaciones inolvidables",
+            "El lugar ideal en la entrada de Mina Clavero para recorrer los atractivos de la zona y disfrutar de unas vacaciones inolvidables.",
         route: "complejo",
     },
     {
         img: frenteImage,
         title: "Cabañas",
         description:
-            "Disponemos de 2 cabañas y 3 dormis para brindar una cómoda estadía en el complejo de cabañas. Cada unidad fue diseñada y pensada para ofrecer alojamiento a grupos de 4 personas.",
+            "Espacios diseñados para ofrecer una estadía cómoda y relajante. Ideales para alojar grupos o familias de hasta 4 personas.",
         route: "cabins",
     },
     {
         img: patioImage2,
         title: "Dormis",
         description:
-            "Un lugar ideal, en la entrada de Mina Clavero para visitar los principales atractivos de la zona y vivir unas vacaciones inolvidables.",
+            "El espacio ideal para un descanso cómodo y práctico. Cuenta con baño privado, capacidad para 4 personas y equipamiento para desayunos.",
         route: "dormis",
     },
 ];
