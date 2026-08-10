@@ -1,6 +1,6 @@
 import { useRef} from "react";
-import HeaderComponent from './Components/Header/HeaderComponent';
-import FooterComponent from "./Components/Footer/FooterComponent";
+import HeaderComponent from './Components/Header/HeaderComp';
+import FooterComponent from "./Components/Footer/FooterComp";
 import './App.css';
 import { BrowserRouter ,Routes, Route } from "react-router-dom";
 import ScrollToTop from "../src/Components/ScrollToTop/ScrollToTopComponent";
