@@ -77,28 +77,10 @@ function HeaderComponent() {
 
                 {/* Botón mobile (hamburguesa animada) */}
                 <div className="header-btns flex flex-row items-center lg:hidden mr-5">
-                    <button
-                        type="button"
-                        onClick={toggleMenu}
-                        aria-expanded={menuOpen}
-                        aria-label="Abrir menú de navegación"
-                        className="relative w-5 h-6 cursor-pointer"
-                    >
-                        <span
-                            className={`absolute left-0 w-full h-0.5 bg-white rounded-full transition-all duration-300 ${
-                                menuOpen ? "top-1/2 -translate-y-1/2 rotate-45 opacity-0" : "top-1.5"
-                            }`}
-                        />
-                        <span
-                            className={`absolute left-0 w-full h-0.5 bg-white rounded-full transition-all duration-300 ${
-                                menuOpen ? "opacity-0" : "top-1/2 -translate-y-1/2"
-                            }`}
-                        />
-                        <span
-                            className={`absolute left-0 w-full h-0.5 bg-white rounded-full transition-all duration-300 ${
-                                menuOpen ? "top-1/2 -translate-y-1/2 -rotate-45 opacity-0" : "bottom-1.5"
-                            }`}
-                        />
+                    <button type="button" onClick={toggleMenu} aria-expanded={menuOpen} aria-label="Abrir menú de navegación" className="relative w-5 h-6 cursor-pointer" >
+                        <span className={`absolute left-0 w-full h-0.5 bg-white rounded-full transition-all duration-300 ${ menuOpen ? "top-1/2 -translate-y-1/2 rotate-45 opacity-0" : "top-1.5" }`} />
+                        <span className={`absolute left-0 w-full h-0.5 bg-white rounded-full transition-all duration-300 ${ menuOpen ? "opacity-0" : "top-1/2 -translate-y-1/2" }`} />
+                        <span className={`absolute left-0 w-full h-0.5 bg-white rounded-full transition-all duration-300 ${ menuOpen ? "top-1/2 -translate-y-1/2 -rotate-45 opacity-0" : "bottom-1.5" }`} />
                     </button>
                 </div>
 

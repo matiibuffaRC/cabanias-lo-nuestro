@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import WhatsAppIcon from "../../icons/whatsappIcon.svg";
-import crossIcon from "../../icons/crossIcon.svg";
+import WhatsAppIcon from "../icons/whatsappIcon.svg";
+import crossIcon from "../icons/crossIcon.svg";
 
 const WHATSAPP_OPTIONS = [
     {
@@ -84,7 +84,7 @@ function WhatsAppFloatingButton({ bubbleLine1 = "¿Consultas y reservas?", bubbl
 
             <div ref={menuRef} className={`wa-menu bg-white z-60 right-7.5 w-[85%] md:w-90 fixed bottom-20 ${menuTransitionClass}`} >
                 <div className="wa-menu-header p-4 flex flex-row items-center gap-3">
-                    <div className="wa-avatar h-11 w-11 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="wa-avatar h-11 w-11 rounded-full flex items-center justify-center shrink-0">
                         <img src={WhatsAppIcon} alt="" className="w-6 h-6 invert" />
                     </div>
                     <div className="flex flex-col text-white">
@@ -107,7 +107,7 @@ function WhatsAppFloatingButton({ bubbleLine1 = "¿Consultas y reservas?", bubbl
                                 </p>
                             </div>
 
-                            <svg className="wa-chevron w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" >
+                            <svg className="wa-chevron w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" >
                                 <path d="M9 18l6-6-6-6" />
                             </svg>
                         </a>

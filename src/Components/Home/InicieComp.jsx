@@ -1,6 +1,6 @@
-import ServiceItemComponent from "../ServiceItem/ServiceItemComponent";
-import WhatsAppFloatingButton from "../WhatsappButton/WhatsAppFloatingButton";
-import "../Animations/animations.css";
+import ServiceItemComponent from "./ServiceItemComp";
+import WhatsAppFloatingButton from "../WppButton";
+import "../animations.css";
 
 import presentationImage from "../../imgs/piletaConDormis.jpg";
 import frenteImage from "../../imgs/frente2.jpg";
@@ -55,9 +55,9 @@ function InicieComponent() {
     return (
         <div className="pt-16 bg-[#F1F3EE] flex flex-col items-center relative">
             {/* Hero */}
-            <div className="h-120 relative w-full overflow-hidden">
+            <div className="h-110 relative w-full overflow-hidden">
                 <img src={presentationImage} alt="Patio de atras" className="hero-image w-full h-full object-cover object-center" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#2A4530]/60 via-[#2A4530]/10 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-[#2A4530]/60 via-[#2A4530]/10 to-transparent" />
 
                 <div className="absolute inset-x-0 bottom-8 text-center px-5 fade-down">
                     <p className="titles-and-subtitles text-white/90 text-[.95rem] md:text-[1.05rem] tracking-wide uppercase">
@@ -73,7 +73,7 @@ function InicieComponent() {
                 <h2 className="titles-and-subtitles font-bold text-[1.9rem] text-[#3E6143] py-2">
                     Lo Nuestro, complejo de alojamiento en traslasierras
                 </h2>
-                <span className="block w-14 h-[3px] bg-[#3E6143]/40 rounded-full mx-auto my-3" />
+                <span className="block w-14 h-0.75 bg-[#3E6143]/40 rounded-full mx-auto my-3" />
                 <h3 className="titles-and-subtitles text-[1.1rem] text-[#757575] px-10">
                     Somos un complejo vacacional único ubicado a la entrada de Mina Clavero desde el Valle de Traslasierras.
                 </h3>
@@ -98,7 +98,7 @@ function InicieComponent() {
                     return (
                         <div key={section.title} className="section-card h-135 lg:h-150 relative w-full overflow-hidden fade-down" style={{ animationDelay: `${index * 0.15}s` }} >
                             <img src={section.img} alt="" className="section-card-img w-full h-full object-cover object-center transition-transform duration-700" />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+                            <div className="absolute inset-0 bg-linear-to-t from-black/30 to-transparent" />
 
                             <div className={`absolute w-[90%] top-10 lg:w-150 bg-[#3E6143]/60 backdrop-blur-[2px] p-5 text-white rounded-3xl md:max-w-1/2 shadow-lg ${ isLeft ? "left-1/2 -translate-x-1/2 md:left-10 md:translate-x-0" : "right-1/2 translate-x-1/2 md:right-10 md:translate-x-0" }`} >
                                 <h2 className="titles-and-subtitles text-[1.8rem] lg:text-[2rem] font-bold py-2">

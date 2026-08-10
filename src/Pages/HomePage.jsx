@@ -1,4 +1,4 @@
-import InicieComponent from "../Components/Inicie/InicieComponent";
+import InicieComponent from "../Components/Home/InicieComp";
 
 function HomePage() {
     return (
