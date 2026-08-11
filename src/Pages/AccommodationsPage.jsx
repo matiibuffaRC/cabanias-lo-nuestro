@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useRef, useEffect, useState } from "react";
 import { accommodation } from "../data/accommodation";
-import CaruselImagesComponente from "../Components/CarouselImages/CaruselImagesComp";
+import CaruselImagesComponente from "../Components/Home/CaruselImagesComp";
 import WhatsAppFloatingButton from "../Components/WppButton";
 
 function AccommodationsPage() {

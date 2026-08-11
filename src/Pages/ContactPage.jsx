@@ -1,5 +1,5 @@
 import presentationImage from "../imgs/piletaConDormis.jpg";
-import WhatsAppFloatingButton from "../Components/WhatsappButton/WhatsAppFloatingButton";
+import WhatsAppFloatingButton from "../Components/WppButton.jsx";
 
 import WhatsAppIcon from "../icons/whatsappIcon.svg";
 import FacebookIcon from "../icons/facebookIcon.svg";
