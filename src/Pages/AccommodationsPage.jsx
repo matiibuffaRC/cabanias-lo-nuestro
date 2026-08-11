@@ -4,6 +4,7 @@ import { accommodation } from "../data/accommodation";
 import CaruselImagesComponente from "../Components/Home/CaruselImagesComp";
 import WhatsAppFloatingButton from "../Components/WppButton";
 
+// ...
 function AccommodationsPage() {
     const { tipo } = useParams();
     const [servicesVisible, setServicesVisible] = useState(false);
