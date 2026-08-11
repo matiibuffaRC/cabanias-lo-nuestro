@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useRef, useEffect, useState } from "react";
 import { accommodation } from "../data/accommodation";
-import CaruselImagesComponente from "../Components/CarouselImages/CaruselImagesComponent";
-import WhatsAppFloatingButton from "../Components/WhatsappButton/WhatsAppFloatingButton";
+import CaruselImagesComponente from "../Components/CarouselImages/CaruselImagesComp";
+import WhatsAppFloatingButton from "../Components/WppButton";
 
 function AccommodationsPage() {
     const { tipo } = useParams();

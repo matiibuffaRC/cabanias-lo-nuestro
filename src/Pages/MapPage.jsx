@@ -1,6 +1,6 @@
-import CaruselImagesComponente from "../Components/CarouselImages/CaruselImagesComponent";
-import MapaComponent from "../Components/Mapa/MapaComponent";
-import WhatsAppFloatingButton from "../Components/WhatsappButton/WhatsAppFloatingButton";
+import CaruselImagesComponente from "../Components/Home/CaruselImagesComp";
+import MapaComponent from "../Components/Mapa/MapaComp";
+import WhatsAppFloatingButton from "../Components/WppButton";
 
 import MinaClavero1 from "../imgs/MinaClavero.jpg";
 import MinaClavero2 from "../imgs/MinaClavero2.jpg";
