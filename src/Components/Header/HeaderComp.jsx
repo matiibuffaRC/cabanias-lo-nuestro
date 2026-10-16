@@ -39,10 +39,13 @@ function HeaderComponente() {
         };
     }, [menuOpen]);
 
+    // La opción activa va en negrita y a opacidad completa.
+    // El pseudo-elemento ::before reserva el ancho del texto en negrita para que
+    // el menú no se desplace al cambiar de opción.
     const desktopLink = (isActive) =>
-        `titles relative block px-3 py-1 text-[0.8rem] uppercase tracking-[0.18em] text-white transition-opacity
-         after:absolute after:left-3 after:right-3 after:-bottom-0.5 after:h-px after:origin-left after:bg-white after:transition-transform after:duration-300
-         ${isActive ? "after:scale-x-100" : "opacity-80 after:scale-x-0 hover:opacity-100 hover:after:scale-x-100"}`;
+        `titles block px-3 py-1 text-[0.8rem] uppercase tracking-[0.18em] text-white transition-all duration-300
+         before:invisible before:block before:h-0 before:overflow-hidden before:font-bold before:content-[attr(data-text)]
+         ${isActive ? "font-bold opacity-100" : "font-normal opacity-80 hover:opacity-100"}`;
 
     // La altura depende SOLO del scroll (así el logo no salta al abrir el menú).
     // Con el menú abierto el header se vuelve transparente: el fondo lo da el menú.
@@ -62,7 +65,13 @@ function HeaderComponente() {
                     {/* Izquierda (desktop) */}
                     <nav aria-label="Navegación principal" className="hidden items-center gap-2 lg:flex">
                         {LEFT_ITEMS.map((item) => (
-                            <NavLink key={item.link} to={item.link} end={item.link === "/"} className={({ isActive }) => desktopLink(isActive)}>
+                            <NavLink
+                                key={item.link}
+                                to={item.link}
+                                end={item.link === "/"}
+                                data-text={item.text}
+                                className={({ isActive }) => desktopLink(isActive)}
+                            >
                                 {item.text}
                             </NavLink>
                         ))}
@@ -76,7 +85,12 @@ function HeaderComponente() {
                     {/* Derecha (desktop) */}
                     <nav aria-label="Navegación secundaria" className="hidden items-center justify-end gap-2 lg:flex">
                         {RIGHT_ITEMS.map((item) => (
-                            <NavLink key={item.link} to={item.link} className={({ isActive }) => desktopLink(isActive)}>
+                            <NavLink
+                                key={item.link}
+                                to={item.link}
+                                data-text={item.text}
+                                className={({ isActive }) => desktopLink(isActive)}
+                            >
                                 {item.text}
                             </NavLink>
                         ))}

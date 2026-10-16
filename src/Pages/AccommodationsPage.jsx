@@ -32,7 +32,7 @@ function AccommodationsPage() {
 
     if (!data) {
         return (
-            <div className="pt-16.25 min-h-screen flex flex-col items-center justify-center bg-[#F1F3EE] text-center px-5">
+            <div className="min-h-screen flex flex-col items-center justify-center bg-[#F1F3EE] text-center px-5">
                 <h1 className="titles-and-subtitles text-[1.8rem] font-bold text-[#3E6143]">
                     Alojamiento no encontrado
                 </h1>
@@ -44,7 +44,7 @@ function AccommodationsPage() {
     }
 
     return (
-        <div className="pt-16.25 bg-[#F1F3EE] flex flex-col items-center">
+        <div className="bg-[#F1F3EE] flex flex-col items-center">
             <CaruselImagesComponente images={data.photos} />
 
             {/* Encabezado */}
