@@ -1,133 +1,157 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 
-function HeaderComponent() {
+const LEFT_ITEMS = [
+    { text: "Inicio", link: "/" },
+    { text: "Complejo", link: "/alojamiento/complejo" },
+    { text: "Cabañas", link: "/alojamiento/cabins" },
+];
+const RIGHT_ITEMS = [
+    { text: "Dormis", link: "/alojamiento/dormis" },
+    { text: "Cómo llegar", link: "/comoLlegar" },
+];
+const ALL_ITEMS = [...LEFT_ITEMS, ...RIGHT_ITEMS];
+const CTA = { text: "Contacto", link: "/contact" };
+
+// Transparente sobre el hero, logo centrado, menú mobile a pantalla completa
+function HeaderComponente() {
     const [menuOpen, setMenuOpen] = useState(false);
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
-    const location = useLocation();
-
-    const navItems = [
-        { text: "Inicio", link: "/" },
-        { text: "Complejo", link: "/alojamiento/complejo" },
-        { text: "Cabañas", link: "/alojamiento/cabins" },
-        { text: "Dormis", link: "/alojamiento/dormis" },
-        { text: "Como llegar", link: "/comoLlegar" },
-        { text: "Contacto", link: "/contact" },
-    ];
-
-    const liClasses = (isActive) => `
-        relative titles py-2 px-3 my-0.5
-        block rounded-lg cursor-pointer
-        text-white text-[1rem] lg:text-[0.95rem]
-        transition-colors duration-200
-
-        lg:py-1 lg:my-4 lg:rounded-none lg:px-3
-
-        md:after:content-[''] md:after:absolute md:after:left-1/2 md:after:-bottom-0.5
-        md:after:h-[1.5px] md:after:bg-white
-        md:after:transition-all md:after:duration-200
-        md:after:-translate-x-1/2
-
-        ${isActive
-            ? "bg-white/10 lg:bg-transparent md:after:w-1/2"
-            : "hover:bg-white/10 lg:hover:bg-transparent md:after:w-0 md:hover:after:w-1/2"
-        }
-    `;
+    const [scrolled, setScrolled] = useState(false);
+    const { pathname } = useLocation();
 
     useEffect(() => {
-        const handleResize = () => {
-            const mobile = window.innerWidth < 1024;
-            setIsMobile(mobile);
-            if (!mobile) setMenuOpen(false);
-        };
-
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
+        const onScroll = () => setScrolled(window.scrollY > 40);
+        onScroll();
+        window.addEventListener("scroll", onScroll, { passive: true });
+        return () => window.removeEventListener("scroll", onScroll);
     }, []);
 
-    // Bloquea el scroll del body mientras el menú mobile está abierto
+    useEffect(() => setMenuOpen(false), [pathname]);
+
     useEffect(() => {
-        document.body.style.overflow = menuOpen ? "hidden" : "";
+        if (!menuOpen) return;
+        const onKey = (e) => e.key === "Escape" && setMenuOpen(false);
+        document.body.style.overflow = "hidden";
+        window.addEventListener("keydown", onKey);
         return () => {
             document.body.style.overflow = "";
+            window.removeEventListener("keydown", onKey);
         };
     }, [menuOpen]);
 
-    const toggleMenu = () => {
-        if (!isMobile) return;
-        setMenuOpen((prev) => !prev);
-    };
+    const desktopLink = (isActive) =>
+        `titles relative block px-3 py-1 text-[0.8rem] uppercase tracking-[0.18em] text-white transition-opacity
+         after:absolute after:left-3 after:right-3 after:-bottom-0.5 after:h-px after:origin-left after:bg-white after:transition-transform after:duration-300
+         ${isActive ? "after:scale-x-100" : "opacity-80 after:scale-x-0 hover:opacity-100 hover:after:scale-x-100"}`;
 
-    const closeMenu = () => setMenuOpen(false);
+    // La altura depende SOLO del scroll (así el logo no salta al abrir el menú).
+    // Con el menú abierto el header se vuelve transparente: el fondo lo da el menú.
+    const headerHeight = scrolled ? "h-16" : "h-20";
+    const headerSurface = menuOpen
+        ? "border-transparent bg-transparent"
+        : scrolled
+        ? "border-transparent bg-[#3E6143] shadow-lg"
+        : "border-white/10 bg-[#3E6143]/60 backdrop-blur-md";
 
     return (
-        <header className="titles-and-subtitles header h-16.25 w-screen shadow-md bg-[#3E6143] flex items-center justify-between text-white fixed left-0 top-0 z-105 lg:justify-center">
+        <>
+            <header
+                className={`fixed inset-x-0 top-0 z-250 border-b transition-all duration-500 ${headerHeight} ${headerSurface}`}
+            >
+                <div className="mx-auto flex h-full max-w-6xl items-center justify-between px-5 lg:grid lg:grid-cols-[1fr_auto_1fr]">
+                    {/* Izquierda (desktop) */}
+                    <nav aria-label="Navegación principal" className="hidden items-center gap-2 lg:flex">
+                        {LEFT_ITEMS.map((item) => (
+                            <NavLink key={item.link} to={item.link} end={item.link === "/"} className={({ isActive }) => desktopLink(isActive)}>
+                                {item.text}
+                            </NavLink>
+                        ))}
+                    </nav>
 
-            {/* Overlay mobile */}
-            <div className={`fixed inset-0 bg-black/50 backdrop-blur-[1px] z-10 transition-opacity duration-300 ${ menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none" } lg:hidden`} onClick={closeMenu} />
-
-            <div className="w-full h-full justify-between flex flex-row lg:w-5xl lg:justify-between lg:items-center">
-
-                {/* Logo */}
-                <div className="header-title flex flex-row items-center gap-2 ml-5">
-                    <Link to="/" className="title text-[1.2rem] md:text-[1rem] lg:text-[1.15rem] font-bold tracking-wide lg:tracking-wider" onClick={closeMenu} >
+                    {/* Logo */}
+                    <Link to="/" className="titles relative z-30 text-[1.3rem] font-bold tracking-wider text-white drop-shadow-sm lg:text-[1.4rem]">
                         Lo nuestro
                     </Link>
-                </div>
 
-                {/* Botón mobile (hamburguesa animada) */}
-                <div className="header-btns flex flex-row items-center lg:hidden mr-5">
-                    <button type="button" onClick={toggleMenu} aria-expanded={menuOpen} aria-label="Abrir menú de navegación" className="relative w-5 h-6 cursor-pointer" >
-                        <span className={`absolute left-0 w-full h-0.5 bg-white rounded-full transition-all duration-300 ${ menuOpen ? "top-1/2 -translate-y-1/2 rotate-45 opacity-0" : "top-1.5" }`} />
-                        <span className={`absolute left-0 w-full h-0.5 bg-white rounded-full transition-all duration-300 ${ menuOpen ? "opacity-0" : "top-1/2 -translate-y-1/2" }`} />
-                        <span className={`absolute left-0 w-full h-0.5 bg-white rounded-full transition-all duration-300 ${ menuOpen ? "top-1/2 -translate-y-1/2 -rotate-45 opacity-0" : "bottom-1.5" }`} />
+                    {/* Derecha (desktop) */}
+                    <nav aria-label="Navegación secundaria" className="hidden items-center justify-end gap-2 lg:flex">
+                        {RIGHT_ITEMS.map((item) => (
+                            <NavLink key={item.link} to={item.link} className={({ isActive }) => desktopLink(isActive)}>
+                                {item.text}
+                            </NavLink>
+                        ))}
+                        <Link
+                            to={CTA.link}
+                            className="titles ml-3 rounded-full border border-white px-5 py-1.5 text-[0.8rem] font-bold uppercase tracking-[0.18em] text-white transition-colors hover:bg-white hover:text-[#3E6143]"
+                        >
+                            {CTA.text}
+                        </Link>
+                    </nav>
+
+                    {/* Botón mobile */}
+                    <button
+                        type="button"
+                        onClick={() => setMenuOpen((p) => !p)}
+                        aria-expanded={menuOpen}
+                        aria-controls="mobile-nav"
+                        aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+                        className="relative z-230 -mr-2 flex h-10 w-10 items-center justify-center lg:hidden"
+                    >
+                        <span className="relative block h-3.5 w-6">
+                            <span className={`absolute right-0 h-0.5 w-full rounded-full bg-white transition-all duration-300 ${menuOpen ? "top-1/2 -translate-y-1/2 rotate-45" : "top-0"}`} />
+                            <span className={`absolute right-0 top-1/2 h-0.5 w-4 -translate-y-1/2 rounded-full bg-white transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`} />
+                            <span className={`absolute right-0 h-0.5 w-full rounded-full bg-white transition-all duration-300 ${menuOpen ? "top-1/2 -translate-y-1/2 -rotate-45" : "bottom-0"}`} />
+                        </span>
                     </button>
                 </div>
+            </header>
 
-                {/* Nav */}
-                <nav className={`fixed top-0 left-0 z-20 h-screen w-62.5 bg-[#3E6143] shadow-2xl transition-transform duration-300 ease-in-out ${ menuOpen ? "translate-x-0" : "-translate-x-full" } md:w-80 lg:static lg:h-full lg:w-auto lg:bg-transparent lg:shadow-none lg:translate-x-0 lg:transition-none lg:flex lg:items-center`} >
-                    <div className="flex items-center justify-between px-5 pt-5 lg:hidden">
-                        <span className="title text-[1.1rem] font-bold">Lo nuestro</span>
-                        <button type="button" onClick={closeMenu} aria-label="Cerrar menú de navegación" className="relative w-5 h-5 cursor-pointer" >
-                            <span className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 bg-white rounded-full rotate-45" />
-                            <span className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 bg-white rounded-full -rotate-45" />
-                        </button>
-                    </div>
-
-                    <span className="block h-px bg-white/15 mx-5 mt-4 lg:hidden" />
-
-                    <ul className="px-3 pt-3 lg:pt-0 flex flex-col gap-0.5 lg:flex-row lg:gap-1 lg:h-full lg:items-center">
-                    {navItems.map((item) => {
-                        const isContact = item.link === "/contact";
-
-                        if (isContact) {
-                            return (
-                                <li key={item.text} className="lg:my-0">
-                                    {/* Mobile: mismo estilo que el resto de los ítems */}
-                                    <Link to={item.link} className={`lg:hidden ${liClasses(location.pathname === item.link)}`} onClick={closeMenu} >
-                                        {item.text}
-                                    </Link>
-
-                                    {/* Desktop: botón píldora */}
-                                    <Link to={item.link} className="hidden lg:inline-flex titles items-center text-[.9rem] font-bold bg-white text-[#3E6143] py-1.5 px-4 rounded-full ml-2 hover:bg-white/90 transition-colors duration-200" onClick={closeMenu} >
-                                        {item.text}
-                                    </Link>
-                                </li>
-                            );
-                        }
-                        return (
-                            <li key={item.text} className="lg:my-0">
-                                <Link to={item.link} className={liClasses(location.pathname === item.link)} onClick={closeMenu} >
-                                    {item.text}
-                                </Link>
-                            </li>
-                        );
-                    })}
+            {/*
+              Menú mobile FUERA del <header>: si fuera hijo, el backdrop-blur del header
+              lo "encerraría" (un ancestro con backdrop-filter se vuelve el contenedor de los
+              hijos fixed), y al sacarse el blur el menú saltaba de tamaño a mitad de animación.
+            */}
+            <nav
+                id="mobile-nav"
+                aria-label="Navegación principal"
+                aria-hidden={!menuOpen}
+                className={`fixed inset-0 z-240 flex flex-col justify-center bg-[#3E6143] px-10 transition-opacity duration-500 lg:hidden ${
+                    menuOpen ? "visible opacity-100" : "invisible opacity-0 delay-0"
+                }`}
+            >
+                <ul className="flex flex-col gap-2">
+                    {ALL_ITEMS.map((item, i) => (
+                        <li
+                            key={item.link}
+                            style={{ transitionDelay: menuOpen ? `${150 + i * 60}ms` : "0ms" }}
+                            className={`transition-all duration-500 ${menuOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
+                        >
+                            <NavLink
+                                to={item.link}
+                                end={item.link === "/"}
+                                className={({ isActive }) =>
+                                    `titles block py-2 text-3xl font-bold text-white transition-opacity ${isActive ? "opacity-100" : "opacity-60 hover:opacity-100"}`
+                                }
+                            >
+                                {item.text}
+                            </NavLink>
+                        </li>
+                    ))}
+                    <li
+                        style={{ transitionDelay: menuOpen ? `${150 + ALL_ITEMS.length * 60}ms` : "0ms" }}
+                        className={`mt-6 transition-all duration-500 ${menuOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
+                    >
+                        <Link
+                            to={CTA.link}
+                            className="titles inline-flex w-fit items-center rounded-full border border-white/70 px-7 py-3 text-sm font-bold uppercase tracking-[0.16em] text-white transition-all duration-300 hover:bg-white hover:text-[#3E6143] active:scale-95"
+                        >
+                            {CTA.text}
+                        </Link>
+                    </li>
                 </ul>
-                </nav>
-            </div>
-        </header>
+            </nav>
+        </>
     );
 }
 
-export default HeaderComponent;
+export default HeaderComponente;

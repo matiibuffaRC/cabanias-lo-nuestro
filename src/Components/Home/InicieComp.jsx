@@ -53,7 +53,7 @@ const SECTIONS = [
 
 function InicieComponent() {
     return (
-        <div className="pt-16 bg-[#F1F3EE] flex flex-col items-center relative">
+        <div className=" bg-[#F1F3EE] flex flex-col items-center relative">
             {/* Hero */}
             <div className="h-110 relative w-full overflow-hidden">
                 <img src={presentationImage} alt="Patio de atras" className="hero-image w-full h-full object-cover object-center" />
