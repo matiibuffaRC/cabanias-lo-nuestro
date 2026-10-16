@@ -106,11 +106,6 @@ function HeaderComponente() {
                 </div>
             </header>
 
-            {/*
-              Menú mobile FUERA del <header>: si fuera hijo, el backdrop-blur del header
-              lo "encerraría" (un ancestro con backdrop-filter se vuelve el contenedor de los
-              hijos fixed), y al sacarse el blur el menú saltaba de tamaño a mitad de animación.
-            */}
             <nav
                 id="mobile-nav"
                 aria-label="Navegación principal"

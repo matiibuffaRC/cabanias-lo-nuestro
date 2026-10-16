@@ -52,7 +52,7 @@ function AccommodationsPage() {
                 <h1 className="text-[2rem] titles-and-subtitles font-bold text-[#3E6143]">
                     {data.title}
                 </h1>
-                <span className="block w-14 h-[3px] bg-[#3E6143]/40 rounded-full my-4" />
+                <span className="block w-14 h-0.75 bg-[#3E6143]/40 rounded-full my-4" />
 
                 <div className="md:w-140">
                     <p className="text-[.95rem] text-defect text-[#757575] leading-relaxed px-3">
