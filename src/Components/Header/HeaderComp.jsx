@@ -62,8 +62,8 @@ function HeaderComponente() {
                 className={`fixed inset-x-0 top-0 z-250 border-b transition-all duration-500 ${headerHeight} ${headerSurface}`}
             >
                 <div className="mx-auto flex h-full max-w-6xl items-center justify-between px-5 lg:grid lg:grid-cols-[1fr_auto_1fr]">
-                    {/* Izquierda (desktop) */}
-                    <nav aria-label="Navegación principal" className="hidden items-center gap-2 lg:flex">
+                    {/* Izquierda (desktop): pegada al logo */}
+                    <nav aria-label="Navegación principal" className="hidden items-center justify-end gap-2 lg:flex">
                         {LEFT_ITEMS.map((item) => (
                             <NavLink
                                 key={item.link}
@@ -77,30 +77,35 @@ function HeaderComponente() {
                         ))}
                     </nav>
 
-                    {/* Logo */}
-                    <Link to="/" className="titles relative z-30 text-[1.3rem] font-bold tracking-wider text-white drop-shadow-sm lg:text-[1.4rem]">
+                    {/* Logo: el padding da el mismo aire a ambos lados */}
+                    <Link
+                        to="/"
+                        className="titles relative z-30 text-[1.3rem] font-bold tracking-wider text-white drop-shadow-sm lg:px-10 lg:text-[1.4rem]"
+                    >
                         Lo nuestro
                     </Link>
 
-                    {/* Derecha (desktop) */}
-                    <nav aria-label="Navegación secundaria" className="hidden items-center justify-end gap-2 lg:flex">
-                        {RIGHT_ITEMS.map((item) => (
-                            <NavLink
-                                key={item.link}
-                                to={item.link}
-                                data-text={item.text}
-                                className={({ isActive }) => desktopLink(isActive)}
-                            >
-                                {item.text}
-                            </NavLink>
-                        ))}
+                    {/* Derecha (desktop): items pegados al logo, CTA al borde */}
+                    <div className="hidden items-center justify-between lg:flex">
+                        <nav aria-label="Navegación secundaria" className="flex items-center gap-2">
+                            {RIGHT_ITEMS.map((item) => (
+                                <NavLink
+                                    key={item.link}
+                                    to={item.link}
+                                    data-text={item.text}
+                                    className={({ isActive }) => desktopLink(isActive)}
+                                >
+                                    {item.text}
+                                </NavLink>
+                            ))}
+                        </nav>
                         <Link
                             to={CTA.link}
-                            className="titles ml-3 rounded-full border border-white px-5 py-1.5 text-[0.8rem] font-bold uppercase tracking-[0.18em] text-white transition-colors hover:bg-white hover:text-[#3E6143]"
+                            className="titles rounded-full border border-white px-5 py-1.5 text-[0.8rem] font-bold uppercase tracking-[0.18em] text-white transition-colors hover:bg-white hover:text-[#3E6143]"
                         >
                             {CTA.text}
                         </Link>
-                    </nav>
+                    </div>
 
                     {/* Botón mobile */}
                     <button

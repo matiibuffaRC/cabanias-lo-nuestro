@@ -55,7 +55,7 @@ function AccommodationsPage() {
                 <span className="block w-14 h-0.75 bg-[#3E6143]/40 rounded-full my-4" />
 
                 <div className="md:w-140">
-                    <p className="text-[.95rem] text-defect text-[#757575] leading-relaxed px-3">
+                    <p className="text-md text-defect text-[#757575] leading-relaxed px-3">
                         {data.description}
                     </p>
                 </div>
@@ -89,13 +89,13 @@ function AccommodationsPage() {
 
             {/* Llamado a la acción */}
             <div className="text-center px-5 py-12 flex flex-col items-center w-full">
-                <h3 className="titles-and-subtitles text-[1.3rem] font-bold text-[#3E6143]">
+                <h3 className="titles-and-subtitles text-2xl font-bold text-[#3E6143]">
                     ¿Te gustaría reservar {data.title.toLowerCase()}?
                 </h3>
-                <p className="text-[.9rem] text-[#757575] mt-2 max-w-md">
+                <p className="text-md text-[#757575] mt-2 max-w-md">
                     Escribinos y te contamos disponibilidad, precios y todo lo que necesites saber.
                 </p>
-                <a href="https://wa.me/5493564507240?text=Hola%20quisiera%20consultar%20por%20este%20alojamiento" target="_blank" rel="noopener noreferrer" className="mt-5 titles-and-subtitles font-bold bg-[#446b4a] text-white border border-[#3E6143] py-2.5 px-6 rounded-xl hover:bg-[#3E6143] transition-colors duration-200" >
+                <a href="https://wa.me/5493564507240?text=Hola%20quisiera%20consultar%20por%20este%20alojamiento" target="_blank" rel="noopener noreferrer" className="mt-5 titles-and-subtitles font-bold bg-[#446b4a] text-white border border-[#3E6143] py-2.5 px-6 rounded-full hover:bg-[#3E6143] transition-colors duration-200" >
                     Consultar por WhatsApp
                 </a>
             </div>
