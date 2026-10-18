@@ -88,15 +88,62 @@ function AccommodationsPage() {
             </div>
 
             {/* Llamado a la acción */}
-            <div className="text-center px-5 py-12 flex flex-col items-center w-full">
+            <div className="mx-auto my-12 flex w-[90%] max-w-xl flex-col items-center rounded-2xl border border-[#3E6143]/15 bg-[#3E6143]/5 px-6 py-10 text-center">
                 <h3 className="titles-and-subtitles text-2xl font-bold text-[#3E6143]">
                     ¿Te gustaría reservar {data.title.toLowerCase()}?
                 </h3>
-                <p className="text-md text-[#757575] mt-2 max-w-md">
+
+                {/* Línea decorativa */}
+                <span className="mb-3 mt-2 block h-0.5 w-12 rounded-full bg-[#3E6143]/40" aria-hidden="true" />
+
+                <p className="max-w-md text-base text-[#757575]">
                     Escribinos y te contamos disponibilidad, precios y todo lo que necesites saber.
                 </p>
-                <a href="https://wa.me/5493564507240?text=Hola%20quisiera%20consultar%20por%20este%20alojamiento" target="_blank" rel="noopener noreferrer" className="mt-5 titles-and-subtitles font-bold bg-[#446b4a] text-white border border-[#3E6143] py-2.5 px-6 rounded-full hover:bg-[#3E6143] transition-colors duration-200" >
-                    Consultar por WhatsApp
+
+                <a
+                    href={`https://wa.me/5493564507240?text=${encodeURIComponent(`Hola, quisiera consultar por ${data.title.toLowerCase()}`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative mt-6 inline-flex items-center gap-2.5 overflow-hidden rounded-full border border-[#3E6143] bg-[#446b4a] px-7 py-3 titles-and-subtitles font-bold text-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6143] focus-visible:ring-offset-2"
+                >
+                    {/* Fondo que se completa de izquierda a derecha */}
+                    <span
+                        aria-hidden="true"
+                        className="absolute inset-0 origin-left scale-x-0 bg-[#2f4d33] transition-transform duration-500 ease-out group-hover:scale-x-100"
+                    />
+
+                    {/* Icono de chat */}
+                    <svg
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="relative z-10 size-5 transition-transform duration-300 motion-safe:group-hover:-rotate-12 motion-safe:group-hover:scale-110"
+                    >
+                        <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+                    </svg>
+
+                    <span className="relative z-10">Consultar por WhatsApp</span>
+
+                    {/* Flecha que aparece en hover */}
+                    <svg
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="relative z-10 -ml-4 size-4 opacity-0 transition-all duration-300 group-hover:ml-0 group-hover:translate-x-0.5 group-hover:opacity-100"
+                    >
+                        <path d="M5 12h14" />
+                        <path d="m12 5 7 7-7 7" />
+                    </svg>
                 </a>
             </div>
 
