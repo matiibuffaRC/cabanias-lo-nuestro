@@ -44,8 +44,8 @@ function HeaderComponente() {
     // el menú no se desplace al cambiar de opción.
     const desktopLink = (isActive) =>
         `titles block px-3 py-1 text-[0.8rem] uppercase tracking-[0.18em] text-white transition-all duration-300
-         before:invisible before:block before:h-0 before:overflow-hidden before:font-bold before:content-[attr(data-text)]
-         ${isActive ? "font-bold opacity-100" : "font-normal opacity-80 hover:opacity-100"}`;
+        before:invisible before:block before:h-0 before:overflow-hidden before:font-bold before:content-[attr(data-text)]
+        ${isActive ? "font-bold opacity-100" : "font-normal opacity-80 hover:opacity-100"}`;
 
     // La altura depende SOLO del scroll (así el logo no salta al abrir el menú).
     // Con el menú abierto el header se vuelve transparente: el fondo lo da el menú.

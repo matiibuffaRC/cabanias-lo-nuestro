@@ -24,7 +24,7 @@ const SERVICES = [
     { id: "wifi", img: wifiIcon, title: "Wifi", description: "en todo el complejo" },
     { id: "tv", img: tvIcon, title: "TV", description: "para tu comodidad" },
     { id: "parrillas", img: grillIcon, title: "Parrillas", description: "individuales" },
-    { id: "aire", img: airIcon, title: "Aire acondicionado", description: "para tu confort" },
+    { id: "aire", img: airIcon, title: "Acondicionado", description: "para tu confort" },
 ];
 
 const SECTIONS = [
@@ -104,10 +104,10 @@ function InicieComponent() {
 
             {/* Cierre con logo */}
             <div className="w-full flex flex-col items-center py-14 px-5 text-center">
-                <h2 className="titles-and-subtitles font-bold text-[1.4rem] text-primary mb-2 fade-down">
+                <h2 className="titles-and-subtitles font-bold text-3xl lg:text-4xl text-primary mb-2 fade-down">
                     En el corazón de Mina Clavero
                 </h2>
-                <p className="text-muted max-w-md mb-6 fade-down" style={{ animationDelay: "0.1s" }}>
+                <p className="text-muted text-lg max-w-md mb-6 fade-down" style={{ animationDelay: "0.1s" }}>
                     A minutos de los principales atractivos del Valle de Traslasierra.
                 </p>
                 <img
