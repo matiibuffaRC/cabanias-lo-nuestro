@@ -26,7 +26,7 @@ export const accommodation = [
         description:
             "Nuestro complejo vacacional está en la entrada de la ciudad de Mina Clavero, a 5 minutos del centro y de los principales ríos y supermercados de la zona. Contamos con 2 cabañas y 3 dormis para brindarte el alojamiento que estás buscando.",
         informationText:
-                "Ofrecemos diferentes servicios generales para nuestros huéspedes, así como servicios particulares según el tipo de alojamiento, ya sea cabaña o dormitorio.",
+            "Ofrecemos diferentes servicios generales para nuestros huéspedes, así como servicios particulares según el tipo de alojamiento, ya sea cabaña o dormitorio.",
         services: [
             { img: carIcon, title: "Estacionamiento" },
             { img: wifiIcon, title: "Wifi" },
@@ -36,6 +36,28 @@ export const accommodation = [
             { img: swimmingPoolIcon, title: "Pileta" },
         ],
         photos: [complejoPhotoFrente, complejoPhotoPatio, complejoPhotoPileta],
+
+        // 👇 NUEVO
+        highlights: [
+            {
+                img: complejoPhotoFrente,
+                alt: "Frente del complejo",
+                title: "Ubicación ideal",
+                text: "A la entrada de Mina Clavero, a 5 minutos del centro, de los principales ríos y de los supermercados de la zona.",
+            },
+            {
+                img: complejoPhotoPatio,
+                alt: "Patio del complejo",
+                title: "Patio y parrillas",
+                text: "Espacios al aire libre para compartir un asado, tomar unos mates y disfrutar de las tardes serranas.",
+            },
+            {
+                img: complejoPhotoPileta,
+                alt: "Pileta del complejo",
+                title: "Pileta",
+                text: "Un lugar para refrescarse y relajarse después de un día de ríos y paseos.",
+            },
+        ],
     },
     {
         slug: "cabins",
@@ -55,13 +77,35 @@ export const accommodation = [
             { img: ToysIcon, title: "Juegos para los más chicos" },
         ],
         photos: [cabaniaPhotoGarage, cabaniaPhotoIndoor, cabaniaPhotoIndoor2],
+
+        // 👇 NUEVO
+        highlights: [
+            {
+                img: cabaniaPhotoIndoor,
+                alt: "Interior de la cabaña",
+                title: "Cocina-comedor equipada",
+                text: "Con frigobar y la vajilla necesaria para hasta cuatro personas, además cuenta con horno y microondas para que te sientas como en casa.",
+            },
+            {
+                img: cabaniaPhotoIndoor2,
+                alt: "Habitación de la cabaña",
+                title: "Ambientes cómodos",
+                text: "Habitaciones pensadas para descansar, con aire acondicionado y DirecTV.",
+            },
+            {
+                img: cabaniaPhotoGarage,
+                alt: "Cochera de la cabaña",
+                title: "Cochera, asador y tender",
+                text: "Cada cabaña tiene su cochera individual, su asador y un tender de ropa privado.",
+            },
+        ],
     },
     {
         slug: "dormis",
         title: "Dormis",
         description:
             "Nuestros dormis se encuentran con salida a la calle Tanti, paralela a la Cruz del Eje, en una zona tranquila con muy poco tránsito debido a sus pocas salidas. Tienen capacidad para hasta cuatro personas y cuentan con la vajilla necesaria para disfrutar los desayunos dentro del complejo. Además, los huéspedes pueden utilizar el quincho y los asadores compartidos, así como los tendederos y el acceso a la pileta.",
-        zinformationText: "",
+        informationText: "", // 👈 corregido (antes decía "zinformationText")
         services: [
             { img: carIcon, title: "Estacionamiento" },
             { img: wifiIcon, title: "Wifi" },
@@ -70,5 +114,27 @@ export const accommodation = [
             { img: swimmingPoolIcon, title: "Acceso a la pileta" },
         ],
         photos: [dormiPhoto, dormiPhoto2, dormiPhoto3],
+
+        // 👇 NUEVO
+        highlights: [
+            {
+                img: dormiPhoto,
+                alt: "Interior del dormi",
+                title: "Capacidad para cuatro personas",
+                text: "Cuentan con la vajilla necesaria para disfrutar los desayunos dentro del complejo.",
+            },
+            {
+                img: dormiPhoto2,
+                alt: "Dormi",
+                title: "Zona tranquila",
+                text: "Con salida a la calle Tanti, paralela a la Cruz del Eje, con muy poco tránsito.",
+            },
+            {
+                img: dormiPhoto3,
+                alt: "Espacios compartidos",
+                title: "Quincho y asadores compartidos",
+                text: "Los huéspedes pueden usar el quincho, los asadores, los tendederos y la pileta.",
+            },
+        ],
     },
 ];

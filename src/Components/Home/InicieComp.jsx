@@ -78,7 +78,7 @@ function InicieComponent() {
                     Lo Nuestro, complejo de alojamiento en Traslasierra
                 </h2>
                 <span className="block w-14 h-0.75 bg-primary/40 rounded-full mx-auto mb-3" />
-                <p className="titles text-[1.1rem] text-muted px-10 text-[#3E6143] font-semibold">
+                <p className="titles text-[1.1rem] text-muted px-10 text-[#757575] font-semibold">
                     Somos un complejo vacacional único ubicado a la entrada de Mina Clavero desde el Valle de Traslasierra.
                 </p>
             </div>

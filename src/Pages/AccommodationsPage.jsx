@@ -4,7 +4,84 @@ import { accommodation } from "../data/accommodation";
 import CaruselImagesComponente from "../Components/Home/CaruselImagesComp";
 import WhatsAppFloatingButton from "../Components/WppButton";
 
-// ...
+/* Hace aparecer el contenido una sola vez, cuando entra en pantalla */
+function Reveal({ children, className = "", delay = 0 }) {
+    const ref = useRef(null);
+    const [visible, setVisible] = useState(false);
+
+    useEffect(() => {
+        const el = ref.current;
+        if (!el) return;
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setVisible(true);
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.2 }
+        );
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, []);
+
+    return (
+        <div
+            ref={ref}
+            className={`transition-all duration-700 ease-out motion-reduce:transition-none ${
+                visible
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-8 motion-reduce:opacity-100 motion-reduce:translate-y-0"
+            } ${className}`}
+            style={{ transitionDelay: `${delay}ms` }}
+        >
+            {children}
+        </div>
+    );
+}
+
+/* Un bloque foto + texto. Los impares se invierten en desktop */
+function HighlightBlock({ item, index }) {
+    const reversed = index % 2 === 1;
+
+    return (
+        <Reveal>
+            <article
+                className={`flex flex-col items-center gap-6 md:gap-10 ${
+                    reversed ? "md:flex-row-reverse" : "md:flex-row"
+                }`}
+            >
+                {/* Foto */}
+                <div className="group w-full md:w-1/2 overflow-hidden rounded-2xl shadow-md border border-[#3E6143]/10">
+                    <img
+                        src={item.img}
+                        alt={item.alt ?? item.title}
+                        loading="lazy"
+                        className="aspect-4/3 w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none"
+                    />
+                </div>
+
+                {/* Texto */}
+                <div className="w-full md:w-1/2 text-center md:text-left px-2">
+                    <span className="titles text-[.85rem] font-bold tracking-widest text-[#3E6143]/50">
+                        {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <h3 className="titles mt-1 text-2xl font-bold text-[#3E6143]">
+                        {item.title}
+                    </h3>
+                    <span
+                        className="mx-auto md:mx-0 my-3 block h-0.75 w-12 rounded-full bg-[#3E6143]/40"
+                        aria-hidden="true"
+                    />
+                    <p className="text-lg leading-relaxed text-[#757575]">
+                        {item.text}
+                    </p>
+                </div>
+            </article>
+        </Reveal>
+    );
+}
+
 function AccommodationsPage() {
     const { tipo } = useParams();
     const [servicesVisible, setServicesVisible] = useState(false);
@@ -55,11 +132,31 @@ function AccommodationsPage() {
                 <span className="block w-14 h-0.75 bg-[#3E6143]/40 rounded-full my-4" />
 
                 <div className="md:w-140">
-                    <p className="text-md text-defect text-[#757575] leading-relaxed px-3">
+                    <p className="text-md text-defect text-[#757575] font-semibold text-lg leading-relaxed px-3">
                         {data.description}
                     </p>
                 </div>
             </div>
+
+            {/* Galería con descripciones */}
+            {data.highlights?.length > 0 && (
+                <section className="w-full max-w-4xl px-5 py-10 flex flex-col items-center">
+                    <h2 className="titles text-[1.8rem] font-bold text-[#3E6143] text-center">
+                        Conocé el alojamiento
+                    </h2>
+                    <span className="block w-14 h-0.75 bg-[#3E6143]/40 rounded-full my-4" />
+
+                    <div className="mt-6 flex w-full flex-col gap-12 md:gap-16">
+                        {data.highlights.map((item, index) => (
+                            <HighlightBlock
+                                key={`${data.slug}-${index}`}
+                                item={item}
+                                index={index}
+                            />
+                        ))}
+                    </div>
+                </section>
+            )}
 
             {/* Servicios */}
             <div className="text-center px-5 py-10 flex flex-col items-center w-full bg-white/40">
@@ -67,15 +164,26 @@ function AccommodationsPage() {
                     Servicios ofrecidos
                 </h2>
 
-                <div className="md:w-140">
-                    <h3 className="text-[.9rem] text-defect font-bold text-[#757575] my-2 px-3">
-                        {data.informationText}
-                    </h3>
-                </div>
+                {data.informationText && (
+                    <div className="md:w-140">
+                        <h3 className="text-[.9rem] text-defect font-bold text-[#757575] my-2 px-3">
+                            {data.informationText}
+                        </h3>
+                    </div>
+                )}
 
-                <div ref={servicesRef} className="mt-8 grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 lg:w-2xl w-full max-w-2xl" >
+                <div
+                    ref={servicesRef}
+                    className="mt-8 grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 lg:w-2xl w-full max-w-2xl"
+                >
                     {data.services.map((service, index) => (
-                        <div key={index} className={`service-card flex flex-col items-center gap-3 bg-white rounded-2xl p-5 shadow-sm border border-[#3E6143]/10 transition-transform duration-200 hover:-translate-y-1 hover:shadow-md ${ servicesVisible ? "fade-down" : "opacity-0" }`} style={{ animationDelay: `${index * 0.12}s` }} >
+                        <div
+                            key={index}
+                            className={`service-card flex flex-col items-center gap-3 bg-white rounded-2xl p-5 shadow-sm border border-[#3E6143]/10 transition-transform duration-200 hover:-translate-y-1 hover:shadow-md ${
+                                servicesVisible ? "fade-down" : "opacity-0"
+                            }`}
+                            style={{ animationDelay: `${index * 0.12}s` }}
+                        >
                             <div className="h-14 w-14 rounded-full bg-[#3E6143]/10 flex items-center justify-center">
                                 <img src={service.img} alt="" className="h-7 w-7" />
                             </div>
