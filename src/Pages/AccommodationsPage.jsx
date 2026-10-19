@@ -33,7 +33,7 @@ function AccommodationsPage() {
     if (!data) {
         return (
             <div className="min-h-screen flex flex-col items-center justify-center bg-[#F1F3EE] text-center px-5">
-                <h1 className="titles-and-subtitles text-[1.8rem] font-bold text-[#3E6143]">
+                <h1 className="titles text-[1.8rem] font-bold text-[#3E6143]">
                     Alojamiento no encontrado
                 </h1>
                 <p className="text-[#757575] mt-2">
@@ -49,7 +49,7 @@ function AccommodationsPage() {
 
             {/* Encabezado */}
             <div className="text-center px-5 pt-10 pb-6 flex flex-col items-center w-full fade-down">
-                <h1 className="text-[2rem] titles-and-subtitles font-bold text-[#3E6143]">
+                <h1 className="text-[2rem] titles font-bold text-[#3E6143]">
                     {data.title}
                 </h1>
                 <span className="block w-14 h-0.75 bg-[#3E6143]/40 rounded-full my-4" />
@@ -63,7 +63,7 @@ function AccommodationsPage() {
 
             {/* Servicios */}
             <div className="text-center px-5 py-10 flex flex-col items-center w-full bg-white/40">
-                <h2 className="titles-and-subtitles text-[1.8rem] font-bold text-[#3E6143]">
+                <h2 className="titles text-[1.8rem] font-bold text-[#3E6143]">
                     Servicios ofrecidos
                 </h2>
 
@@ -89,7 +89,7 @@ function AccommodationsPage() {
 
             {/* Llamado a la acción */}
             <div className="mx-auto my-12 flex w-[90%] max-w-xl flex-col items-center rounded-2xl border border-[#3E6143]/15 bg-[#3E6143]/5 px-6 py-10 text-center">
-                <h3 className="titles-and-subtitles text-2xl font-bold text-[#3E6143]">
+                <h3 className="titles text-2xl font-bold text-[#3E6143]">
                     ¿Te gustaría reservar {data.title.toLowerCase()}?
                 </h3>
 
@@ -104,7 +104,7 @@ function AccommodationsPage() {
                     href={`https://wa.me/5493564507240?text=${encodeURIComponent(`Hola, quisiera consultar por ${data.title.toLowerCase()}`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group relative mt-6 inline-flex items-center gap-2.5 overflow-hidden rounded-full border border-[#3E6143] bg-[#446b4a] px-7 py-3 titles-and-subtitles font-bold text-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6143] focus-visible:ring-offset-2"
+                    className="group relative mt-6 inline-flex items-center gap-2.5 overflow-hidden rounded-full border border-[#3E6143] bg-[#446b4a] px-7 py-3 titles font-bold text-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6143] focus-visible:ring-offset-2"
                 >
                     {/* Fondo que se completa de izquierda a derecha */}
                     <span

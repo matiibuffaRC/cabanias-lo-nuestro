@@ -1,12 +1,12 @@
 :root {
-  --color-bg: #F1F3EE;
-  --color-primary: #3E6143;
-  --color-primary-dark: #2A4530;
-  --color-accent: #C97B3D;
-  --color-whatsapp: #2DB742;
-  --color-whatsapp-dark: #229636;
-  --shadow-soft: 0 8px 24px rgba(62, 97, 67, 0.12);
-  --shadow-strong: 0 12px 32px rgba(62, 97, 67, 0.22);
+    --color-bg: #F1F3EE;
+    --color-primary: #3E6143;
+    --color-primary-dark: #2A4530;
+    --color-accent: #C97B3D;
+    --color-whatsapp: #2DB742;
+    --color-whatsapp-dark: #229636;
+    --shadow-soft: 0 8px 24px rgba(62, 97, 67, 0.12);
+    --shadow-strong: 0 12px 32px rgba(62, 97, 67, 0.22);
 }
 
 /* ===== Animaciones base (sin cambios de comportamiento) ===== */

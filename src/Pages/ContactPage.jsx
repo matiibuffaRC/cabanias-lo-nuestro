@@ -7,7 +7,7 @@ import GmailIcon from "../icons/gmail.svg";
 
 const CONTACTS = [
     { icon: WhatsAppIcon, title: "WhatsApp", name: "Cristian", href: "https://wa.me/5493564507240" },
-    { icon: FacebookIcon, title: "Facebook", name: "Lo Nuestro", href: "#" },
+    { icon: FacebookIcon, title: "Facebook", name: "Lo Nuestro", href: "https://www.facebook.com/p/Lo-Nuestro-100054220102040/" },
     { icon: GmailIcon, title: "Gmail", name: "Lo Nuestro", href: "#" },
 ];
 
@@ -20,7 +20,7 @@ function ContactPage() {
             </div>
 
             <div className="text-center py-10 px-5">
-                <h2 className="text-[2rem] titles-and-subtitles font-bold text-[#3E6143] fade-down">
+                <h2 className="text-[2rem] titles font-bold text-[#3E6143] fade-down">
                     Contactanos
                 </h2>
                 <p className="text-[#3E6143]/70 max-w-md mx-auto mt-2 fade-down" style={{ animationDelay: "0.1s" }}>
@@ -35,10 +35,10 @@ function ContactPage() {
                                 <img src={contact.icon} alt="" className="w-6 h-6" />
                             </div>
                             <div className="flex flex-col text-left min-w-0">
-                                <h3 className="titles-and-subtitles font-bold text-[1rem] text-[#3E6143] truncate">
+                                <h3 className="titles font-bold text-[1rem] text-[#3E6143] truncate">
                                     {contact.title}
                                 </h3>
-                                <h3 className="titles-and-subtitles text-[.9rem] text-[#3E6143]/60 truncate">
+                                <h3 className="titles text-[.9rem] text-[#3E6143]/60 truncate">
                                     {contact.name}
                                 </h3>
                             </div>

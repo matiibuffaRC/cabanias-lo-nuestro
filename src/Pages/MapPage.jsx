@@ -50,7 +50,7 @@ function SectionHeading({ eyebrow, title }) {
             <span className="inline-block text-[.75rem] tracking-[0.2em] uppercase font-semibold text-[#3E6143]/70 mb-2">
                 {eyebrow}
             </span>
-            <h3 className="titles-and-subtitles font-bold text-[#3E6143] text-[1.6rem] md:text-[1.9rem] leading-tight">
+            <h3 className="titles font-bold text-[#3E6143] text-[1.6rem] md:text-[1.9rem] leading-tight">
                 {title}
             </h3>
             <span className="block w-14 h-0.75 bg-[#3E6143]/40 rounded-full mx-auto mt-3" />
@@ -68,7 +68,7 @@ function MapPage() {
                 <span className="inline-block text-[.75rem] tracking-[0.2em] uppercase font-semibold text-[#3E6143]/70 mb-2">
                     Valle de Traslasierra · Córdoba
                 </span>
-                <h2 className="titles-and-subtitles font-bold text-[#3E6143] text-[2rem] md:text-[2.5rem] leading-tight my-2">
+                <h2 className="titles font-bold text-[#3E6143] text-[2rem] md:text-[2.5rem] leading-tight my-2">
                     Cómo llegar a Mina Clavero
                 </h2>
                 <span className="block w-14 h-0.75 bg-[#3E6143]/40 rounded-full mx-auto my-4" />
@@ -134,7 +134,7 @@ function MapPage() {
                                 <span className="inline-block text-[.65rem] tracking-[0.18em] uppercase font-semibold bg-white/15 rounded-full px-2.5 py-0.5 mb-1">
                                     {route.badge}
                                 </span>
-                                <h4 className="titles-and-subtitles font-bold text-[1.15rem] leading-tight">
+                                <h4 className="titles font-bold text-[1.15rem] leading-tight">
                                     {route.title}
                                 </h4>
                             </div>

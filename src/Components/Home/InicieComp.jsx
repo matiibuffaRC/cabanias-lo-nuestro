@@ -63,10 +63,10 @@ function InicieComponent() {
                 <div className="absolute inset-0 bg-linear-to-t from-[#2A4530]/60 via-[#2A4530]/10 to-transparent" />
 
                 <div className="absolute inset-x-0 bottom-8 text-center px-5 fade-down">
-                    <p className="titles-and-subtitles text-white/90 text-[.95rem] md:text-[1.05rem] tracking-wide uppercase">
+                    <p className="titles text-white/90 text-[.95rem] md:text-[1.05rem] tracking-wide uppercase">
                         Mina Clavero · Traslasierra
                     </p>
-                    <h1 className="titles-and-subtitles text-white font-bold text-[1.6rem] md:text-[2.2rem] drop-shadow-sm">
+                    <h1 className="titles text-white font-bold text-[1.6rem] md:text-[2.2rem] drop-shadow-sm">
                         Tu descanso empieza acá
                     </h1>
                 </div>
@@ -74,18 +74,18 @@ function InicieComponent() {
 
             {/* Presentación */}
             <div className="my-10 p-4 max-w-150 text-center fade-down">
-                <h2 className="titles-and-subtitles font-bold text-[1.9rem] text-primary py-2">
+                <h2 className="titles font-bold text-[1.9rem] text-primary py-2 text-[#3E6143]">
                     Lo Nuestro, complejo de alojamiento en Traslasierra
                 </h2>
-                <span className="block w-14 h-0.75 bg-primary/40 rounded-full mx-auto my-3" />
-                <p className="titles-and-subtitles text-[1.1rem] text-muted px-10">
+                <span className="block w-14 h-0.75 bg-primary/40 rounded-full mx-auto mb-3" />
+                <p className="titles text-[1.1rem] text-muted px-10 text-[#3E6143] font-semibold">
                     Somos un complejo vacacional único ubicado a la entrada de Mina Clavero desde el Valle de Traslasierra.
                 </p>
             </div>
 
             {/* Servicios */}
             <div className="w-full bg-[#F7F8F5] py-10 flex flex-col justify-center items-center">
-                <h2 className="titles-and-subtitles text-center font-bold text-[1.6rem] text-primary mb-6 fade-down">
+                <h2 className="titles text-center font-bold text-[1.6rem] text-primary mb-6 fade-down text-[#3E6143]">
                     Lo que ofrecemos
                 </h2>
                 <div className="grid grid-cols-2 md:grid-cols-6 md:mx-10 gap-10 p-2 max-w-6xl">
@@ -104,10 +104,10 @@ function InicieComponent() {
 
             {/* Cierre con logo */}
             <div className="w-full flex flex-col items-center py-14 px-5 text-center">
-                <h2 className="titles-and-subtitles font-bold text-3xl lg:text-4xl text-primary mb-2 fade-down">
+                <h2 className="titles font-bold text-3xl lg:text-4xl text-primary mb-2 fade-down text-[#3E6143]">
                     En el corazón de Mina Clavero
                 </h2>
-                <p className="text-muted text-lg max-w-md mb-6 fade-down" style={{ animationDelay: "0.1s" }}>
+                <p className="text-muted text-lg max-w-md mb-6 fade-down font-semibold text-[#3E6143]" style={{ animationDelay: "0.1s" }}>
                     A minutos de los principales atractivos del Valle de Traslasierra.
                 </p>
                 <img

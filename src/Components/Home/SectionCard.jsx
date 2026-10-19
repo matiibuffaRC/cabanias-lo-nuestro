@@ -24,14 +24,14 @@ function SectionCard({ section, index }) {
             <div
                 className={`absolute w-[90%] top-10 lg:w-150 bg-[#3E6143]/50 backdrop-blur-[2px] p-5 text-white flex flex-col justify-center rounded-xl md:max-w-1/2 shadow-lg ring-1 ring-white/20 ${position}`}
             >
-                <h2 className="titles-and-subtitles text-[1.8rem] lg:text-[2rem] font-bold pt-2">
+                <h2 className="titles text-[1.8rem] lg:text-[2rem] font-bold pt-2">
                     {section.title}
                 </h2>
 
                 {/* Línea decorativa */}
                 <span className="block h-0.5 w-full rounded-full bg-white/60 mb-3" aria-hidden="true" />
 
-                <p className="titles-and-subtitles text-[1rem] md:text-[.9rem] lg:text-[1.2rem] leading-relaxed">
+                <p className="titles text-[1rem] md:text-[.9rem] lg:text-[1.2rem] leading-relaxed">
                     {section.description}
                 </p>
 
@@ -39,7 +39,7 @@ function SectionCard({ section, index }) {
                     <Link
                         to={`/alojamiento/${section.route}`}
                         aria-label={`Saber más sobre ${section.title}`}
-                        className="group relative inline-flex items-center gap-2 overflow-hidden titles-and-subtitles font-bold bg-primary-light border border-primary py-2 px-5 rounded-full shadow-md transition-all duration-300 hover:shadow-lg active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#3E6143]"
+                        className="group relative inline-flex items-center gap-2 overflow-hidden titles font-bold bg-primary-light border border-primary py-2 px-5 rounded-full shadow-md transition-all duration-300 hover:shadow-lg active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#3E6143]"
                     >
                         {/* Fondo que se completa de izquierda a derecha */}
                         <span

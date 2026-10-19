@@ -71,7 +71,7 @@ function FooterComponent() {
             <div className="max-w-5xl mx-auto px-6 pt-10 pb-6">
                 {/* Marca */}
                 <div className="text-center mb-8">
-                    <h2 className="titles-and-subtitles font-bold text-[2rem] md:text-[2.4rem] leading-tight">
+                    <h2 className="titles font-bold text-[2rem] md:text-[2.4rem] leading-tight">
                         Lo Nuestro
                     </h2>
                     <span className="block w-14 h-0.75 bg-[#F1F3EE]/40 rounded-full mx-auto mt-3" />
@@ -96,7 +96,7 @@ function FooterComponent() {
                                     : "opacity-0"
                             }`}
                         >
-                            <h3 className="titles-and-subtitles font-bold text-[1rem] md:text-[1.2rem] uppercase tracking-[0.12em] mb-3">
+                            <h3 className="titles font-bold text-[1rem] md:text-[1.2rem] uppercase tracking-[0.12em] mb-3">
                                 {column.title}
                             </h3>
                             <ul className="flex flex-col gap-2">
@@ -117,7 +117,7 @@ function FooterComponent() {
 
                 {/* Redes */}
                 <div className="flex flex-col items-center pt-8">
-                    <h3 className="titles-and-subtitles font-bold text-[1.2rem]">
+                    <h3 className="titles font-bold text-[1.2rem]">
                         ¡Sigamos conectados!
                     </h3>
 

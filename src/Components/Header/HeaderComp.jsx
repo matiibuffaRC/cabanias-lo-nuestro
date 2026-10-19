@@ -43,13 +43,13 @@ function HeaderComponente() {
     // El pseudo-elemento ::before reserva el ancho del texto en negrita para que
     // el menú no se desplace al cambiar de opción.
     const desktopLink = (isActive) =>
-        `titles block px-3 py-1 text-[0.8rem] uppercase tracking-[0.18em] text-white transition-all duration-300
+        `titles block px-3 py-1 text-xs uppercase tracking-[0.18em] text-white transition-all duration-300
         before:invisible before:block before:h-0 before:overflow-hidden before:font-bold before:content-[attr(data-text)]
         ${isActive ? "font-bold opacity-100" : "font-normal opacity-80 hover:opacity-100"}`;
 
     // La altura depende SOLO del scroll (así el logo no salta al abrir el menú).
     // Con el menú abierto el header se vuelve transparente: el fondo lo da el menú.
-    const headerHeight = scrolled ? "h-16" : "h-20";
+    const headerHeight = scrolled ? "h-16" : "h-18";
     const headerSurface = menuOpen
         ? "border-transparent bg-transparent"
         : scrolled
@@ -80,7 +80,7 @@ function HeaderComponente() {
                     {/* Logo: el padding da el mismo aire a ambos lados */}
                     <Link
                         to="/"
-                        className="titles relative z-30 text-[1.3rem] font-bold tracking-wider text-white drop-shadow-sm lg:px-10 lg:text-[1.4rem]"
+                        className="titles relative z-30 text-xl font-bold pb-1 tracking-wider text-white drop-shadow-sm lg:px-10 lg:text-2xl"
                     >
                         Lo nuestro
                     </Link>
