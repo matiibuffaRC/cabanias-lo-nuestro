@@ -57,54 +57,61 @@ const SECTIONS = [
 function HomeContent() {
     return (
         <div className="bg-surface flex flex-col items-center relative bg-[#F1F3EE]">
-            {/* Hero */}
-            <div className="h-110 relative w-full overflow-hidden">
+            {/* Hero: queda fijo y el resto del contenido lo tapa al scrollear */}
+            <div className="sticky top-0 z-0 h-110 w-full overflow-hidden">
                 <img src={presentationImage} alt="Patio de atras" className="hero-image w-full h-full object-cover object-center" />
-                <div className="absolute inset-0 bg-linear-to-t from-[#2A4530]/60 via-[#2A4530]/10 to-transparent" />
 
-                <div className="absolute inset-x-0 bottom-7 flex flex-col items-center px-5 text-center fade-down md:bottom-9">
-                <p className="titles text-[.8rem] font-semibold uppercase tracking-[0.2em] text-white/90 md:text-[.95rem]">
+                {/* Velo general: baja el brillo de la foto para que el texto blanco destaque */}
+                <div className="absolute inset-0 bg-[#1F3524]/25" />
+                {/* Degradé inferior más profundo, donde vive el texto */}
+                <div className="absolute inset-0 bg-linear-to-t from-[#1F3524]/70 via-[#1F3524]/20 via-45% to-transparent" />
+
+                <div className="absolute inset-x-0 bottom-14 flex flex-col items-center px-5 text-center fade-down md:bottom-16">
+                    <p className="titles text-[.8rem] font-semibold uppercase tracking-[0.2em] text-white [text-shadow:0_1px_8px_rgba(0,0,0,0.6)] md:text-[.95rem]">
                         Mina Clavero · Traslasierra
                     </p>
-                <h1 className="titles mt-2 text-[1.8rem] font-bold text-white drop-shadow-sm md:text-[2.6rem]">
+                    <h1 className="titles mt-2 text-[1.8rem] font-bold text-white [text-shadow:0_2px_14px_rgba(0,0,0,0.55)] md:text-[2.6rem]">
                         Tu descanso empieza acá
                     </h1>
-                <p className="mt-2 max-w-xl text-sm leading-relaxed text-white/90 md:text-base">
-                    Cabañas, dormis y momentos para disfrutar Traslasierra.
-                </p>
-                <Link
-                    to="/alojamiento/complejo"
-                    className="titles mt-5 inline-flex items-center gap-2 rounded-full border border-white/80 bg-white px-6 py-3 text-sm font-bold text-[#3E6143] shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#F1F3EE] hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#3E6143]"
-                >
-                    Conocé nuestros alojamientos
-                    <svg
-                        aria-hidden="true"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="size-4"
+                    <p className="mt-2 max-w-xl text-sm font-medium leading-relaxed text-white [text-shadow:0_1px_8px_rgba(0,0,0,0.6)] md:text-base">
+                        Cabañas, dormis y momentos para disfrutar Traslasierra.
+                    </p>
+                    <Link
+                        to="/alojamiento/complejo"
+                        className="titles mt-5 inline-flex items-center gap-2 rounded-full border border-white/80 bg-white px-6 py-3 text-sm font-bold text-[#3E6143] shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#F1F3EE] hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#3E6143]"
                     >
-                        <path d="M5 12h14" />
-                        <path d="m12 5 7 7-7 7" />
-                    </svg>
-                </Link>
+                        Conocé nuestros alojamientos
+                        <svg
+                            aria-hidden="true"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="size-4"
+                        >
+                            <path d="M5 12h14" />
+                            <path d="m12 5 7 7-7 7" />
+                        </svg>
+                    </Link>
                 </div>
             </div>
+
+            {/* Todo lo que sigue se desliza por encima del hero */}
+            <div className="relative z-10 -mt-8 flex w-full flex-col items-center rounded-t-4xl bg-[#F1F3EE]">
 
             {/* Presentación */}
             <div className="max-w-3xl px-5 py-14 text-center fade-down md:py-16">
                 <p className="mb-2 text-[.75rem] font-semibold uppercase tracking-[0.2em] text-[#3E6143]/65">
-                Tu lugar en Traslasierra
+                    Tu lugar en Traslasierra
                 </p>
                 <h2 className="titles py-2 text-[1.8rem] font-bold text-[#3E6143] md:text-[2.1rem]">
-                Lo Nuestro, complejo de alojamiento en Traslasierra
+                    Lo Nuestro, complejo de alojamiento en Traslasierra
                 </h2>
                 <span className="mx-auto mb-4 block h-0.75 w-14 rounded-full bg-[#3E6143]/40" />
                 <p className="mx-auto max-w-2xl text-base font-medium leading-relaxed text-[#757575] md:text-lg">
-                Somos un complejo vacacional único ubicado a la entrada de Mina Clavero desde el Valle de Traslasierra.
+                    Somos un complejo vacacional único ubicado a la entrada de Mina Clavero desde el Valle de Traslasierra.
                 </p>
             </div>
 
@@ -143,6 +150,8 @@ function HomeContent() {
                     className="w-60 h-60 md:w-80 md:h-80 fade-down"
                     style={{ animationDelay: "0.2s" }}
                 />
+            </div>
+
             </div>
 
             <WhatsAppFloatingButton />

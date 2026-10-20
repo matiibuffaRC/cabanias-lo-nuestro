@@ -44,122 +44,128 @@ function AccommodationContent({ tipo }) {
 
     return (
         <div className="bg-[#F1F3EE] flex flex-col items-center">
-            <ImageCarousel images={data.photos} />
-
-            {/* Encabezado */}
-            <div className="text-center px-5 pt-10 pb-6 flex flex-col items-center w-full fade-down">
-                <h1 className="text-[2rem] titles font-bold text-[#3E6143]">
-                    {data.title}
-                </h1>
-                <span className="block w-14 h-0.75 bg-[#3E6143]/40 rounded-full my-4" />
-
-                <div className="md:w-140 lg:w-170">
-                    <p className="text-md text-defect text-[#757575] font-semibold text-lg leading-relaxed px-3">
-                        {data.description}
-                    </p>
-                </div>
+            {/* Carrusel: queda fijo y el resto del contenido lo tapa al scrollear */}
+            <div className="sticky top-0 z-0 w-full">
+                <ImageCarousel images={data.photos} />
             </div>
 
-            {/* Galería con descripciones */}
-            {data.highlights?.length > 0 && (
-                <AccommodationHighlights highlights={data.highlights} slug={data.slug} />
-            )}
+            {/* Todo lo que sigue se desliza por encima del carrusel */}
+            <div className="relative z-10 -mt-8 flex w-full flex-col items-center rounded-t-[2rem] bg-[#F1F3EE]">
+                {/* Encabezado */}
+                <div className="text-center px-5 pt-10 pb-6 flex flex-col items-center w-full fade-down">
+                    <h1 className="text-[2rem] titles font-bold text-[#3E6143]">
+                        {data.title}
+                    </h1>
+                    <span className="block w-14 h-0.75 bg-[#3E6143]/40 rounded-full my-4" />
 
-            {/* Servicios */}
-            <div className="text-center px-5 py-10 flex flex-col items-center w-full bg-white/40">
-                <h2 className="titles text-[1.8rem] font-bold text-[#3E6143]">
-                    Servicios ofrecidos
-                </h2>
-
-                {data.informationText && (
-                    <div className="md:w-140">
-                        <h3 className="text-[.9rem] text-defect font-bold text-[#757575] my-2 px-3">
-                            {data.informationText}
-                        </h3>
+                    <div className="md:w-140 lg:w-170">
+                        <p className="text-md text-defect text-[#757575] font-semibold text-lg leading-relaxed px-3">
+                            {data.description}
+                        </p>
                     </div>
+                </div>
+
+                {/* Galería con descripciones */}
+                {data.highlights?.length > 0 && (
+                    <AccommodationHighlights highlights={data.highlights} slug={data.slug} />
                 )}
 
-                <div
-                    ref={servicesRef}
-                    className="mt-8 grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 lg:w-2xl w-full max-w-2xl"
-                >
-                    {data.services.map((service, index) => (
-                        <div
-                            key={index}
-                            className={`service-card flex flex-col items-center gap-3 bg-white rounded-2xl p-5 shadow-sm border border-[#3E6143]/10 transition-transform duration-200 hover:-translate-y-1 hover:shadow-md ${
-                                servicesVisible ? "fade-down" : "opacity-0"
-                            }`}
-                            style={{ animationDelay: `${index * 0.12}s` }}
-                        >
-                            <div className="h-14 w-14 rounded-full bg-[#3E6143]/10 flex items-center justify-center">
-                                <img src={service.img} alt="" className="h-7 w-7" />
-                            </div>
-                            <h3 className="text-[.9rem] font-bold text-defect text-[#3E6143] leading-tight">
-                                {service.title}
+                {/* Servicios */}
+                <div className="text-center px-5 py-10 flex flex-col items-center w-full bg-white/40">
+                    <h2 className="titles text-[1.8rem] font-bold text-[#3E6143]">
+                        Servicios ofrecidos
+                    </h2>
+
+                    {data.informationText && (
+                        <div className="md:w-140">
+                            <h3 className="text-[.9rem] text-defect font-bold text-[#757575] my-2 px-3">
+                                {data.informationText}
                             </h3>
                         </div>
-                    ))}
+                    )}
+
+                    <div
+                        ref={servicesRef}
+                        className="mt-8 grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 lg:w-2xl w-full max-w-2xl"
+                    >
+                        {data.services.map((service, index) => (
+                            <div
+                                key={index}
+                                className={`service-card flex flex-col items-center gap-3 bg-white rounded-2xl p-5 shadow-sm border border-[#3E6143]/10 transition-transform duration-200 hover:-translate-y-1 hover:shadow-md ${
+                                    servicesVisible ? "fade-down" : "opacity-0"
+                                }`}
+                                style={{ animationDelay: `${index * 0.12}s` }}
+                            >
+                                <div className="h-14 w-14 rounded-full bg-[#3E6143]/10 flex items-center justify-center">
+                                    <img src={service.img} alt="" className="h-7 w-7" />
+                                </div>
+                                <h3 className="text-[.9rem] font-bold text-defect text-[#3E6143] leading-tight">
+                                    {service.title}
+                                </h3>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-            </div>
 
-            {/* Llamado a la acción */}
-            <div className="mx-auto my-12 flex w-[90%] max-w-xl flex-col items-center rounded-2xl border border-[#3E6143]/15 bg-[#3E6143]/5 px-6 py-10 text-center">
-                <h3 className="titles text-2xl font-bold text-[#3E6143]">
-                    ¿Te gustaría reservar {data.title.toLowerCase()}?
-                </h3>
+                {/* Llamado a la acción */}
+                <div className="mx-auto my-12 flex w-[90%] max-w-xl flex-col items-center rounded-2xl border border-[#3E6143]/15 bg-[#3E6143]/5 px-6 py-10 text-center">
+                    <h3 className="titles text-2xl font-bold text-[#3E6143]">
+                        ¿Te gustaría reservar {data.title.toLowerCase()}?
+                    </h3>
 
-                {/* Línea decorativa */}
-                <span className="mb-3 mt-2 block h-0.5 w-12 rounded-full bg-[#3E6143]/40" aria-hidden="true" />
+                    {/* Línea decorativa */}
+                    <span className="mb-3 mt-2 block h-0.5 w-12 rounded-full bg-[#3E6143]/40" aria-hidden="true" />
 
-                <p className="max-w-md text-base text-[#757575]">
-                    Escribinos y te contamos disponibilidad, precios y todo lo que necesites saber.
-                </p>
+                    <p className="max-w-md text-base text-[#757575]">
+                        Escribinos y te contamos disponibilidad, precios y todo lo que necesites saber.
+                    </p>
 
-                <a
-                    href={`https://wa.me/5493564507240?text=${encodeURIComponent(`Hola, quisiera consultar por ${data.title.toLowerCase()}`)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group relative mt-6 inline-flex items-center gap-2.5 overflow-hidden rounded-full border border-[#3E6143] bg-[#446b4a] px-7 py-3 titles font-bold text-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6143] focus-visible:ring-offset-2"
-                >
-                    {/* Fondo que se completa de izquierda a derecha */}
-                    <span
-                        aria-hidden="true"
-                        className="absolute inset-0 origin-left scale-x-0 bg-[#2f4d33] transition-transform duration-500 ease-out group-hover:scale-x-100"
-                    />
-
-                    {/* Icono de chat */}
-                    <svg
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="relative z-10 size-5 transition-transform duration-300 motion-safe:group-hover:-rotate-12 motion-safe:group-hover:scale-110"
+                    <a
+                        href={`https://wa.me/5493564507240?text=${encodeURIComponent(`Hola, quisiera consultar por ${data.title.toLowerCase()}`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group relative mt-6 inline-flex items-center gap-2.5 overflow-hidden rounded-full border border-[#3E6143] bg-[#446b4a] px-7 py-3 titles font-bold text-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E6143] focus-visible:ring-offset-2"
                     >
-                        <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
-                    </svg>
+                        {/* Fondo que se completa de izquierda a derecha */}
+                        <span
+                            aria-hidden="true"
+                            className="absolute inset-0 origin-left scale-x-0 bg-[#2f4d33] transition-transform duration-500 ease-out group-hover:scale-x-100"
+                        />
 
-                    <span className="relative z-10">Consultar por WhatsApp</span>
+                        {/* Icono de chat */}
+                        <svg
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="relative z-10 size-5 transition-transform duration-300 motion-safe:group-hover:-rotate-12 motion-safe:group-hover:scale-110"
+                        >
+                            <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+                        </svg>
 
-                    {/* Flecha que aparece en hover */}
-                    <svg
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="relative z-10 -ml-4 size-4 opacity-0 transition-all duration-300 group-hover:ml-0 group-hover:translate-x-0.5 group-hover:opacity-100"
-                    >
-                        <path d="M5 12h14" />
-                        <path d="m12 5 7 7-7 7" />
-                    </svg>
-                </a>
+                        <span className="relative z-10">Consultar por WhatsApp</span>
+
+                        {/* Flecha que aparece en hover */}
+                        <svg
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="relative z-10 -ml-4 size-4 opacity-0 transition-all duration-300 group-hover:ml-0 group-hover:translate-x-0.5 group-hover:opacity-100"
+                        >
+                            <path d="M5 12h14" />
+                            <path d="m12 5 7 7-7 7" />
+                        </svg>
+                    </a>
+                </div>
             </div>
 
             <WhatsAppFloatingButton bubbleLine1="¿Consultas y reservas?" bubbleLine2="¡Hablemos!" />

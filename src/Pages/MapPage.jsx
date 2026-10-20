@@ -7,10 +7,58 @@ import MinaClavero2 from "../assets/images/MinaClavero2.jpg";
 
 const MinaClaveroPhotos = [MinaClavero1, MinaClavero2];
 
+/* ───────────── Íconos (estilo outline, 24x24, stroke) ───────────── */
+function Icon({ children, className = "w-5 h-5" }) {
+    return (
+        <svg
+            className={className}
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+        >
+            {children}
+        </svg>
+    );
+}
+
+const PinIcon = (props) => (
+    <Icon {...props}>
+        <path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0116 0z" />
+        <circle cx="12" cy="10" r="3" />
+    </Icon>
+);
+
+const RouteIcon = (props) => (
+    <Icon {...props}>
+        <circle cx="6" cy="19" r="2.5" />
+        <circle cx="18" cy="5" r="2.5" />
+        <path d="M8.5 19H15a3.5 3.5 0 000-7H9a3.5 3.5 0 010-7h6.5" />
+    </Icon>
+);
+
+const MapIcon = (props) => (
+    <Icon {...props}>
+        <path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+    </Icon>
+);
+
+const ExternalIcon = (props) => (
+    <Icon {...props}>
+        <path d="M7 17L17 7M8 7h9v9" />
+    </Icon>
+);
+
+const MAIN_MAP_LINK =
+    "https://www.google.com/maps/search/?api=1&query=Cruz+del+Eje+2080+Mina+Clavero+Cordoba";
+
 const DISTANCES = [
-    { label: "Desde Córdoba Capital", value: "120-150 km", icon: "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 119.5 9 2.5 2.5 0 0112 11.5z" },
-    { label: "Desde Villa Carlos Paz", value: "110-120 km", icon: "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 119.5 9 2.5 2.5 0 0112 11.5z" },
-    { label: "Camino recomendado", value: "Altas Cumbres · RP 34", icon: "M3 17l6-6 4 4 8-8M14 7h7v7" },
+    { label: "Desde Córdoba Capital", value: "120-150 km", Icon: PinIcon },
+    { label: "Desde Villa Carlos Paz", value: "110-120 km", Icon: PinIcon },
+    { label: "Camino recomendado", value: "Altas Cumbres · RP 34", Icon: RouteIcon },
 ];
 
 const ROUTES = [
@@ -65,7 +113,8 @@ function MapPage() {
 
             {/* Intro */}
             <section className="px-6 pt-12 pb-8 text-center max-w-3xl fade-down">
-                <span className="inline-block text-[.75rem] tracking-[0.2em] uppercase font-semibold text-[#3E6143]/70 mb-2">
+                <span className="inline-flex items-center gap-1.5 text-[.75rem] tracking-[0.2em] uppercase font-semibold text-[#3E6143]/70 mb-2">
+                    <PinIcon className="w-3.5 h-3.5" />
                     Valle de Traslasierra · Córdoba
                 </span>
                 <h2 className="titles font-bold text-[#3E6143] text-[2rem] md:text-[2.5rem] leading-tight my-2">
@@ -82,20 +131,18 @@ function MapPage() {
             {/* Chips de distancia */}
             <section className="w-full max-w-4xl px-4 mb-10">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    {DISTANCES.map((item, index) => (
+                    {DISTANCES.map(({ label, value, Icon: ChipIcon }, index) => (
                         <div
-                            key={item.label}
-                            className="fade-down flex items-center gap-3 bg-white rounded-2xl border border-[#3E6143]/10 shadow-sm px-4 py-3"
+                            key={label}
+                            className="fade-down group flex items-center gap-3 bg-white rounded-2xl border border-[#3E6143]/10 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 px-4 py-3"
                             style={{ animationDelay: `${index * 0.1}s` }}
                         >
-                            <div className="h-10 w-10 rounded-full bg-[#3E6143]/10 flex items-center justify-center shrink-0">
-                                <svg className="w-5 h-5 text-[#3E6143]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d={item.icon} />
-                                </svg>
+                            <div className="h-11 w-11 rounded-full bg-[#3E6143]/10 text-[#3E6143] group-hover:bg-[#3E6143] group-hover:text-white transition-colors duration-300 flex items-center justify-center shrink-0">
+                                <ChipIcon className="w-5 h-5" />
                             </div>
                             <div className="text-left leading-tight">
-                                <p className="text-[.75rem] text-[#757575]">{item.label}</p>
-                                <p className="text-[#3E6143] font-bold text-[1rem]">{item.value}</p>
+                                <p className="text-[.75rem] text-[#757575]">{label}</p>
+                                <p className="text-[#3E6143] font-bold text-[1rem]">{value}</p>
                             </div>
                         </div>
                     ))}
@@ -107,6 +154,22 @@ function MapPage() {
                 <div className="rounded-3xl overflow-hidden bg-white border border-[#3E6143]/15 shadow-md p-2">
                     <div className="rounded-2xl overflow-hidden">
                         <MapEmbed />
+                    </div>
+                    {/* Barra propia: no depende del cartel interno del iframe de Google */}
+                    <div className="flex items-center justify-between gap-3 flex-wrap px-4 pt-3 pb-2">
+                        <span className="inline-flex items-center gap-1.5 text-[.85rem] text-[#757575]">
+                            <PinIcon className="w-4 h-4 text-[#3E6143]" />
+                            <span className="font-semibold text-[#3E6143]">Mina Clavero, Córdoba</span>
+                        </span>
+                        <a
+                            href={MAIN_MAP_LINK}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 text-[.85rem] font-semibold text-white bg-[#3E6143] rounded-full px-4 py-1.5 hover:bg-[#2f4c34] transition-colors"
+                        >
+                            Ver en Google Maps
+                            <ExternalIcon className="w-3.5 h-3.5" />
+                        </a>
                     </div>
                 </div>
             </section>
@@ -125,10 +188,8 @@ function MapPage() {
                     >
                         {/* Encabezado */}
                         <div className="bg-linear-to-br from-[#3E6143] to-[#2f4c34] text-white px-6 py-5 flex items-center gap-4">
-                            <div className="h-12 w-12 rounded-full bg-white/15 flex items-center justify-center shrink-0">
-                                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-                                </svg>
+                            <div className="h-12 w-12 rounded-full bg-white/15 ring-1 ring-white/20 flex items-center justify-center shrink-0">
+                                <MapIcon className="w-6 h-6" />
                             </div>
                             <div className="text-left min-w-0">
                                 <span className="inline-block text-[.65rem] tracking-[0.18em] uppercase font-semibold bg-white/15 rounded-full px-2.5 py-0.5 mb-1">
@@ -140,18 +201,33 @@ function MapPage() {
                             </div>
                         </div>
 
-                        {/* Pasos */}
-                        <ol className="px-6 pt-6 pb-4 flex flex-col gap-4 flex-1">
-                            {route.steps.map((step, i) => (
-                                <li key={i} className="flex items-start gap-3 text-left">
-                                    <span className="h-7 w-7 rounded-full bg-[#3E6143]/10 text-[#3E6143] text-[.8rem] font-bold flex items-center justify-center shrink-0">
-                                        {i + 1}
-                                    </span>
-                                    <p className="text-defect text-[.92rem] text-[#757575] leading-relaxed pt-0.5">
-                                        {step}
-                                    </p>
-                                </li>
-                            ))}
+                        {/* Pasos con línea conectora */}
+                        <ol className="px-6 pt-6 pb-4 flex-1">
+                            {route.steps.map((step, i) => {
+                                const isLast = i === route.steps.length - 1;
+                                return (
+                                    <li key={i} className="relative flex items-start gap-3 text-left pb-4 last:pb-0">
+                                        {!isLast && (
+                                            <span
+                                                aria-hidden="true"
+                                                className="absolute left-3.5 top-7 bottom-0 w-px -translate-x-1/2 bg-[#3E6143]/20"
+                                            />
+                                        )}
+                                        <span
+                                            className={`relative z-10 h-7 w-7 rounded-full text-[.8rem] font-bold flex items-center justify-center shrink-0 ${
+                                                isLast
+                                                    ? "bg-[#3E6143] text-white"
+                                                    : "bg-[#3E6143]/10 text-[#3E6143]"
+                                            }`}
+                                        >
+                                            {isLast ? <PinIcon className="w-3.5 h-3.5" /> : i + 1}
+                                        </span>
+                                        <p className="text-defect text-[.92rem] text-[#757575] leading-relaxed pt-0.5">
+                                            {step}
+                                        </p>
+                                    </li>
+                                );
+                            })}
                         </ol>
 
                         {/* Mapa */}
@@ -170,17 +246,19 @@ function MapPage() {
                         </div>
 
                         {/* Pie con dirección y link */}
-                        <div className="px-6 pb-5 pt-1 flex items-center justify-between gap-3">
-                            <span className="text-[.85rem] text-[#757575]">
-                                📍 <span className="font-semibold text-[#3E6143]">{route.address}</span>
+                        <div className="px-6 pb-5 pt-1 flex items-center justify-between gap-3 flex-wrap">
+                            <span className="inline-flex items-center gap-1.5 text-[.85rem] text-[#757575]">
+                                <PinIcon className="w-4 h-4 text-[#3E6143]" />
+                                <span className="font-semibold text-[#3E6143]">{route.address}</span>
                             </span>
                             <a
                                 href={route.link}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-[.85rem] font-semibold text-[#3E6143] border border-[#3E6143]/30 rounded-full px-4 py-1.5 hover:bg-[#3E6143] hover:text-white transition-colors"
+                                className="inline-flex items-center gap-1.5 text-[.85rem] font-semibold text-[#3E6143] border border-[#3E6143]/30 rounded-full px-4 py-1.5 hover:bg-[#3E6143] hover:text-white hover:border-[#3E6143] transition-colors"
                             >
                                 Abrir en Maps
+                                <ExternalIcon className="w-3.5 h-3.5" />
                             </a>
                         </div>
                     </article>
