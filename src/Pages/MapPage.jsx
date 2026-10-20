@@ -109,10 +109,13 @@ function SectionHeading({ eyebrow, title }) {
 function MapPage() {
     return (
         <div className="pt-16.25 bg-[#F1F3EE] flex flex-col items-center">
-            <ImageCarousel images={MinaClaveroPhotos} />
+            <div className="sticky top-0 z-0 w-full">
+                <ImageCarousel images={MinaClaveroPhotos} />
+            </div>
 
-            {/* Intro */}
-            <section className="px-6 pt-12 pb-8 text-center max-w-3xl fade-down">
+            <div className="relative z-10 -mt-8 flex w-full flex-col items-center rounded-t-[2rem] bg-[#F1F3EE]">
+                {/* Intro */}
+                <section className="px-6 pt-12 pb-8 text-center max-w-3xl fade-down">
                 <span className="inline-flex items-center gap-1.5 text-[.75rem] tracking-[0.2em] uppercase font-semibold text-[#3E6143]/70 mb-2">
                     <PinIcon className="w-3.5 h-3.5" />
                     Valle de Traslasierra · Córdoba
@@ -126,31 +129,31 @@ function MapPage() {
                     Sierras Grandes. Se llega por el pintoresco camino de las Altas Cumbres
                     (Ruta Provincial 34).
                 </p>
-            </section>
+                </section>
 
             {/* Chips de distancia */}
-            <section className="w-full max-w-4xl px-4 mb-10">
+                <section className="w-full max-w-4xl px-4 mb-10">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    {DISTANCES.map(({ label, value, Icon: ChipIcon }, index) => (
+                    {DISTANCES.map((distance, index) => (
                         <div
-                            key={label}
+                            key={distance.label}
                             className="fade-down group flex items-center gap-3 bg-white rounded-2xl border border-[#3E6143]/10 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 px-4 py-3"
                             style={{ animationDelay: `${index * 0.1}s` }}
                         >
                             <div className="h-11 w-11 rounded-full bg-[#3E6143]/10 text-[#3E6143] group-hover:bg-[#3E6143] group-hover:text-white transition-colors duration-300 flex items-center justify-center shrink-0">
-                                <ChipIcon className="w-5 h-5" />
+                                <distance.Icon className="w-5 h-5" />
                             </div>
                             <div className="text-left leading-tight">
-                                <p className="text-[.75rem] text-[#757575]">{label}</p>
-                                <p className="text-[#3E6143] font-bold text-[1rem]">{value}</p>
+                                <p className="text-[.75rem] text-[#757575]">{distance.label}</p>
+                                <p className="text-[#3E6143] font-bold text-[1rem]">{distance.value}</p>
                             </div>
                         </div>
                     ))}
                 </div>
-            </section>
+                </section>
 
             {/* Mapa general */}
-            <section className="w-full max-w-4xl px-4 mb-16 fade-down">
+                <section className="w-full max-w-4xl px-4 mb-16 fade-down">
                 <div className="rounded-3xl overflow-hidden bg-white border border-[#3E6143]/15 shadow-md p-2">
                     <div className="rounded-2xl overflow-hidden">
                         <MapEmbed />
@@ -172,14 +175,14 @@ function MapPage() {
                         </a>
                     </div>
                 </div>
-            </section>
+                </section>
 
             {/* Indicaciones detalladas */}
-            <section className="w-full max-w-5xl px-4 mb-8">
+                <section className="w-full max-w-5xl px-4 mb-8">
                 <SectionHeading eyebrow="Último tramo" title="Indicaciones detalladas" />
-            </section>
+                </section>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16 px-4 max-w-5xl w-full">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16 px-4 max-w-5xl w-full">
                 {ROUTES.map((route, index) => (
                     <article
                         key={route.title}
@@ -263,9 +266,10 @@ function MapPage() {
                         </div>
                     </article>
                 ))}
-            </div>
+                </div>
 
-            <WhatsAppFloatingButton bubbleLine1="¿Consultas y reservas?" bubbleLine2="¡Hablemos!" />
+                <WhatsAppFloatingButton bubbleLine1="¿Consultas y reservas?" bubbleLine2="¡Hablemos!" />
+            </div>
         </div>
     );
 }
