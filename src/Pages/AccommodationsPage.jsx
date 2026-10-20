@@ -52,27 +52,26 @@ function HighlightBlock({ item, index }) {
                 }`}
             >
                 {/* Foto */}
-                <div className="group w-full md:w-1/2 overflow-hidden rounded-2xl shadow-md border border-[#3E6143]/10">
+                <div className="group w-full overflow-hidden rounded-2xl shadow-md border border-[#3E6143]/10 md:flex-3">
                     <img
                         src={item.img}
                         alt={item.alt ?? item.title}
                         loading="lazy"
-                        className="aspect-4/3 w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none"
+                        className="aspect-video w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none"
                     />
                 </div>
 
                 {/* Texto */}
-                <div className="w-full md:w-1/2 text-center md:text-left px-2">
+                <div className="w-full px-2 text-center md:flex-2 md:text-left">
                     <span className="titles text-[.85rem] font-bold tracking-widest text-[#3E6143]/50">
                         {String(index + 1).padStart(2, "0")}
                     </span>
+                    
                     <h3 className="titles mt-1 text-2xl font-bold text-[#3E6143]">
                         {item.title}
                     </h3>
-                    <span
-                        className="mx-auto md:mx-0 my-3 block h-0.75 w-12 rounded-full bg-[#3E6143]/40"
-                        aria-hidden="true"
-                    />
+
+                    <span className="mx-auto md:mx-0 my-3 block h-0.75 w-12 rounded-full bg-[#3E6143]/40" aria-hidden="true" />
                     <p className="text-lg leading-relaxed text-[#757575]">
                         {item.text}
                     </p>
@@ -131,7 +130,7 @@ function AccommodationsPage() {
                 </h1>
                 <span className="block w-14 h-0.75 bg-[#3E6143]/40 rounded-full my-4" />
 
-                <div className="md:w-140">
+                <div className="md:w-140 lg:w-170">
                     <p className="text-md text-defect text-[#757575] font-semibold text-lg leading-relaxed px-3">
                         {data.description}
                     </p>
@@ -140,7 +139,7 @@ function AccommodationsPage() {
 
             {/* Galería con descripciones */}
             {data.highlights?.length > 0 && (
-                <section className="w-full max-w-4xl px-5 py-10 flex flex-col items-center">
+                <section className="w-full max-w-6xl px-5 py-10 flex flex-col items-center">
                     <h2 className="titles text-[1.8rem] font-bold text-[#3E6143] text-center">
                         Conocé el alojamiento
                     </h2>

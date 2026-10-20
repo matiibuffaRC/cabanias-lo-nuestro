@@ -8,10 +8,7 @@ function SectionCard({ section, index }) {
         : "right-1/2 translate-x-1/2 md:right-10 md:translate-x-0";
 
     return (
-        <div
-            className="section-card h-135 lg:h-150 relative w-full overflow-hidden fade-down"
-            style={{ animationDelay: `${index * 0.15}s` }}
-        >
+        <div className="section-card h-135 lg:h-150 relative w-full overflow-hidden fade-down" style={{ animationDelay: `${index * 0.15}s` }} >
             <img
                 src={section.img}
                 alt={section.alt}
@@ -21,17 +18,15 @@ function SectionCard({ section, index }) {
             />
             <div className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent"/>
 
-            <div
-                className={`absolute w-[90%] top-10 lg:w-150 bg-[#3E6143]/50 backdrop-blur-[2px] p-5 text-white flex flex-col justify-center rounded-xl md:max-w-1/2 shadow-lg ring-1 ring-white/20 ${position}`}
-            >
+            <div className={`absolute w-[90%] top-10 lg:w-150 bg-[#3E6143]/50 backdrop-blur-[2px] p-5 text-white flex flex-col justify-center rounded-4xl md:max-w-1/2 shadow-lg  ${position}`} >
                 <h2 className="titles text-[1.8rem] lg:text-[2rem] font-bold pt-2">
                     {section.title}
                 </h2>
 
                 {/* Línea decorativa */}
-                <span className="block h-0.5 w-full rounded-full bg-white/60 mb-3" aria-hidden="true" />
+                <span className="block h-0.5 w-2/3 rounded-full bg-white/60 mb-3" aria-hidden="true" />
 
-                <p className="titles text-[1rem] md:text-[.9rem] lg:text-[1.2rem] leading-relaxed">
+                <p className="titles text-md md:text-lg lg:text-lg leading-relaxed">
                     {section.description}
                 </p>
 
@@ -39,7 +34,7 @@ function SectionCard({ section, index }) {
                     <Link
                         to={`/alojamiento/${section.route}`}
                         aria-label={`Saber más sobre ${section.title}`}
-                        className="group relative inline-flex items-center gap-2 overflow-hidden titles font-bold bg-primary-light border border-primary py-2 px-5 rounded-full shadow-md transition-all duration-300 hover:shadow-lg active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#3E6143]"
+                        className="group relative inline-flex items-center gap-2 overflow-hidden titles font-bold bg-primary-light border border-primary py-2 px-5 rounded-full shadow-md transition-all duration-300 hover:shadow-lg active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:border-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#3E6143]"
                     >
                         {/* Fondo que se completa de izquierda a derecha */}
                         <span
@@ -50,17 +45,7 @@ function SectionCard({ section, index }) {
                         <span className="relative z-10">Saber más</span>
 
                         {/* Icono flecha */}
-                        <svg
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="relative z-10 size-4 transition-transform duration-300 group-hover:translate-x-1"
-                        >
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="relative z-10 size-4 transition-transform duration-300 group-hover:translate-x-1" >
                             <path d="M5 12h14" />
                             <path d="m12 5 7 7-7 7" />
                         </svg>

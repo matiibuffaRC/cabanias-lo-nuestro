@@ -1,14 +1,17 @@
 import complejoPhotoFrente from "../imgs/frente.jpg";
 import complejoPhotoPatio from "../imgs/patioBien.jpg";
 import complejoPhotoPileta from "../imgs/piletaConDormis.jpg";
+import complejoPhotoAsador from "../imgs/asador.jpg";
 
 import cabaniaPhotoIndoor from "../imgs/habitacion5Carrusel.jpg";
 import cabaniaPhotoIndoor2 from "../imgs/habitacion4.2Carrusel.jpg";
 import cabaniaPhotoGarage from "../imgs/cocheraCarrusel.jpg";
+import cabaniaPhotoIndoor3 from "../imgs/cabania2.jpg";
 
 import dormiPhoto from "../imgs/dormis3.jpeg";
 import dormiPhoto2 from "../imgs/dormis1.jpg";
 import dormiPhoto3 from "../imgs/dormi.jpg";
+import quinchoPhoto from "../imgs/quincho.jpg";
 
 import carIcon from "../icons/CarIcon.svg";
 import wifiIcon from "../icons/WifiIcon.svg";
@@ -46,7 +49,7 @@ export const accommodation = [
                 text: "A la entrada de Mina Clavero, a 5 minutos del centro, de los principales ríos y de los supermercados de la zona.",
             },
             {
-                img: complejoPhotoPatio,
+                img: complejoPhotoAsador,
                 alt: "Patio del complejo",
                 title: "Patio y parrillas",
                 text: "Espacios al aire libre para compartir un asado, tomar unos mates y disfrutar de las tardes serranas.",
@@ -81,13 +84,13 @@ export const accommodation = [
         // 👇 NUEVO
         highlights: [
             {
-                img: cabaniaPhotoIndoor,
+                img: cabaniaPhotoIndoor3,
                 alt: "Interior de la cabaña",
                 title: "Cocina-comedor equipada",
                 text: "Con frigobar y la vajilla necesaria para hasta cuatro personas, además cuenta con horno y microondas para que te sientas como en casa.",
             },
             {
-                img: cabaniaPhotoIndoor2,
+                img: cabaniaPhotoIndoor,
                 alt: "Habitación de la cabaña",
                 title: "Ambientes cómodos",
                 text: "Habitaciones pensadas para descansar, con aire acondicionado y DirecTV.",
@@ -130,7 +133,7 @@ export const accommodation = [
                 text: "Con salida a la calle Tanti, paralela a la Cruz del Eje, con muy poco tránsito.",
             },
             {
-                img: dormiPhoto3,
+                img: quinchoPhoto,
                 alt: "Espacios compartidos",
                 title: "Quincho y asadores compartidos",
                 text: "Los huéspedes pueden usar el quincho, los asadores, los tendederos y la pileta.",
