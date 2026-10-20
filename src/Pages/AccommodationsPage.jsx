@@ -1,97 +1,20 @@
 import { useParams } from "react-router-dom";
 import { useRef, useEffect, useState } from "react";
 import { accommodation } from "../data/accommodation";
-import CaruselImagesComponente from "../Components/Home/CaruselImagesComp";
-import WhatsAppFloatingButton from "../Components/WppButton";
-
-/* Hace aparecer el contenido una sola vez, cuando entra en pantalla */
-function Reveal({ children, className = "", delay = 0 }) {
-    const ref = useRef(null);
-    const [visible, setVisible] = useState(false);
-
-    useEffect(() => {
-        const el = ref.current;
-        if (!el) return;
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setVisible(true);
-                    observer.disconnect();
-                }
-            },
-            { threshold: 0.2 }
-        );
-        observer.observe(el);
-        return () => observer.disconnect();
-    }, []);
-
-    return (
-        <div
-            ref={ref}
-            className={`transition-all duration-700 ease-out motion-reduce:transition-none ${
-                visible
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-8 motion-reduce:opacity-100 motion-reduce:translate-y-0"
-            } ${className}`}
-            style={{ transitionDelay: `${delay}ms` }}
-        >
-            {children}
-        </div>
-    );
-}
-
-/* Un bloque foto + texto. Los impares se invierten en desktop */
-function HighlightBlock({ item, index }) {
-    const reversed = index % 2 === 1;
-
-    return (
-        <Reveal>
-            <article
-                className={`flex flex-col items-center gap-6 md:gap-10 ${
-                    reversed ? "md:flex-row-reverse" : "md:flex-row"
-                }`}
-            >
-                {/* Foto */}
-                <div className="group w-full overflow-hidden rounded-2xl shadow-md border border-[#3E6143]/10 md:flex-3">
-                    <img
-                        src={item.img}
-                        alt={item.alt ?? item.title}
-                        loading="lazy"
-                        className="aspect-video w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none"
-                    />
-                </div>
-
-                {/* Texto */}
-                <div className="w-full px-2 text-center md:flex-2 md:text-left">
-                    <span className="titles text-[.85rem] font-bold tracking-widest text-[#3E6143]/50">
-                        {String(index + 1).padStart(2, "0")}
-                    </span>
-                    
-                    <h3 className="titles mt-1 text-2xl font-bold text-[#3E6143]">
-                        {item.title}
-                    </h3>
-
-                    <span className="mx-auto md:mx-0 my-3 block h-0.75 w-12 rounded-full bg-[#3E6143]/40" aria-hidden="true" />
-                    <p className="text-lg leading-relaxed text-[#757575]">
-                        {item.text}
-                    </p>
-                </div>
-            </article>
-        </Reveal>
-    );
-}
+import AccommodationHighlights from "../components/accommodations/AccommodationHighlights";
+import ImageCarousel from "../components/shared/ImageCarousel";
+import WhatsAppFloatingButton from "../components/layout/WhatsAppButton";
 
 function AccommodationsPage() {
     const { tipo } = useParams();
+    return <AccommodationContent key={tipo} tipo={tipo} />;
+}
+
+function AccommodationContent({ tipo }) {
     const [servicesVisible, setServicesVisible] = useState(false);
     const servicesRef = useRef(null);
 
     const data = accommodation.find((item) => item.slug === tipo);
-
-    // Reinicia animación cuando cambia el alojamiento
-    useEffect(() => {
-        setServicesVisible(false);
-    }, [tipo]);
 
     // Observer para detectar cuando la sección entra en pantalla
     useEffect(() => {
@@ -104,7 +27,7 @@ function AccommodationsPage() {
 
         if (servicesRef.current) observer.observe(servicesRef.current);
         return () => observer.disconnect();
-    }, [tipo]);
+    }, []);
 
     if (!data) {
         return (
@@ -121,7 +44,7 @@ function AccommodationsPage() {
 
     return (
         <div className="bg-[#F1F3EE] flex flex-col items-center">
-            <CaruselImagesComponente images={data.photos} />
+            <ImageCarousel images={data.photos} />
 
             {/* Encabezado */}
             <div className="text-center px-5 pt-10 pb-6 flex flex-col items-center w-full fade-down">
@@ -139,22 +62,7 @@ function AccommodationsPage() {
 
             {/* Galería con descripciones */}
             {data.highlights?.length > 0 && (
-                <section className="w-full max-w-6xl px-5 py-10 flex flex-col items-center">
-                    <h2 className="titles text-[1.8rem] font-bold text-[#3E6143] text-center">
-                        Conocé el alojamiento
-                    </h2>
-                    <span className="block w-14 h-0.75 bg-[#3E6143]/40 rounded-full my-4" />
-
-                    <div className="mt-6 flex w-full flex-col gap-12 md:gap-16">
-                        {data.highlights.map((item, index) => (
-                            <HighlightBlock
-                                key={`${data.slug}-${index}`}
-                                item={item}
-                                index={index}
-                            />
-                        ))}
-                    </div>
-                </section>
+                <AccommodationHighlights highlights={data.highlights} slug={data.slug} />
             )}
 
             {/* Servicios */}

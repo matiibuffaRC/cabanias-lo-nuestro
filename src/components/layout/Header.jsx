@@ -15,9 +15,14 @@ const CTA = { text: "Contacto", link: "/contact" };
 
 // Transparente sobre el hero, logo centrado, menú mobile a pantalla completa
 function HeaderComponente() {
+    const { pathname } = useLocation();
+
+    return <HeaderContent key={pathname} />;
+}
+
+function HeaderContent() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
-    const { pathname } = useLocation();
 
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 40);
@@ -25,8 +30,6 @@ function HeaderComponente() {
         window.addEventListener("scroll", onScroll, { passive: true });
         return () => window.removeEventListener("scroll", onScroll);
     }, []);
-
-    useEffect(() => setMenuOpen(false), [pathname]);
 
     useEffect(() => {
         if (!menuOpen) return;

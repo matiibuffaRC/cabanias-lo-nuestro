@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 
-import GmailIcon from "../../icons/gmail.svg";
-import WhatsAppIcon from "../../icons/whatsappIcon.svg";
-import FacebookIcon from "../../icons/facebookIcon.svg";
+import GmailIcon from "../../assets/icons/gmail.svg";
+import WhatsAppIcon from "../../assets/icons/whatsappIcon.svg";
+import FacebookIcon from "../../assets/icons/facebookIcon.svg";
 
 // Datos fuera del componente: son estáticos, no dependen de props ni estado.
 const FOOTER_COLUMNS = [

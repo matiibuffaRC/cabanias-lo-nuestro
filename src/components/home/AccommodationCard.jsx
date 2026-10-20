@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function SectionCard({ section, index }) {
+function AccommodationCard({ section, index }) {
     const isLeft = index % 2 === 0;
 
     const position = isLeft
@@ -56,4 +56,4 @@ function SectionCard({ section, index }) {
     );
 }
 
-export default SectionCard;
+export default AccommodationCard;

@@ -1,10 +1,8 @@
-import InicieComponent from "../Components/Home/InicieComp";
+import HomeContent from "../components/home/HomeContent";
 
 function HomePage() {
     return (
-        <div>
-            <InicieComponent></InicieComponent>
-        </div>
+        <HomeContent />
     )
 }
 

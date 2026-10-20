@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import presentationImage from "../imgs/piletaConDormis.jpg";
-import WhatsAppFloatingButton from "../Components/WppButton.jsx";
+import presentationImage from "../assets/images/piletaConDormis.jpg";
+import WhatsAppFloatingButton from "../components/layout/WhatsAppButton.jsx";
 
-import WhatsAppIcon from "../icons/whatsappIcon.svg";
-import FacebookIcon from "../icons/facebookIcon.svg";
+import WhatsAppIcon from "../assets/icons/whatsappIcon.svg";
+import FacebookIcon from "../assets/icons/facebookIcon.svg";
 
 const CONTACTS = [
     { icon: WhatsAppIcon, title: "WhatsApp", name: "Cristian", href: "https://wa.me/5493564507240" },

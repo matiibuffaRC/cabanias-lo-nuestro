@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import WhatsAppIcon from "../icons/whatsappIcon.svg";
-import crossIcon from "../icons/crossIcon.svg";
+import WhatsAppIcon from "../../assets/icons/whatsappIcon.svg";
+import crossIcon from "../../assets/icons/crossIcon.svg";
 
 const WHATSAPP_OPTIONS = [
     {

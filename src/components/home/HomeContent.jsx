@@ -1,21 +1,21 @@
-import ServiceItemComponent from "./ServiceItemComp";
-import SectionCard from "./SectionCard";
-import WhatsAppFloatingButton from "../WppButton";
-import "../animations.css";
+import { Link } from "react-router-dom";
+import ServiceItem from "./ServiceItem";
+import AccommodationCard from "./AccommodationCard";
+import WhatsAppFloatingButton from "../layout/WhatsAppButton";
 
-import presentationImage from "../../imgs/piletaConDormis.jpg";
-import frenteImage from "../../imgs/frente21.jpg";
-import patioImage from "../../imgs/patioBien.jpg";
-import patioImage2 from "../../imgs/patio3.jpeg";
+import presentationImage from "../../assets/images/piletaConDormis.jpg";
+import frenteImage from "../../assets/images/frente21.jpg";
+import patioImage from "../../assets/images/patioBien.jpg";
+import patioImage2 from "../../assets/images/patio3.jpeg";
 
-import homeIcon from "../../icons/HomeIcon.svg";
-import carIcon from "../../icons/CarIcon.svg";
-import wifiIcon from "../../icons/WifiIcon.svg";
-import tvIcon from "../../icons/TvIcon.svg";
-import grillIcon from "../../icons/GrillIcon.svg";
-import airIcon from "../../icons/AirIcon.svg";
+import homeIcon from "../../assets/icons/HomeIcon.svg";
+import carIcon from "../../assets/icons/CarIcon.svg";
+import wifiIcon from "../../assets/icons/WifiIcon.svg";
+import tvIcon from "../../assets/icons/TvIcon.svg";
+import grillIcon from "../../assets/icons/GrillIcon.svg";
+import airIcon from "../../assets/icons/AirIcon.svg";
 
-import LogoMinaClavero from "../../icons/MinaClaveroLogo.png";
+import LogoMinaClavero from "../../assets/icons/MinaClaveroLogo.png";
 
 
 const SERVICES = [
@@ -54,7 +54,7 @@ const SECTIONS = [
     },
 ];
 
-function InicieComponent() {
+function HomeContent() {
     return (
         <div className="bg-surface flex flex-col items-center relative bg-[#F1F3EE]">
             {/* Hero */}
@@ -62,24 +62,49 @@ function InicieComponent() {
                 <img src={presentationImage} alt="Patio de atras" className="hero-image w-full h-full object-cover object-center" />
                 <div className="absolute inset-0 bg-linear-to-t from-[#2A4530]/60 via-[#2A4530]/10 to-transparent" />
 
-                <div className="absolute inset-x-0 bottom-8 text-center px-5 fade-down">
-                    <p className="titles text-white/90 text-[.95rem] md:text-[1.05rem] tracking-wide uppercase">
+                <div className="absolute inset-x-0 bottom-7 flex flex-col items-center px-5 text-center fade-down md:bottom-9">
+                <p className="titles text-[.8rem] font-semibold uppercase tracking-[0.2em] text-white/90 md:text-[.95rem]">
                         Mina Clavero · Traslasierra
                     </p>
-                    <h1 className="titles text-white font-bold text-[1.6rem] md:text-[2.2rem] drop-shadow-sm">
+                <h1 className="titles mt-2 text-[1.8rem] font-bold text-white drop-shadow-sm md:text-[2.6rem]">
                         Tu descanso empieza acá
                     </h1>
+                <p className="mt-2 max-w-xl text-sm leading-relaxed text-white/90 md:text-base">
+                    Cabañas, dormis y momentos para disfrutar Traslasierra.
+                </p>
+                <Link
+                    to="/alojamiento/complejo"
+                    className="titles mt-5 inline-flex items-center gap-2 rounded-full border border-white/80 bg-white px-6 py-3 text-sm font-bold text-[#3E6143] shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#F1F3EE] hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#3E6143]"
+                >
+                    Conocé nuestros alojamientos
+                    <svg
+                        aria-hidden="true"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="size-4"
+                    >
+                        <path d="M5 12h14" />
+                        <path d="m12 5 7 7-7 7" />
+                    </svg>
+                </Link>
                 </div>
             </div>
 
             {/* Presentación */}
-            <div className="my-10 p-4 max-w-150 text-center fade-down">
-                <h2 className="titles font-bold text-[1.9rem] text-primary py-2 text-[#3E6143]">
-                    Lo Nuestro, complejo de alojamiento en Traslasierra
+            <div className="max-w-3xl px-5 py-14 text-center fade-down md:py-16">
+                <p className="mb-2 text-[.75rem] font-semibold uppercase tracking-[0.2em] text-[#3E6143]/65">
+                Tu lugar en Traslasierra
+                </p>
+                <h2 className="titles py-2 text-[1.8rem] font-bold text-[#3E6143] md:text-[2.1rem]">
+                Lo Nuestro, complejo de alojamiento en Traslasierra
                 </h2>
-                <span className="block w-14 h-0.75 bg-primary/40 rounded-full mx-auto mb-3" />
-                <p className="titles text-[1.1rem] text-muted px-10 text-[#757575] font-semibold">
-                    Somos un complejo vacacional único ubicado a la entrada de Mina Clavero desde el Valle de Traslasierra.
+                <span className="mx-auto mb-4 block h-0.75 w-14 rounded-full bg-[#3E6143]/40" />
+                <p className="mx-auto max-w-2xl text-base font-medium leading-relaxed text-[#757575] md:text-lg">
+                Somos un complejo vacacional único ubicado a la entrada de Mina Clavero desde el Valle de Traslasierra.
                 </p>
             </div>
 
@@ -88,9 +113,9 @@ function InicieComponent() {
                 <h2 className="titles text-center font-bold text-[1.6rem] text-primary mb-6 fade-down text-[#3E6143]">
                     Lo que ofrecemos
                 </h2>
-                <div className="grid grid-cols-2 md:grid-cols-6 md:mx-10 gap-10 p-2 max-w-6xl">
+                <div className="grid w-full max-w-6xl grid-cols-2 gap-3 px-5 md:grid-cols-3 md:gap-5 lg:grid-cols-6">
                     {SERVICES.map((service, index) => (
-                        <ServiceItemComponent key={service.id} service={service} index={index} />
+                        <ServiceItem key={service.id} service={service} index={index} />
                     ))}
                 </div>
             </div>
@@ -98,7 +123,7 @@ function InicieComponent() {
             {/* Secciones */}
             <div className="w-full flex flex-col gap-2 mt-10">
                 {SECTIONS.map((section, index) => (
-                    <SectionCard key={section.route} section={section} index={index} />
+                    <AccommodationCard key={section.route} section={section} index={index} />
                 ))}
             </div>
 
@@ -125,4 +150,4 @@ function InicieComponent() {
     );
 }
 
-export default InicieComponent;
+export default HomeContent;

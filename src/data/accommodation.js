@@ -1,26 +1,26 @@
-import complejoPhotoFrente from "../imgs/frente.jpg";
-import complejoPhotoPatio from "../imgs/patioBien.jpg";
-import complejoPhotoPileta from "../imgs/piletaConDormis.jpg";
-import complejoPhotoAsador from "../imgs/asador.jpg";
+import complejoPhotoFrente from "../assets/images/frente.jpg";
+import complejoPhotoPatio from "../assets/images/patioBien.jpg";
+import complejoPhotoPileta from "../assets/images/piletaConDormis.jpg";
+import complejoPhotoAsador from "../assets/images/asador.jpg";
 
-import cabaniaPhotoIndoor from "../imgs/habitacion5Carrusel.jpg";
-import cabaniaPhotoIndoor2 from "../imgs/habitacion4.2Carrusel.jpg";
-import cabaniaPhotoGarage from "../imgs/cocheraCarrusel.jpg";
-import cabaniaPhotoIndoor3 from "../imgs/cabania2.jpg";
+import cabaniaPhotoIndoor from "../assets/images/habitacion5Carrusel.jpg";
+import cabaniaPhotoIndoor2 from "../assets/images/habitacion4.2Carrusel.jpg";
+import cabaniaPhotoGarage from "../assets/images/cocheraCarrusel.jpg";
+import cabaniaPhotoIndoor3 from "../assets/images/cabania2.jpg";
 
-import dormiPhoto from "../imgs/dormis3.jpeg";
-import dormiPhoto2 from "../imgs/dormis1.jpg";
-import dormiPhoto3 from "../imgs/dormi.jpg";
-import quinchoPhoto from "../imgs/quincho.jpg";
+import dormiPhoto from "../assets/images/dormis3.jpeg";
+import dormiPhoto2 from "../assets/images/dormis1.jpg";
+import dormiPhoto3 from "../assets/images/dormi.jpg";
+import quinchoPhoto from "../assets/images/quincho.jpg";
 
-import carIcon from "../icons/CarIcon.svg";
-import wifiIcon from "../icons/WifiIcon.svg";
-import tvIcon from "../icons/TvIcon.svg";
-import grillIcon from "../icons/GrillIcon.svg";
-import airIcon from "../icons/AirIcon.svg";
-import swimmingPoolIcon from "../icons/SwimmingPoolIcon.svg";
-import ToysIcon from "../icons/ToysIcon.svg";
-import CookingIcon from "../icons/CookingIcon.svg";
+import carIcon from "../assets/icons/CarIcon.svg";
+import wifiIcon from "../assets/icons/WifiIcon.svg";
+import tvIcon from "../assets/icons/TvIcon.svg";
+import grillIcon from "../assets/icons/GrillIcon.svg";
+import airIcon from "../assets/icons/AirIcon.svg";
+import swimmingPoolIcon from "../assets/icons/SwimmingPoolIcon.svg";
+import ToysIcon from "../assets/icons/ToysIcon.svg";
+import CookingIcon from "../assets/icons/CookingIcon.svg";
 
 export const accommodation = [
     {

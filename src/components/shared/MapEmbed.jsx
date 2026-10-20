@@ -1,4 +1,4 @@
-function MapaComponent() {
+function MapEmbed() {
   return (
     <div className="w-full max-w-4xl h-75 sm:h-87.5 md:h-80 flex flex-col justify-center items-center rounded-[25px]">
         <iframe
@@ -16,4 +16,4 @@ function MapaComponent() {
 }
 
 
-export default MapaComponent
+export default MapEmbed;

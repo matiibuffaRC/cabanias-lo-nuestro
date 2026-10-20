@@ -1,9 +1,9 @@
-import CaruselImagesComponente from "../Components/Home/CaruselImagesComp";
-import MapaComponent from "../Components/Mapa/MapaComp";
-import WhatsAppFloatingButton from "../Components/WppButton";
+import ImageCarousel from "../components/shared/ImageCarousel";
+import MapEmbed from "../components/shared/MapEmbed";
+import WhatsAppFloatingButton from "../components/layout/WhatsAppButton";
 
-import MinaClavero1 from "../imgs/MinaClavero.jpg";
-import MinaClavero2 from "../imgs/MinaClavero2.jpg";
+import MinaClavero1 from "../assets/images/MinaClavero.jpg";
+import MinaClavero2 from "../assets/images/MinaClavero2.jpg";
 
 const MinaClaveroPhotos = [MinaClavero1, MinaClavero2];
 
@@ -61,7 +61,7 @@ function SectionHeading({ eyebrow, title }) {
 function MapPage() {
     return (
         <div className="pt-16.25 bg-[#F1F3EE] flex flex-col items-center">
-            <CaruselImagesComponente images={MinaClaveroPhotos} />
+            <ImageCarousel images={MinaClaveroPhotos} />
 
             {/* Intro */}
             <section className="px-6 pt-12 pb-8 text-center max-w-3xl fade-down">
@@ -106,7 +106,7 @@ function MapPage() {
             <section className="w-full max-w-4xl px-4 mb-16 fade-down">
                 <div className="rounded-3xl overflow-hidden bg-white border border-[#3E6143]/15 shadow-md p-2">
                     <div className="rounded-2xl overflow-hidden">
-                        <MapaComponent />
+                        <MapEmbed />
                     </div>
                 </div>
             </section>
