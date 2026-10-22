@@ -41,24 +41,51 @@ function HighlightBlock({ item, index }) {
     return (
         <Reveal>
             <article
-                className={`flex flex-col items-center gap-6 md:gap-10 ${
+                className={`flex flex-col items-center gap-8 md:gap-12 ${
                     reversed ? "md:flex-row-reverse" : "md:flex-row"
                 }`}
             >
-                <div className="group w-full overflow-hidden rounded-2xl border border-[#3E6143]/10 shadow-md md:flex-3">
-                    <img
-                        src={item.img}
-                        alt={item.alt ?? item.title}
-                        loading="lazy"
-                        className="aspect-video w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none"
+                {/* Imagen con marco desfasado detrás */}
+                <div className="group relative isolate w-full md:flex-3">
+                    {/* Marco decorativo: se acerca a la foto al pasar el mouse */}
+                    <span
+                        aria-hidden="true"
+                        className={`absolute inset-0 -z-10 rounded-3xl border-2 border-[#3E6143]/25 bg-[#3E6143]/5 transition-transform duration-500 ease-out motion-reduce:transition-none ${
+                            reversed
+                                ? "-translate-x-3 translate-y-3 group-hover:-translate-x-1.5 group-hover:translate-y-1.5"
+                                : "translate-x-3 translate-y-3 group-hover:translate-x-1.5 group-hover:translate-y-1.5"
+                        }`}
                     />
+
+                    <div className="relative overflow-hidden rounded-3xl shadow-[0_18px_36px_-16px_rgba(62,97,67,0.55)]">
+                        <img
+                            src={item.img}
+                            alt={item.alt ?? item.title}
+                            loading="lazy"
+                            className="aspect-video w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none"
+                        />
+
+                        {/* Degradado suave abajo para dar profundidad */}
+                        <div
+                            aria-hidden="true"
+                            className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-black/25 to-transparent"
+                        />
+
+                        {/* Borde interno sutil */}
+                        <div
+                            aria-hidden="true"
+                            className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-inset ring-white/30"
+                        />
+
+                        {/* Número sobre la foto */}
+                        <span className="titles absolute left-4 top-4 flex size-10 items-center justify-center rounded-full border border-white/40 bg-[#3E6143]/60 text-sm font-bold tracking-wider text-white backdrop-blur-sm">
+                            {String(index + 1).padStart(2, "0")}
+                        </span>
+                    </div>
                 </div>
 
                 <div className="w-full px-2 text-center md:flex-2 md:text-left">
-                    <span className="titles text-[.85rem] font-bold tracking-widest text-[#3E6143]/50">
-                        {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <h3 className="titles mt-1 text-2xl font-bold text-[#3E6143]">
+                    <h3 className="titles text-2xl font-bold text-[#3E6143]">
                         {item.title}
                     </h3>
                     <span
@@ -74,13 +101,13 @@ function HighlightBlock({ item, index }) {
 
 function AccommodationHighlights({ highlights, slug }) {
     return (
-        <section className="flex w-full max-w-6xl flex-col items-center px-5 py-10">
+        <section className="flex w-full max-w-6xl flex-col items-center px-8 py-10 md:px-10">
             <h2 className="titles text-center text-[1.8rem] font-bold text-[#3E6143]">
                 Conocé el alojamiento
             </h2>
             <span className="my-4 block h-0.75 w-14 rounded-full bg-[#3E6143]/40" />
 
-            <div className="mt-6 flex w-full flex-col gap-12 md:gap-16">
+            <div className="mt-6 flex w-full flex-col gap-14 md:gap-20">
                 {highlights.map((item, index) => (
                     <HighlightBlock key={`${slug}-${index}`} item={item} index={index} />
                 ))}
