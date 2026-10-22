@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import ImageCarousel from "../components/shared/ImageCarousel";
 import MapEmbed from "../components/shared/MapEmbed";
 import WhatsAppFloatingButton from "../components/layout/WhatsAppButton";
@@ -6,6 +7,85 @@ import MinaClavero1 from "../assets/images/MinaClavero.jpg";
 import MinaClavero2 from "../assets/images/MinaClavero2.jpg";
 
 const MinaClaveroPhotos = [MinaClavero1, MinaClavero2];
+
+/* ───────────── Efectos de scroll ───────────── */
+
+/**
+ * Mientras el contenido sube y tapa el carrusel, la foto se oscurece y hace
+ * un leve zoom. Escribe una variable CSS (--p, de 0 a 1) directamente en el
+ * DOM, sin re-renders, y respeta "reducir movimiento".
+ */
+function useCarouselScrollEffect() {
+    const ref = useRef(null);
+
+    useEffect(() => {
+        const element = ref.current;
+        if (!element) return;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+        let frame = 0;
+        const update = () => {
+            frame = 0;
+            const height = element.offsetHeight || 1;
+            const progress = Math.min(Math.max(window.scrollY / height, 0), 1);
+            element.style.setProperty("--p", progress.toFixed(3));
+        };
+        const onScroll = () => {
+            if (!frame) frame = requestAnimationFrame(update);
+        };
+
+        update();
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", onScroll);
+        return () => {
+            window.removeEventListener("scroll", onScroll);
+            window.removeEventListener("resize", onScroll);
+            if (frame) cancelAnimationFrame(frame);
+        };
+    }, []);
+
+    return ref;
+}
+
+/**
+ * Aparece cuando entra en pantalla (no al montar la página), así los
+ * bloques de más abajo animan recién cuando el usuario llega a ellos.
+ */
+function Reveal({ children, delay = 0, className = "" }) {
+    const ref = useRef(null);
+    const [visible, setVisible] = useState(false);
+
+    useEffect(() => {
+        const element = ref.current;
+        if (!element) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setVisible(true);
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.15, rootMargin: "0px 0px -8% 0px" }
+        );
+        observer.observe(element);
+        return () => observer.disconnect();
+    }, []);
+
+    return (
+        <div
+            ref={ref}
+            style={{ transitionDelay: visible ? `${delay}s` : "0s" }}
+            className={`transition-all duration-700 ease-out motion-reduce:transition-none ${
+                visible
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-8 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100"
+            } ${className}`}
+        >
+            {children}
+        </div>
+    );
+}
 
 /* ───────────── Íconos (estilo outline, 24x24, stroke) ───────────── */
 function Icon({ children, className = "w-5 h-5" }) {
@@ -94,7 +174,7 @@ const ROUTES = [
 
 function SectionHeading({ eyebrow, title }) {
     return (
-        <div className="text-center fade-down">
+        <Reveal className="text-center">
             <span className="inline-block text-[.75rem] tracking-[0.2em] uppercase font-semibold text-[#3E6143]/70 mb-2">
                 {eyebrow}
             </span>
@@ -102,170 +182,180 @@ function SectionHeading({ eyebrow, title }) {
                 {title}
             </h3>
             <span className="block w-14 h-0.75 bg-[#3E6143]/40 rounded-full mx-auto mt-3" />
-        </div>
+        </Reveal>
     );
 }
 
 function MapPage() {
+    const carouselRef = useCarouselScrollEffect();
+
     return (
         <div className="pt-16.25 bg-[#F1F3EE] flex flex-col items-center">
-            <div className="sticky top-0 z-0 w-full">
-                <ImageCarousel images={MinaClaveroPhotos} />
+            {/* Carrusel fijo: se oscurece y hace zoom mientras el contenido lo tapa */}
+            <div ref={carouselRef} className="sticky top-16.25 z-0 w-full overflow-hidden">
+                <div
+                    className="will-change-transform"
+                    style={{
+                        transform: "scale(calc(1 + var(--p, 0) * 0.08))",
+                        filter: "brightness(calc(1 - var(--p, 0) * 0.45))",
+                    }}
+                >
+                    <ImageCarousel images={MinaClaveroPhotos} />
+                </div>
             </div>
 
-            <div className="relative z-10 -mt-8 flex w-full flex-col items-center rounded-t-[2rem] bg-[#F1F3EE]">
-                {/* Intro */}
+            {/* Panel que sube por encima del carrusel */}
+            <div className="relative z-10 -mt-8 flex w-full flex-col items-center rounded-t-[2rem] bg-[#F1F3EE] shadow-[0_-14px_30px_-14px_rgba(0,0,0,0.3)]">
+                {/* Intro (arriba del todo: anima al cargar) */}
                 <section className="px-6 pt-12 pb-8 text-center max-w-3xl fade-down">
-                <span className="inline-flex items-center gap-1.5 text-[.75rem] tracking-[0.2em] uppercase font-semibold text-[#3E6143]/70 mb-2">
-                    <PinIcon className="w-3.5 h-3.5" />
-                    Valle de Traslasierra · Córdoba
-                </span>
-                <h2 className="titles font-bold text-[#3E6143] text-[2rem] md:text-[2.5rem] leading-tight my-2">
-                    Cómo llegar a Mina Clavero
-                </h2>
-                <span className="block w-14 h-0.75 bg-[#3E6143]/40 rounded-full mx-auto my-4" />
-                <p className="text-defect text-[#757575] leading-relaxed md:text-[1.05rem]">
-                    Mina Clavero está en el corazón del Valle de Traslasierra, al pie de las
-                    Sierras Grandes. Se llega por el pintoresco camino de las Altas Cumbres
-                    (Ruta Provincial 34).
-                </p>
+                    <span className="inline-flex items-center gap-1.5 text-[.75rem] tracking-[0.2em] uppercase font-semibold text-[#3E6143]/70 mb-2">
+                        <PinIcon className="w-3.5 h-3.5" />
+                        Valle de Traslasierra · Córdoba
+                    </span>
+                    <h2 className="titles font-bold text-[#3E6143] text-[2rem] md:text-[2.5rem] leading-tight my-2">
+                        Cómo llegar a Mina Clavero
+                    </h2>
+                    <span className="block w-14 h-0.75 bg-[#3E6143]/40 rounded-full mx-auto my-4" />
+                    <p className="text-defect text-[#757575] leading-relaxed md:text-[1.05rem]">
+                        Mina Clavero está en el corazón del Valle de Traslasierra, al pie de las
+                        Sierras Grandes. Se llega por el pintoresco camino de las Altas Cumbres
+                        (Ruta Provincial 34).
+                    </p>
                 </section>
 
-            {/* Chips de distancia */}
+                {/* Chips de distancia */}
                 <section className="w-full max-w-4xl px-4 mb-10">
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    {DISTANCES.map((distance, index) => (
-                        <div
-                            key={distance.label}
-                            className="fade-down group flex items-center gap-3 bg-white rounded-2xl border border-[#3E6143]/10 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 px-4 py-3"
-                            style={{ animationDelay: `${index * 0.1}s` }}
-                        >
-                            <div className="h-11 w-11 rounded-full bg-[#3E6143]/10 text-[#3E6143] group-hover:bg-[#3E6143] group-hover:text-white transition-colors duration-300 flex items-center justify-center shrink-0">
-                                <distance.Icon className="w-5 h-5" />
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        {DISTANCES.map((distance, index) => (
+                            <Reveal key={distance.label} delay={index * 0.1} className="h-full">
+                                <div className="group flex h-full items-center gap-3 bg-white rounded-2xl border border-[#3E6143]/10 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 px-4 py-3">
+                                    <div className="h-11 w-11 rounded-full bg-[#3E6143]/10 text-[#3E6143] group-hover:bg-[#3E6143] group-hover:text-white transition-colors duration-300 flex items-center justify-center shrink-0">
+                                        <distance.Icon className="w-5 h-5" />
+                                    </div>
+                                    <div className="text-left leading-tight">
+                                        <p className="text-[.75rem] text-[#757575]">{distance.label}</p>
+                                        <p className="text-[#3E6143] font-bold text-[1rem]">{distance.value}</p>
+                                    </div>
+                                </div>
+                            </Reveal>
+                        ))}
+                    </div>
+                </section>
+
+                {/* Mapa general */}
+                <section className="w-full max-w-4xl px-4 mb-16">
+                    <Reveal>
+                        <div className="rounded-3xl overflow-hidden bg-white border border-[#3E6143]/15 shadow-md p-2">
+                            <div className="rounded-2xl overflow-hidden">
+                                <MapEmbed />
                             </div>
-                            <div className="text-left leading-tight">
-                                <p className="text-[.75rem] text-[#757575]">{distance.label}</p>
-                                <p className="text-[#3E6143] font-bold text-[1rem]">{distance.value}</p>
+                            {/* Barra propia: no depende del cartel interno del iframe de Google */}
+                            <div className="flex items-center justify-between gap-3 flex-wrap px-4 pt-3 pb-2">
+                                <span className="inline-flex items-center gap-1.5 text-[.85rem] text-[#757575]">
+                                    <PinIcon className="w-4 h-4 text-[#3E6143]" />
+                                    <span className="font-semibold text-[#3E6143]">Mina Clavero, Córdoba</span>
+                                </span>
+                                <a
+                                    href={MAIN_MAP_LINK}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-1.5 text-[.85rem] font-semibold text-white bg-[#3E6143] rounded-full px-4 py-1.5 hover:bg-[#2f4c34] transition-colors"
+                                >
+                                    Ver en Google Maps
+                                    <ExternalIcon className="w-3.5 h-3.5" />
+                                </a>
                             </div>
                         </div>
-                    ))}
-                </div>
+                    </Reveal>
                 </section>
 
-            {/* Mapa general */}
-                <section className="w-full max-w-4xl px-4 mb-16 fade-down">
-                <div className="rounded-3xl overflow-hidden bg-white border border-[#3E6143]/15 shadow-md p-2">
-                    <div className="rounded-2xl overflow-hidden">
-                        <MapEmbed />
-                    </div>
-                    {/* Barra propia: no depende del cartel interno del iframe de Google */}
-                    <div className="flex items-center justify-between gap-3 flex-wrap px-4 pt-3 pb-2">
-                        <span className="inline-flex items-center gap-1.5 text-[.85rem] text-[#757575]">
-                            <PinIcon className="w-4 h-4 text-[#3E6143]" />
-                            <span className="font-semibold text-[#3E6143]">Mina Clavero, Córdoba</span>
-                        </span>
-                        <a
-                            href={MAIN_MAP_LINK}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 text-[.85rem] font-semibold text-white bg-[#3E6143] rounded-full px-4 py-1.5 hover:bg-[#2f4c34] transition-colors"
-                        >
-                            Ver en Google Maps
-                            <ExternalIcon className="w-3.5 h-3.5" />
-                        </a>
-                    </div>
-                </div>
-                </section>
-
-            {/* Indicaciones detalladas */}
+                {/* Indicaciones detalladas */}
                 <section className="w-full max-w-5xl px-4 mb-8">
-                <SectionHeading eyebrow="Último tramo" title="Indicaciones detalladas" />
+                    <SectionHeading eyebrow="Último tramo" title="Indicaciones detalladas" />
                 </section>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16 px-4 max-w-5xl w-full">
-                {ROUTES.map((route, index) => (
-                    <article
-                        key={route.title}
-                        className="route-card fade-down group bg-white rounded-3xl border border-[#3E6143]/15 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col"
-                        style={{ animationDelay: `${index * 0.15}s` }}
-                    >
-                        {/* Encabezado */}
-                        <div className="bg-linear-to-br from-[#3E6143] to-[#2f4c34] text-white px-6 py-5 flex items-center gap-4">
-                            <div className="h-12 w-12 rounded-full bg-white/15 ring-1 ring-white/20 flex items-center justify-center shrink-0">
-                                <MapIcon className="w-6 h-6" />
-                            </div>
-                            <div className="text-left min-w-0">
-                                <span className="inline-block text-[.65rem] tracking-[0.18em] uppercase font-semibold bg-white/15 rounded-full px-2.5 py-0.5 mb-1">
-                                    {route.badge}
-                                </span>
-                                <h4 className="titles font-bold text-[1.15rem] leading-tight">
-                                    {route.title}
-                                </h4>
-                            </div>
-                        </div>
-
-                        {/* Pasos con línea conectora */}
-                        <ol className="px-6 pt-6 pb-4 flex-1">
-                            {route.steps.map((step, i) => {
-                                const isLast = i === route.steps.length - 1;
-                                return (
-                                    <li key={i} className="relative flex items-start gap-3 text-left pb-4 last:pb-0">
-                                        {!isLast && (
-                                            <span
-                                                aria-hidden="true"
-                                                className="absolute left-3.5 top-7 bottom-0 w-px -translate-x-1/2 bg-[#3E6143]/20"
-                                            />
-                                        )}
-                                        <span
-                                            className={`relative z-10 h-7 w-7 rounded-full text-[.8rem] font-bold flex items-center justify-center shrink-0 ${
-                                                isLast
-                                                    ? "bg-[#3E6143] text-white"
-                                                    : "bg-[#3E6143]/10 text-[#3E6143]"
-                                            }`}
-                                        >
-                                            {isLast ? <PinIcon className="w-3.5 h-3.5" /> : i + 1}
+                    {ROUTES.map((route, index) => (
+                        <Reveal key={route.title} delay={index * 0.15} className="h-full">
+                            <article className="route-card group bg-white rounded-3xl border border-[#3E6143]/15 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden flex h-full flex-col">
+                                {/* Encabezado */}
+                                <div className="bg-linear-to-br from-[#3E6143] to-[#2f4c34] text-white px-6 py-5 flex items-center gap-4">
+                                    <div className="h-12 w-12 rounded-full bg-white/15 ring-1 ring-white/20 flex items-center justify-center shrink-0">
+                                        <MapIcon className="w-6 h-6" />
+                                    </div>
+                                    <div className="text-left min-w-0">
+                                        <span className="inline-block text-[.65rem] tracking-[0.18em] uppercase font-semibold bg-white/15 rounded-full px-2.5 py-0.5 mb-1">
+                                            {route.badge}
                                         </span>
-                                        <p className="text-defect text-[.92rem] text-[#757575] leading-relaxed pt-0.5">
-                                            {step}
-                                        </p>
-                                    </li>
-                                );
-                            })}
-                        </ol>
+                                        <h4 className="titles font-bold text-[1.15rem] leading-tight">
+                                            {route.title}
+                                        </h4>
+                                    </div>
+                                </div>
 
-                        {/* Mapa */}
-                        <div className="px-4 pb-3">
-                            <iframe
-                                src={route.mapSrc}
-                                width="350"
-                                height="250"
-                                className="rounded-2xl w-full h-56 md:h-60 lg:h-64 border border-[#3E6143]/10"
-                                style={{ border: 0 }}
-                                allowFullScreen
-                                loading="lazy"
-                                referrerPolicy="no-referrer-when-downgrade"
-                                title={route.title}
-                            />
-                        </div>
+                                {/* Pasos con línea conectora */}
+                                <ol className="px-6 pt-6 pb-4 flex-1">
+                                    {route.steps.map((step, i) => {
+                                        const isLast = i === route.steps.length - 1;
+                                        return (
+                                            <li key={i} className="relative flex items-start gap-3 text-left pb-4 last:pb-0">
+                                                {!isLast && (
+                                                    <span
+                                                        aria-hidden="true"
+                                                        className="absolute left-3.5 top-7 bottom-0 w-px -translate-x-1/2 bg-[#3E6143]/20"
+                                                    />
+                                                )}
+                                                <span
+                                                    className={`relative z-10 h-7 w-7 rounded-full text-[.8rem] font-bold flex items-center justify-center shrink-0 ${
+                                                        isLast
+                                                            ? "bg-[#3E6143] text-white"
+                                                            : "bg-[#3E6143]/10 text-[#3E6143]"
+                                                    }`}
+                                                >
+                                                    {isLast ? <PinIcon className="w-3.5 h-3.5" /> : i + 1}
+                                                </span>
+                                                <p className="text-defect text-[.92rem] text-[#757575] leading-relaxed pt-0.5">
+                                                    {step}
+                                                </p>
+                                            </li>
+                                        );
+                                    })}
+                                </ol>
 
-                        {/* Pie con dirección y link */}
-                        <div className="px-6 pb-5 pt-1 flex items-center justify-between gap-3 flex-wrap">
-                            <span className="inline-flex items-center gap-1.5 text-[.85rem] text-[#757575]">
-                                <PinIcon className="w-4 h-4 text-[#3E6143]" />
-                                <span className="font-semibold text-[#3E6143]">{route.address}</span>
-                            </span>
-                            <a
-                                href={route.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1.5 text-[.85rem] font-semibold text-[#3E6143] border border-[#3E6143]/30 rounded-full px-4 py-1.5 hover:bg-[#3E6143] hover:text-white hover:border-[#3E6143] transition-colors"
-                            >
-                                Abrir en Maps
-                                <ExternalIcon className="w-3.5 h-3.5" />
-                            </a>
-                        </div>
-                    </article>
-                ))}
+                                {/* Mapa */}
+                                <div className="px-4 pb-3">
+                                    <iframe
+                                        src={route.mapSrc}
+                                        width="350"
+                                        height="250"
+                                        className="rounded-2xl w-full h-56 md:h-60 lg:h-64 border border-[#3E6143]/10"
+                                        style={{ border: 0 }}
+                                        allowFullScreen
+                                        loading="lazy"
+                                        referrerPolicy="no-referrer-when-downgrade"
+                                        title={route.title}
+                                    />
+                                </div>
+
+                                {/* Pie con dirección y link */}
+                                <div className="px-6 pb-5 pt-1 flex items-center justify-between gap-3 flex-wrap">
+                                    <span className="inline-flex items-center gap-1.5 text-[.85rem] text-[#757575]">
+                                        <PinIcon className="w-4 h-4 text-[#3E6143]" />
+                                        <span className="font-semibold text-[#3E6143]">{route.address}</span>
+                                    </span>
+                                    <a
+                                        href={route.link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-1.5 text-[.85rem] font-semibold text-[#3E6143] border border-[#3E6143]/30 rounded-full px-4 py-1.5 hover:bg-[#3E6143] hover:text-white hover:border-[#3E6143] transition-colors"
+                                    >
+                                        Abrir en Maps
+                                        <ExternalIcon className="w-3.5 h-3.5" />
+                                    </a>
+                                </div>
+                            </article>
+                        </Reveal>
+                    ))}
                 </div>
 
                 <WhatsAppFloatingButton bubbleLine1="¿Consultas y reservas?" bubbleLine2="¡Hablemos!" />
