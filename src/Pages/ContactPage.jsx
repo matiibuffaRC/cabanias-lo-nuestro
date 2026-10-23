@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import presentationImage from "../assets/images/piletaConDormis.jpg";
 import WhatsAppFloatingButton from "../components/layout/WhatsAppButton.jsx";
+import useScrollImageEffect from "../hooks/useScrollImageEffect";
 
 import WhatsAppIcon from "../assets/icons/whatsappIcon.svg";
 import FacebookIcon from "../assets/icons/facebookIcon.svg";
@@ -75,6 +76,7 @@ function ContactPage() {
     const [openIndex, setOpenIndex] = useState(null);
     const [scrollY, setScrollY] = useState(0);
     const [faqRef, faqVisible] = useInView();
+    const heroRef = useScrollImageEffect();
 
     // Parallax suave del hero
     useEffect(() => {
@@ -85,13 +87,15 @@ function ContactPage() {
 
     return (
         <div className="pt-16.25 bg-[#F1F3EE]">
-            <div className="h-135 relative w-full overflow-hidden">
-                <img
-                    src={presentationImage}
-                    alt="Patio de atrás"
-                    className="hero-image w-full h-full object-cover object-center will-change-transform"
-                    style={{ transform: `translateY(${Math.min(scrollY * 0.25, 120)}px) scale(1.1)` }}
-                />
+            <div ref={heroRef} className="h-135 relative w-full overflow-hidden">
+                <div className="scroll-image-effect absolute inset-0">
+                    <img
+                        src={presentationImage}
+                        alt="Patio de atrás"
+                        className="hero-image w-full h-full object-cover object-center will-change-transform"
+                        style={{ transform: `translateY(${Math.min(scrollY * 0.25, 120)}px) scale(1.1)` }}
+                    />
+                </div>
                 <div className="absolute inset-0 bg-linear-to-t from-[#2A4530]/25 via-transparent to-transparent" />
             </div>
 

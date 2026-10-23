@@ -4,6 +4,7 @@ import { accommodation } from "../data/accommodation";
 import AccommodationHighlights from "../components/accommodations/AccommodationHighlights";
 import ImageCarousel from "../components/shared/ImageCarousel";
 import WhatsAppFloatingButton from "../components/layout/WhatsAppButton";
+import useScrollImageEffect from "../hooks/useScrollImageEffect";
 
 function AccommodationsPage() {
     const { tipo } = useParams();
@@ -13,6 +14,7 @@ function AccommodationsPage() {
 function AccommodationContent({ tipo }) {
     const [servicesVisible, setServicesVisible] = useState(false);
     const servicesRef = useRef(null);
+    const carouselRef = useScrollImageEffect();
 
     const data = accommodation.find((item) => item.slug === tipo);
 
@@ -45,8 +47,10 @@ function AccommodationContent({ tipo }) {
     return (
         <div className="bg-[#F1F3EE] flex flex-col items-center">
             {/* Carrusel: queda fijo y el resto del contenido lo tapa al scrollear */}
-            <div className="sticky top-0 z-0 w-full">
-                <ImageCarousel images={data.photos} />
+            <div ref={carouselRef} className="sticky top-0 z-0 w-full overflow-hidden">
+                <div className="scroll-image-effect">
+                    <ImageCarousel images={data.photos} />
+                </div>
             </div>
 
             {/* Todo lo que sigue se desliza por encima del carrusel */}

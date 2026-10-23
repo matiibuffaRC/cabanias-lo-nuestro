@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import ServiceItem from "./ServiceItem";
 import AccommodationCard from "./AccommodationCard";
 import WhatsAppFloatingButton from "../layout/WhatsAppButton";
+import useScrollImageEffect from "../../hooks/useScrollImageEffect";
 
 import presentationImage from "../../assets/images/piletaConDormis.jpg";
 import frenteImage from "../../assets/images/frente21.jpg";
@@ -55,11 +56,15 @@ const SECTIONS = [
 ];
 
 function HomeContent() {
+    const heroRef = useScrollImageEffect();
+
     return (
         <div className="bg-surface flex flex-col items-center relative bg-[#F1F3EE]">
             {/* Hero: queda fijo y el resto del contenido lo tapa al scrollear */}
-            <div className="sticky top-0 z-0 h-110 w-full overflow-hidden">
-                <img src={presentationImage} alt="Patio de atras" className="hero-image w-full h-full object-cover object-center" />
+            <div ref={heroRef} className="sticky top-0 z-0 h-110 w-full overflow-hidden">
+                <div className="scroll-image-effect absolute inset-0">
+                    <img src={presentationImage} alt="Patio de atras" className="hero-image w-full h-full object-cover object-center" />
+                </div>
 
                 {/* Velo general: baja el brillo de la foto para que el texto blanco destaque */}
                 <div className="absolute inset-0 bg-[#1F3524]/25" />

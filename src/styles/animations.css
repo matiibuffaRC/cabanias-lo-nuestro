@@ -76,6 +76,12 @@
     to   { transform: scale(1.06); }
 }
 
+.scroll-image-effect {
+    transform: scale(calc(1 + var(--p, 0) * 0.08));
+    filter: brightness(calc(1 - var(--p, 0) * 0.45));
+    will-change: transform, filter;
+}
+
 /* ===== Tarjetas de contacto (WhatsApp / Facebook / Gmail) ===== */
 
 .contact-card {

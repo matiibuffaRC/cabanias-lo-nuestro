@@ -2,50 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import ImageCarousel from "../components/shared/ImageCarousel";
 import MapEmbed from "../components/shared/MapEmbed";
 import WhatsAppFloatingButton from "../components/layout/WhatsAppButton";
+import useScrollImageEffect from "../hooks/useScrollImageEffect";
 
 import MinaClavero1 from "../assets/images/MinaClavero.jpg";
 import MinaClavero2 from "../assets/images/MinaClavero2.jpg";
 
 const MinaClaveroPhotos = [MinaClavero1, MinaClavero2];
-
-/* ───────────── Efectos de scroll ───────────── */
-
-/**
- * Mientras el contenido sube y tapa el carrusel, la foto se oscurece y hace
- * un leve zoom. Escribe una variable CSS (--p, de 0 a 1) directamente en el
- * DOM, sin re-renders, y respeta "reducir movimiento".
- */
-function useCarouselScrollEffect() {
-    const ref = useRef(null);
-
-    useEffect(() => {
-        const element = ref.current;
-        if (!element) return;
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-        let frame = 0;
-        const update = () => {
-            frame = 0;
-            const height = element.offsetHeight || 1;
-            const progress = Math.min(Math.max(window.scrollY / height, 0), 1);
-            element.style.setProperty("--p", progress.toFixed(3));
-        };
-        const onScroll = () => {
-            if (!frame) frame = requestAnimationFrame(update);
-        };
-
-        update();
-        window.addEventListener("scroll", onScroll, { passive: true });
-        window.addEventListener("resize", onScroll);
-        return () => {
-            window.removeEventListener("scroll", onScroll);
-            window.removeEventListener("resize", onScroll);
-            if (frame) cancelAnimationFrame(frame);
-        };
-    }, []);
-
-    return ref;
-}
 
 /**
  * Aparece cuando entra en pantalla (no al montar la página), así los
@@ -187,18 +149,14 @@ function SectionHeading({ eyebrow, title }) {
 }
 
 function MapPage() {
-    const carouselRef = useCarouselScrollEffect();
+    const carouselRef = useScrollImageEffect();
 
     return (
         <div className="pt-16.25 bg-[#F1F3EE] flex flex-col items-center">
             {/* Carrusel fijo: se oscurece y hace zoom mientras el contenido lo tapa */}
             <div ref={carouselRef} className="sticky top-16.25 z-0 w-full overflow-hidden">
                 <div
-                    className="will-change-transform"
-                    style={{
-                        transform: "scale(calc(1 + var(--p, 0) * 0.08))",
-                        filter: "brightness(calc(1 - var(--p, 0) * 0.45))",
-                    }}
+                    className="scroll-image-effect"
                 >
                     <ImageCarousel images={MinaClaveroPhotos} />
                 </div>
