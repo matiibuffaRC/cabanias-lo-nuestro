@@ -26,11 +26,11 @@ const FOOTER_COLUMNS = [
 ];
 
 const SOCIALS = [
-    {
-        icon: GmailIcon,
-        title: "Gmail",
-        href: "#",
-    },
+    // {
+    //     icon: GmailIcon,
+    //     title: "Gmail",
+    //     href: "#",
+    // },
     {
         icon: WhatsAppIcon,
         title: "WhatsApp",
@@ -39,7 +39,7 @@ const SOCIALS = [
     {
         icon: FacebookIcon,
         title: "Facebook",
-        href: "#",
+        href: "https://www.facebook.com/p/Lo-Nuestro-100054220102040/",
     },
 ];
 

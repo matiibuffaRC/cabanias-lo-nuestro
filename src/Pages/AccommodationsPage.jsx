@@ -50,7 +50,7 @@ function AccommodationContent({ tipo }) {
             </div>
 
             {/* Todo lo que sigue se desliza por encima del carrusel */}
-            <div className="relative z-10 -mt-8 flex w-full flex-col items-center rounded-t-[2rem] bg-[#F1F3EE]">
+            <div className="relative z-10 -mt-8 flex w-full flex-col items-center rounded-t-4xl bg-[#F1F3EE]">
                 {/* Encabezado */}
                 <div className="text-center px-5 pt-10 pb-6 flex flex-col items-center w-full fade-down">
                     <h1 className="text-[2rem] titles font-bold text-[#3E6143]">

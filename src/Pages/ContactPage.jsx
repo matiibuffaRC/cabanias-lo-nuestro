@@ -12,10 +12,10 @@ const CONTACTS = [
 
 // ⚠️ Texto de ejemplo: reemplazalo por tus preguntas reales
 const FAQS = [
-    { q: "¿Cómo puedo hacer una consulta o reserva?", a: "Escribinos por WhatsApp y te respondemos a la brevedad con disponibilidad y precios." },
+    { q: "¿Cómo puedo hacer una consulta o reserva?", a: "Escribinos por WhatsApp o Facebook y te respondemos a la brevedad con disponibilidad y precios." },
     { q: "¿En qué horarios atienden?", a: "Respondemos mensajes todos los días. Si no contestamos enseguida, es porque estamos ocupados; te escribimos apenas podamos." },
-    { q: "¿Dónde están ubicados?", a: "Te pasamos la ubicación exacta por WhatsApp cuando coordinemos con vos." },
-    { q: "¿Qué medios de pago aceptan?", a: "Trabajamos con transferencias bancarias y entregas en efectivo." },
+    { q: "¿Dónde están ubicados?", a: "Estamos a la entrada de Mina Clavero. Te pasamos la ubicación exacta por WhatsApp cuando coordinemos con vos para que no tengas problemas con ubicarnos." },
+    { q: "¿Qué medios de pago aceptan?", a: "Trabajamos con transferencias bancarias y entregas en efectivo, lo podemos coordinar una vez que nos contactemos." },
 ];
 
 /* Hook: marca un elemento como visible cuando entra en pantalla */

@@ -205,7 +205,7 @@ function MapPage() {
             </div>
 
             {/* Panel que sube por encima del carrusel */}
-            <div className="relative z-10 -mt-8 flex w-full flex-col items-center rounded-t-[2rem] bg-[#F1F3EE] shadow-[0_-14px_30px_-14px_rgba(0,0,0,0.3)]">
+            <div className="relative z-10 -mt-8 flex w-full flex-col items-center rounded-t-4xl bg-[#F1F3EE] shadow-[0_-14px_30px_-14px_rgba(0,0,0,0.3)]">
                 {/* Intro (arriba del todo: anima al cargar) */}
                 <section className="px-6 pt-12 pb-8 text-center max-w-3xl fade-down">
                     <span className="inline-flex items-center gap-1.5 text-[.75rem] tracking-[0.2em] uppercase font-semibold text-[#3E6143]/70 mb-2">
