@@ -16,6 +16,8 @@ import tvIcon from "../../assets/icons/TvIcon.svg";
 import grillIcon from "../../assets/icons/GrillIcon.svg";
 import airIcon from "../../assets/icons/AirIcon.svg";
 
+import QueHacer from "../layout/QueHacer.jsx";
+
 import LogoMinaClavero from "../../assets/icons/MinaClaveroLogo.png";
 
 
@@ -106,59 +108,59 @@ function HomeContent() {
             {/* Todo lo que sigue se desliza por encima del hero */}
             <div className="relative z-10 -mt-8 flex w-full flex-col items-center rounded-t-4xl bg-[#F1F3EE]">
 
-            {/* Presentación */}
-            <div className="max-w-3xl px-5 py-14 text-center fade-down md:py-16">
-                <p className="mb-2 text-[.75rem] font-semibold uppercase tracking-[0.2em] text-[#3E6143]/65">
-                    Tu lugar en Traslasierra
-                </p>
-                <h2 className="titles py-2 text-[1.8rem] font-bold text-[#3E6143] md:text-[2.1rem]">
-                    Lo Nuestro, complejo de alojamiento en Traslasierra
-                </h2>
-                <span className="mx-auto mb-4 block h-0.75 w-14 rounded-full bg-[#3E6143]/40" />
-                <p className="mx-auto max-w-2xl text-base font-medium leading-relaxed text-[#757575] md:text-lg">
-                    Somos un complejo vacacional único ubicado a la entrada de Mina Clavero desde el Valle de Traslasierra.
-                </p>
-            </div>
+                {/* Presentación */}
+                <div className="max-w-3xl px-5 py-14 text-center fade-down md:py-16">
+                    <p className="mb-2 text-[.75rem] font-semibold uppercase tracking-[0.2em] text-[#3E6143]/65">
+                        Tu lugar en Traslasierra
+                    </p>
+                    <h2 className="titles py-2 text-[1.8rem] font-bold text-[#3E6143] md:text-[2.1rem]">
+                        Lo Nuestro, complejo de alojamiento en Traslasierra
+                    </h2>
+                    <span className="mx-auto mb-4 block h-0.75 w-14 rounded-full bg-[#3E6143]/40" />
+                    <p className="mx-auto max-w-2xl text-base font-medium leading-relaxed text-[#757575] md:text-lg">
+                        Somos un complejo vacacional único ubicado a la entrada de Mina Clavero desde el Valle de Traslasierra.
+                    </p>
+                </div>
 
-            {/* Servicios */}
-            <div className="w-full bg-[#F7F8F5] py-10 flex flex-col justify-center items-center">
-                <h2 className="titles text-center font-bold text-[1.6rem] text-primary mb-6 fade-down text-[#3E6143]">
-                    Lo que ofrecemos
-                </h2>
-                <div className="grid w-full max-w-6xl grid-cols-2 gap-3 px-5 md:grid-cols-3 md:gap-5 lg:grid-cols-6">
-                    {SERVICES.map((service, index) => (
-                        <ServiceItem key={service.id} service={service} index={index} />
+                {/* Servicios */}
+                <div className="w-full bg-[#F7F8F5] py-10 flex flex-col justify-center items-center">
+                    <h2 className="titles text-center font-bold text-[1.6rem] text-primary mb-6 fade-down text-[#3E6143]">
+                        Lo que ofrecemos
+                    </h2>
+                    <div className="grid w-full max-w-6xl grid-cols-2 gap-3 px-5 md:grid-cols-3 md:gap-5 lg:grid-cols-6">
+                        {SERVICES.map((service, index) => (
+                            <ServiceItem key={service.id} service={service} index={index} />
+                        ))}
+                    </div>
+                </div>
+
+                {/* Secciones */}
+                <div className="w-full flex flex-col gap-2 mt-10">
+                    {SECTIONS.map((section, index) => (
+                        <AccommodationCard key={section.route} section={section} index={index} />
                     ))}
                 </div>
-            </div>
+                <QueHacer />
 
-            {/* Secciones */}
-            <div className="w-full flex flex-col gap-2 mt-10">
-                {SECTIONS.map((section, index) => (
-                    <AccommodationCard key={section.route} section={section} index={index} />
-                ))}
+                {/* Cierre con logo */}
+                <div className="w-full flex flex-col items-center py-14 px-5 text-center">
+                    <h2 className="titles font-bold text-3xl lg:text-4xl text-primary mb-2 fade-down text-[#3E6143]">
+                        En el corazón de Mina Clavero
+                    </h2>
+                    <p className="text-muted text-lg max-w-md mb-6 fade-down font-semibold text-[#3E6143]" style={{ animationDelay: "0.1s" }}>
+                        A minutos de los principales atractivos del Valle de Traslasierra.
+                    </p>
+                    <img
+                        src={LogoMinaClavero}
+                        alt="Logo de Mina Clavero"
+                        loading="lazy"
+                        decoding="async"
+                        className="w-60 h-60 md:w-80 md:h-80 fade-down"
+                        style={{ animationDelay: "0.2s" }}
+                    />
+                </div>
             </div>
-
-            {/* Cierre con logo */}
-            <div className="w-full flex flex-col items-center py-14 px-5 text-center">
-                <h2 className="titles font-bold text-3xl lg:text-4xl text-primary mb-2 fade-down text-[#3E6143]">
-                    En el corazón de Mina Clavero
-                </h2>
-                <p className="text-muted text-lg max-w-md mb-6 fade-down font-semibold text-[#3E6143]" style={{ animationDelay: "0.1s" }}>
-                    A minutos de los principales atractivos del Valle de Traslasierra.
-                </p>
-                <img
-                    src={LogoMinaClavero}
-                    alt="Logo de Mina Clavero"
-                    loading="lazy"
-                    decoding="async"
-                    className="w-60 h-60 md:w-80 md:h-80 fade-down"
-                    style={{ animationDelay: "0.2s" }}
-                />
-            </div>
-
-            </div>
-
+            
             <WhatsAppFloatingButton />
         </div>
     );

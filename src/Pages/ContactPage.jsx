@@ -6,6 +6,7 @@ import useScrollImageEffect from "../hooks/useScrollImageEffect";
 import WhatsAppIcon from "../assets/icons/whatsappIcon.svg";
 import FacebookIcon from "../assets/icons/facebookIcon.svg";
 import Testimonials from "../components/layout/Testimonials.jsx";
+import QueHacer from "../components/layout/QueHacer.jsx";
 
 const CONTACTS = [
     { icon: WhatsAppIcon, title: "WhatsApp", name: "Cristian", href: "https://wa.me/5493564507240" },
