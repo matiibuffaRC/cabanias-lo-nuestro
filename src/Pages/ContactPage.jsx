@@ -101,7 +101,7 @@ function ContactPage() {
             </div>
 
             <div className="text-center py-10 px-5">
-                <h2 className="text-[2rem] titles font-bold text-[#3E6143] fade-down">Contactanos</h2>
+                <h1 className="text-[2rem] titles font-bold text-[#3E6143] fade-down">Contactanos</h1>
                 <p className="text-[#3E6143]/70 max-w-md mx-auto mt-2 fade-down" style={{ animationDelay: "0.1s" }}>
                     Escribinos por el medio que prefieras, te respondemos a la brevedad.
                 </p>

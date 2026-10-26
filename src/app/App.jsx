@@ -6,10 +6,12 @@ import AccommodationsPage from "../Pages/AccommodationsPage";
 import ContactPage from "../Pages/ContactPage";
 import HomePage from "../Pages/HomePage";
 import MapPage from "../Pages/MapPage";
+import PageMetadata from "../components/seo/PageMetadata";
 
 function App() {
   return (
     <>
+      <PageMetadata />
       <Header />
       <ScrollToTop />
       <Routes>

@@ -170,9 +170,9 @@ function MapPage() {
                         <PinIcon className="w-3.5 h-3.5" />
                         Valle de Traslasierra · Córdoba
                     </span>
-                    <h2 className="titles font-bold text-[#3E6143] text-[2rem] md:text-[2.5rem] leading-tight my-2">
+                    <h1 className="titles font-bold text-[#3E6143] text-[2rem] md:text-[2.5rem] leading-tight my-2">
                         Cómo llegar a Mina Clavero
-                    </h2>
+                    </h1>
                     <span className="block w-14 h-0.75 bg-[#3E6143]/40 rounded-full mx-auto my-4" />
                     <p className="text-defect text-[#757575] leading-relaxed md:text-[1.05rem]">
                         Mina Clavero está en el corazón del Valle de Traslasierra, al pie de las
