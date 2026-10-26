@@ -1,6 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 
-// ⚠️ Texto de ejemplo: reemplazalo por testimonios reales de tus clientes
+const AUTOPLAY_MS = 5000;
+const GAP = 16; // gap-4 en px
+
+// ⚠️ Texto de ejemplo: reemplazalo por testimonios reales de tus clientes.
+// Podés agregar todos los que quieras: el carrusel se adapta solo.
 const TESTIMONIALS = [
     {
         name: "María G.",
@@ -12,13 +16,31 @@ const TESTIMONIALS = [
         name: "Javier R.",
         place: "Rosario",
         text: "Fuimos en familia y los chicos disfrutaron la pileta todo el día. Muy tranquilo y súper bien cuidado.",
-        rating: 4,
+        rating: 5,
     },
     {
         name: "Lucía P.",
         place: "Buenos Aires",
         text: "Coordinar fue facilidad total. Muy amables y atentos a cada detalle. ¡Súper recomendable!",
+        rating: 5,
+    },
+    {
+        name: "Martín S.",
+        place: "Villa María",
+        text: "Pasamos un fin de semana espectacular con amigos. El lugar es hermoso y la atención de diez.",
+        rating: 5,
+    },
+    {
+        name: "Carolina D.",
+        place: "San Francisco",
+        text: "Muy buena relación precio-calidad. Todo limpio, cómodo y con muy buena onda de parte de los dueños.",
         rating: 4,
+    },
+    {
+        name: "Esteban L.",
+        place: "Santa Fe",
+        text: "Nos encantó la ubicación y lo bien que nos orientaron para llegar. Ya estamos pensando en volver.",
+        rating: 5,
     },
 ];
 
@@ -69,7 +91,7 @@ function Stars({ rating, visible, baseDelay }) {
 
 function TestimonialCard({ name, place, text, rating, visible, delay }) {
     return (
-        <figure className="group relative h-full flex flex-col gap-4 bg-white rounded-2xl p-6 shadow-sm border border-[#3E6143]/10 text-left overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:shadow-[#3E6143]/10">
+        <figure className="group relative h-full w-full flex flex-col gap-4 bg-white rounded-2xl p-6 shadow-sm border border-[#3E6143]/10 text-left overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:shadow-[#3E6143]/10">
             {/* Franja de acento superior que se expande al pasar el mouse */}
             <span className="absolute top-0 left-0 h-1 w-12 bg-linear-to-r from-[#3E6143] to-[#6E9B72] rounded-br-full transition-all duration-500 group-hover:w-full" />
 
@@ -102,11 +124,87 @@ function TestimonialCard({ name, place, text, rating, visible, delay }) {
     );
 }
 
+function ArrowButton({ direction, onClick }) {
+    const isPrev = direction === "prev";
+    return (
+        <button
+            type="button"
+            onClick={onClick}
+            aria-label={isPrev ? "Testimonio anterior" : "Testimonio siguiente"}
+            className="h-10 w-10 rounded-full bg-white border border-[#3E6143]/10 shadow-sm flex items-center justify-center text-[#3E6143] cursor-pointer transition-all duration-200 hover:bg-[#3E6143] hover:text-white hover:shadow-md active:scale-90"
+        >
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d={isPrev ? "M15 18l-6-6 6-6" : "M9 18l6-6-6-6"} />
+            </svg>
+        </button>
+    );
+}
+
 function Testimonials() {
     const [ref, visible] = useInView();
+    const trackRef = useRef(null);
+    const [active, setActive] = useState(0);
+    const [pages, setPages] = useState(TESTIMONIALS.length);
+    const [paused, setPaused] = useState(false);
+
+    // Ancho de un "paso" (tarjeta + gap) y cuántas tarjetas se ven a la vez
+    const measure = useCallback(() => {
+        const track = trackRef.current;
+        const first = track?.firstElementChild;
+        if (!track || !first) return null;
+        const step = first.offsetWidth + GAP;
+        const perView = Math.max(1, Math.round(track.clientWidth / step));
+        return { step, perView };
+    }, []);
+
+    const updatePages = useCallback(() => {
+        const m = measure();
+        if (!m) return;
+        setPages(Math.max(1, TESTIMONIALS.length - m.perView + 1));
+    }, [measure]);
+
+    // Recalcular cantidad de "páginas" al cambiar el tamaño de pantalla
+    useEffect(() => {
+        updatePages();
+        window.addEventListener("resize", updatePages);
+        return () => window.removeEventListener("resize", updatePages);
+    }, [updatePages]);
+
+    // Detectar qué tarjeta está activa mientras se hace scroll (swipe, flechas o autoplay)
+    const onScroll = () => {
+        const track = trackRef.current;
+        const m = measure();
+        if (!track || !m) return;
+        const index = Math.round(track.scrollLeft / m.step);
+        setActive(Math.min(Math.max(index, 0), pages - 1));
+    };
+
+    const goTo = useCallback(
+        (index) => {
+            const track = trackRef.current;
+            const m = measure();
+            if (!track || !m) return;
+            const target = (index + pages) % pages; // da la vuelta al llegar al final
+            track.scrollTo({ left: target * m.step, behavior: "smooth" });
+        },
+        [measure, pages]
+    );
+
+    // Autoplay: se pausa con el mouse encima, al tocar, con foco por teclado o si el usuario prefiere menos movimiento
+    useEffect(() => {
+        if (!visible || paused || pages <= 1) return;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        const id = setInterval(() => goTo(active + 1), AUTOPLAY_MS);
+        return () => clearInterval(id);
+    }, [visible, paused, pages, active, goTo]);
 
     return (
-        <section ref={ref} className="max-w-md md:max-w-5xl mx-auto mt-16">
+        <section
+            ref={ref}
+            className="max-w-md md:max-w-5xl mx-auto mt-16"
+            aria-roledescription="carrusel"
+            aria-label="Testimonios de clientes"
+        >
             {/* Encabezado */}
             <div
                 className={`mb-8 transition-all duration-700 ease-out ${
@@ -130,19 +228,63 @@ function Testimonials() {
                 <p className="text-[#3E6143]/70 mt-3">Experiencias de quienes ya nos visitaron.</p>
             </div>
 
-            {/* Mobile: carrusel con scroll-snap. Desktop: grilla de 3 columnas */}
-            <div className="flex md:grid md:grid-cols-3 gap-4 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none -mx-5 px-5 md:mx-0 md:px-0 pt-2 pb-6 md:pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                {TESTIMONIALS.map((item, i) => (
+            {/* Carrusel: swipe en celular, flechas y puntos en todas las pantallas */}
+            <div
+                onMouseEnter={() => setPaused(true)}
+                onMouseLeave={() => setPaused(false)}
+                onTouchStart={() => setPaused(true)}
+                onFocus={() => setPaused(true)}
+                onBlur={() => setPaused(false)}
+            >
+                <div
+                    ref={trackRef}
+                    onScroll={onScroll}
+                    className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-pl-5 md:scroll-pl-0 -mx-5 px-5 md:mx-0 md:px-0 pt-2 pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                >
+                    {TESTIMONIALS.map((item, i) => (
+                        <div
+                            key={item.name}
+                            className={`snap-start shrink-0 w-[85%] md:w-[calc((100%-2rem)/3)] flex transition-all duration-700 ease-out ${
+                                visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                            }`}
+                            style={{ transitionDelay: `${150 + Math.min(i, 3) * 150}ms` }}
+                        >
+                            <TestimonialCard {...item} visible={visible} delay={150 + Math.min(i, 3) * 150} />
+                        </div>
+                    ))}
+                </div>
+
+                {/* Controles */}
+                {pages > 1 && (
                     <div
-                        key={item.name}
-                        className={`snap-center shrink-0 w-[85%] md:w-auto transition-all duration-700 ease-out ${
-                            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                        className={`flex items-center justify-center gap-4 transition-opacity duration-700 delay-500 ${
+                            visible ? "opacity-100" : "opacity-0"
                         }`}
-                        style={{ transitionDelay: `${150 + i * 150}ms` }}
                     >
-                        <TestimonialCard {...item} visible={visible} delay={150 + i * 150} />
+                        <ArrowButton direction="prev" onClick={() => goTo(active - 1)} />
+
+                        <div className="flex items-center gap-2">
+                            {Array.from({ length: pages }).map((_, i) => (
+                                <button
+                                    key={i}
+                                    type="button"
+                                    onClick={() => goTo(i)}
+                                    aria-label={`Ir al testimonio ${i + 1}`}
+                                    aria-current={i === active}
+                                    className="p-1 cursor-pointer"
+                                >
+                                    <span
+                                        className={`block h-2 rounded-full transition-all duration-300 ${
+                                            i === active ? "w-6 bg-[#3E6143]" : "w-2 bg-[#3E6143]/25 hover:bg-[#3E6143]/50"
+                                        }`}
+                                    />
+                                </button>
+                            ))}
+                        </div>
+
+                        <ArrowButton direction="next" onClick={() => goTo(active + 1)} />
                     </div>
-                ))}
+                )}
             </div>
         </section>
     );
