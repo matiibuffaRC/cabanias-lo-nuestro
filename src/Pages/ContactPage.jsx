@@ -5,6 +5,7 @@ import useScrollImageEffect from "../hooks/useScrollImageEffect";
 
 import WhatsAppIcon from "../assets/icons/whatsappIcon.svg";
 import FacebookIcon from "../assets/icons/facebookIcon.svg";
+import Testimonials from "../components/layout/Testimonials.jsx";
 
 const CONTACTS = [
     { icon: WhatsAppIcon, title: "WhatsApp", name: "Cristian", href: "https://wa.me/5493564507240" },
@@ -129,7 +130,7 @@ function ContactPage() {
                         </a>
                     ))}
                 </div>
-
+                <Testimonials />
                 {/* Preguntas frecuentes */}
                 <section ref={faqRef} className="max-w-md md:max-w-3xl mx-auto mt-14">
                     <h2 className="text-[1.5rem] titles font-bold text-[#3E6143] mb-5">Preguntas frecuentes</h2>
