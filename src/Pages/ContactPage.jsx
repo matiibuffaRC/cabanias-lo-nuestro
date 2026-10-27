@@ -6,7 +6,8 @@ import useScrollImageEffect from "../hooks/useScrollImageEffect";
 import WhatsAppIcon from "../assets/icons/whatsappIcon.svg";
 import FacebookIcon from "../assets/icons/facebookIcon.svg";
 import Testimonials from "../components/layout/Testimonials.jsx";
-import QueHacer from "../components/layout/QueHacer.jsx";
+import ReglasCondiciones from "../components/layout/ReglasCondiciones.jsx";
+
 
 const CONTACTS = [
     { icon: WhatsAppIcon, title: "WhatsApp", name: "Cristian", href: "https://wa.me/5493564507240" },
@@ -15,10 +16,11 @@ const CONTACTS = [
 
 // ⚠️ Texto de ejemplo: reemplazalo por tus preguntas reales
 const FAQS = [
-    { q: "¿Cómo puedo hacer una consulta o reserva?", a: "Escribinos por WhatsApp o Facebook y te respondemos a la brevedad con disponibilidad y precios." },
     { q: "¿En qué horarios atienden?", a: "Respondemos mensajes todos los días. Si no contestamos enseguida, es porque estamos ocupados; te escribimos apenas podamos." },
-    { q: "¿Dónde están ubicados?", a: "Estamos a la entrada de Mina Clavero. Te pasamos la ubicación exacta por WhatsApp cuando coordinemos con vos para que no tengas problemas con ubicarnos." },
     { q: "¿Qué medios de pago aceptan?", a: "Trabajamos con transferencias bancarias y entregas en efectivo, lo podemos coordinar una vez que nos contactemos." },
+    { q: "Seña y política de cancelación", a: "La reserva se confirma con una seña del 30%. Si cancelás con más de 15 días de anticipación, te devolvemos la seña. Con menos tiempo, la seña no es reembolsable pero podemos reprogramar tu fecha según disponibilidad.", },
+    { q: "Medios de pago", a: "Trabajamos con transferencias bancarias y entregas en efectivo. El saldo restante se abona al ingresar. Lo coordinamos con vos por WhatsApp.", },
+    { q: "Temporada alta y fines de semana largos", a: "En vacaciones de verano, invierno y fines de semana largos el mínimo de noches puede ser mayor y las tarifas cambian. Consultanos las fechas que tenés en mente.", },
 ];
 
 /* Hook: marca un elemento como visible cuando entra en pantalla */
@@ -132,6 +134,7 @@ function ContactPage() {
                     ))}
                 </div>
                 <Testimonials />
+                <ReglasCondiciones />
                 {/* Preguntas frecuentes */}
                 <section ref={faqRef} className="max-w-md md:max-w-3xl mx-auto mt-14">
                     <h2 className="text-[1.5rem] titles font-bold text-[#3E6143] mb-5">Preguntas frecuentes</h2>
