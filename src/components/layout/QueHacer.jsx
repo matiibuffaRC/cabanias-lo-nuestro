@@ -236,7 +236,7 @@ function QueHacer() {
             </div>
 
             {/* Paneles: todos están en el HTML (bueno para Google), solo se muestra el activo */}
-            <div className="mt-8 text-center">
+            <div className="mt-8 text-center p-4">
                 {CATEGORIES.map((cat) => {
                     const [featured, ...rest] = cat.items;
                     // Si queda una tarjeta sola en la última fila (2 columnas), la estiramos
@@ -274,7 +274,7 @@ function QueHacer() {
 
             {/* Llamado a la acción */}
             <div
-                className={`relative mt-10 overflow-hidden text-center rounded-3xl bg-linear-to-br from-[#3E6143] to-[#2A4530] px-6 py-8 shadow-lg shadow-[#3E6143]/20 transition-all duration-700 delay-500 ${
+                className={`relative mt-10 overflow-hidden text-center m-4 rounded-3xl bg-linear-to-br from-[#3E6143] to-[#2A4530] px-6 py-8 shadow-lg shadow-[#3E6143]/20 transition-all duration-700 delay-500 ${
                     visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
                 }`}
             >
