@@ -5,6 +5,10 @@ const WHATSAPP_URL = "https://wa.me/5493564507240";
 /*
   ⚠️ Revisá los textos y sumá/quitá lo que quieras.
   - El PRIMER lugar de cada categoría se muestra destacado (tarjeta grande y verde).
+  - Ese primer lugar puede llevar foto: campos `image` e `imageAlt`.
+    Si no tiene `image` (o la imagen no carga), se muestra el diseño con emoji.
+  - Las imágenes de abajo son GENÉRICAS (picsum.photos) solo para evaluar el diseño.
+    Reemplazalas por fotos propias, por ejemplo "/img/nido-del-aguila.webp".
   - Los lugares están tomados de guías turísticas de Mina Clavero y Traslasierra.
   - Si querés agregar distancias, ponelas desde TU complejo, por ejemplo "A 10 min en auto".
   - En "Comercios" conviene poner nombres reales de tu zona (supermercado, panadería, farmacia, etc.).
@@ -17,7 +21,13 @@ const CATEGORIES = [
         title: "Balnearios y ríos de Mina Clavero",
         intro: "El río Mina Clavero, declarado una de las Siete Maravillas Naturales de Argentina, regala pozas cristalinas, toboganes de piedra y playas para todos los gustos.",
         items: [
-            { emoji: "🦅", title: "Nido del Águila", text: "Pozas profundas, saltos de agua y paredones de roca, un clásico para animarse a un clavado." },
+            {
+                emoji: "🦅",
+                title: "Nido del Águila",
+                text: "Pozas profundas, saltos de agua y paredones de roca, un clásico para animarse a un clavado.",
+                image: "https://picsum.photos/seed/nido-del-aguila/1200/900",
+                imageAlt: "Pozas y paredones de roca en el Nido del Águila",
+            },
             { emoji: "🛝", title: "La Toma", text: "Pequeñas cascadas y toboganes naturales formados por el agua. Ideal para ir con chicos." },
             { emoji: "🐘", title: "Los Elefantes", text: "Enormes rocas con formas únicas a la orilla del río, muy buenas para sacar fotos." },
             { emoji: "🌊", title: "Los Cajones", text: "El río corre encajonado entre piedras y forma rápidos y ollas profundas." },
@@ -32,7 +42,13 @@ const CATEGORIES = [
         title: "Excursiones y paseos por las sierras",
         intro: "Desde Mina Clavero se llega fácil a miradores, cascadas y caminos serranos. Hay opciones tranquilas y otras con más aventura.",
         items: [
-            { emoji: "🛣️", title: "Camino de las Altas Cumbres", text: "Una de las rutas más escénicas de Córdoba, que pasa por el Parque Nacional Quebrada del Condorito." },
+            {
+                emoji: "🛣️",
+                title: "Camino de las Altas Cumbres",
+                text: "Una de las rutas más escénicas de Córdoba, que pasa por el Parque Nacional Quebrada del Condorito.",
+                image: "https://picsum.photos/seed/altas-cumbres/1200/900",
+                imageAlt: "Ruta serrana del Camino de las Altas Cumbres",
+            },
             { emoji: "💧", title: "Nacimiento del Río Mina Clavero", text: "Un parador sobre la RP 34 desde donde se accede al lugar donde nace el río." },
             { emoji: "🐎", title: "Cabalgatas y 4x4", text: "Recorridos por arroyos y caminos de montaña, con guías de la zona." },
             { emoji: "🚣", title: "Dique La Viña", text: "Un lugar enorme para pasear, pescar o hacer kayak, a unos kilómetros de Nono." },
@@ -47,7 +63,13 @@ const CATEGORIES = [
         title: "Museos y pueblos cercanos",
         intro: "Para los días de lluvia o para variar el plan, la zona tiene museos curiosos y pueblos con mucha historia.",
         items: [
-            { emoji: "🏛️", title: "Museo Rocsen (Nono)", text: "Un museo polifacético con más de 18.000 piezas de distintas épocas y disciplinas." },
+            {
+                emoji: "🏛️",
+                title: "Museo Rocsen (Nono)",
+                text: "Un museo polifacético con más de 18.000 piezas de distintas épocas y disciplinas.",
+                image: "https://picsum.photos/seed/museo-rocsen/1200/900",
+                imageAlt: "Salas del Museo Rocsen en Nono",
+            },
             { emoji: "🌵", title: "Museo de Cactus", text: "Un jardín con cactus y suculentas para recorrer sin apuro." },
             { emoji: "🔔", title: "Museo de las Campanas", text: "Una colección con cientos de campanas de todas las formas y sonidos." },
             { emoji: "💎", title: "Piedra Cruz del Sur", text: "Un recorrido guiado para conocer minerales y piedras de la región." },
@@ -62,7 +84,13 @@ const CATEGORIES = [
         title: "Comercios y servicios cerca",
         intro: "Para que no te falte nada durante la estadía, a poca distancia hay todo lo necesario para abastecerte.",
         items: [
-            { emoji: "🛒", title: "Supermercados y almacenes", text: "Para hacer las compras del fin de semana y llegar con la heladera llena." },
+            {
+                emoji: "🛒",
+                title: "Supermercados y almacenes",
+                text: "Para hacer las compras del fin de semana y llegar con la heladera llena.",
+                image: "https://picsum.photos/seed/supermercado/1200/900",
+                imageAlt: "Compras de supermercado para la estadía",
+            },
             { emoji: "🥖", title: "Panaderías y rotiserías", text: "Facturas, pan fresco y comida lista para cuando no querés cocinar." },
             { emoji: "🥩", title: "Carnicerías y verdulerías", text: "Todo lo que necesitás para el asado en la parrilla del complejo." },
             { emoji: "💊", title: "Farmacias y servicios", text: "Farmacias, cajeros y estaciones de servicio en el centro de Mina Clavero." },
@@ -97,17 +125,42 @@ function useInView(threshold = 0.1) {
 }
 
 /* Tarjeta destacada (primer lugar de cada categoría) */
-function FeaturedCard({ emoji, title, text, animate }) {
+function FeaturedCard({ emoji, title, text, image, imageAlt, animate }) {
+    // Si la imagen falta o no carga, vuelve al diseño con emoji
+    const [imgOk, setImgOk] = useState(Boolean(image));
+    const [imgLoaded, setImgLoaded] = useState(false);
+
     return (
         <li
             className={`group sm:col-span-2 md:row-span-2 ${animate ? "zone-card-in" : "opacity-0"}`}
         >
-            <article className="relative h-full min-h-48 md:min-h-72 flex flex-col justify-end gap-3 rounded-3xl p-6 md:p-8 text-left overflow-hidden bg-linear-to-br from-[#3E6143] via-[#34553A] to-[#2A4530] shadow-lg shadow-[#3E6143]/20 transition-all duration-300 group-hover:-translate-y-1.5 group-hover:shadow-xl group-hover:shadow-[#3E6143]/30">
-                {/* Decoración de fondo */}
+            <article className="relative h-full min-h-64 md:min-h-80 flex flex-col justify-end gap-3 rounded-3xl p-6 md:p-8 text-left overflow-hidden bg-linear-to-br from-[#3E6143] via-[#34553A] to-[#2A4530] shadow-lg shadow-[#3E6143]/20 transition-all duration-300 group-hover:-translate-y-1.5 group-hover:shadow-xl group-hover:shadow-[#3E6143]/30">
+                {/* Foto de fondo (opcional) */}
+                {imgOk && (
+                    <>
+                        <img
+                            src={image}
+                            alt={imageAlt || title}
+                            loading="lazy"
+                            decoding="async"
+                            onLoad={() => setImgLoaded(true)}
+                            onError={() => setImgOk(false)}
+                            className={`absolute inset-0 h-full w-full object-cover transition-all duration-700 ease-out group-hover:scale-105 ${
+                                imgLoaded ? "opacity-100" : "opacity-0"
+                            }`}
+                        />
+                        {/* Degradado para que el texto se lea siempre */}
+                        <span className="pointer-events-none absolute inset-0 bg-linear-to-t from-[#1F3524] via-[#2A4530]/70 to-[#2A4530]/20" />
+                    </>
+                )}
+
+                {/* Decoración original: círculos + emoji (siempre visibles, con o sin foto) */}
                 <span className="pointer-events-none absolute -top-10 -right-10 h-40 w-40 rounded-full bg-white/10 transition-transform duration-700 group-hover:scale-125" />
                 <span className="pointer-events-none absolute top-16 -right-4 h-20 w-20 rounded-full bg-[#6E9B72]/30 transition-transform duration-700 group-hover:scale-125" />
                 <span
-                    className="pointer-events-none absolute top-5 right-6 md:top-6 md:right-8 text-[3.5rem] md:text-[5rem] leading-none opacity-90 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6"
+                    className={`pointer-events-none absolute top-5 right-6 md:top-6 md:right-8 text-[3.5rem] md:text-[5rem] leading-none transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6 ${
+                        imgOk ? "opacity-95 drop-shadow-[0_4px_10px_rgba(0,0,0,.35)]" : "opacity-90"
+                    }`}
                     aria-hidden="true"
                 >
                     {emoji}
@@ -116,10 +169,10 @@ function FeaturedCard({ emoji, title, text, animate }) {
                 <span className="relative self-start inline-flex items-center gap-1.5 rounded-full bg-white/15 backdrop-blur-sm px-3 py-1 text-[.7rem] titles font-bold tracking-widest uppercase text-white">
                     <span aria-hidden="true">★</span> Imperdible
                 </span>
-                <h4 className="relative titles font-bold text-[1.35rem] md:text-[1.6rem] leading-tight text-white max-w-[85%]">
+                <h4 className="relative titles font-bold text-[1.35rem] md:text-[1.6rem] leading-tight text-white max-w-[85%] drop-shadow-sm">
                     {title}
                 </h4>
-                <p className="relative text-[.92rem] md:text-[1rem] leading-relaxed text-white/80 max-w-md">{text}</p>
+                <p className="relative text-[.92rem] md:text-[1rem] leading-relaxed text-white/90 max-w-md">{text}</p>
             </article>
         </li>
     );
@@ -300,4 +353,4 @@ function QueHacer() {
     );
 }
 
-export default QueHacer;
+export default QueHacer;    
