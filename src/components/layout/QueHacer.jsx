@@ -1,24 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 
-/*
-  📁 Dónde van las imágenes:
-  Poné los 4 archivos en  src/assets/img/  (esta ruta asume que este archivo
-  está en  src/components/QueHacer.jsx).
-
-    src/
-    ├─ assets/
-    │  └─ img/
-    │     ├─ nido_aguila.jpg
-    │     ├─ altas_cumbres.jpg
-    │     ├─ rocsen.jpg
-    │     └─ supermercado.jpg
-    └─ components/
-       └─ QueHacer.jsx   ← este archivo
-
-  Si tus imágenes son .webp o .png, cambiá la extensión en los imports.
-  Si este archivo está en otra carpeta, ajustá el "../assets/img/" para que
-  apunte a donde las tengas (por ejemplo "./img/" si están al lado del componente).
-*/
 import nidoAguila from "../../assets/images/nido_aguila.webp";
 import altasCumbres from "../../assets/images/altas_cumbres.webp";
 import rocsen from "../../assets/images/rocsen.webp";
@@ -26,17 +7,6 @@ import supermercado from "../../assets/images/supermercado.webp";
 
 const WHATSAPP_URL = "https://wa.me/5493564507240";
 
-/*
-  ⚠️ Revisá los textos y sumá/quitá lo que quieras.
-  - El PRIMER lugar de cada categoría se muestra destacado (tarjeta grande y verde).
-  - Ese primer lugar puede llevar foto: campos `image` e `imageAlt`.
-    Si no tiene `image` (o la imagen no carga), se muestra el diseño con emoji.
-  - Las fotos se importan arriba de todo (import ... from "../assets/img/...").
-    Para cambiar una foto, reemplazá el archivo o cambiá el import.
-  - Los lugares están tomados de guías turísticas de Mina Clavero y Traslasierra.
-  - Si querés agregar distancias, ponelas desde TU complejo, por ejemplo "A 10 min en auto".
-  - En "Comercios" conviene poner nombres reales de tu zona (supermercado, panadería, farmacia, etc.).
-*/
 const CATEGORIES = [
     {
         id: "balnearios",
@@ -306,11 +276,9 @@ function QueHacer() {
                 </div>
             </div>
 
-            {/* Paneles: todos están en el HTML (bueno para Google), solo se muestra el activo */}
             <div className="mt-8 text-center p-4">
                 {CATEGORIES.map((cat) => {
                     const [featured, ...rest] = cat.items;
-                    // Si queda una tarjeta sola en la última fila (2 columnas), la estiramos
                     const orphanIndex = rest.length % 2 === 1 ? rest.length - 1 : -1;
 
                     return (
