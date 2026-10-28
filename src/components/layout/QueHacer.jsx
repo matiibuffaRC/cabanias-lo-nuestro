@@ -1,5 +1,29 @@
 import { useState, useEffect, useRef } from "react";
 
+/*
+  📁 Dónde van las imágenes:
+  Poné los 4 archivos en  src/assets/img/  (esta ruta asume que este archivo
+  está en  src/components/QueHacer.jsx).
+
+    src/
+    ├─ assets/
+    │  └─ img/
+    │     ├─ nido_aguila.jpg
+    │     ├─ altas_cumbres.jpg
+    │     ├─ rocsen.jpg
+    │     └─ supermercado.jpg
+    └─ components/
+       └─ QueHacer.jsx   ← este archivo
+
+  Si tus imágenes son .webp o .png, cambiá la extensión en los imports.
+  Si este archivo está en otra carpeta, ajustá el "../assets/img/" para que
+  apunte a donde las tengas (por ejemplo "./img/" si están al lado del componente).
+*/
+import nidoAguila from "../../assets/images/nido_aguila.webp";
+import altasCumbres from "../../assets/images/altas_cumbres.webp";
+import rocsen from "../../assets/images/rocsen.webp";
+import supermercado from "../../assets/images/supermercado.webp";
+
 const WHATSAPP_URL = "https://wa.me/5493564507240";
 
 /*
@@ -7,8 +31,8 @@ const WHATSAPP_URL = "https://wa.me/5493564507240";
   - El PRIMER lugar de cada categoría se muestra destacado (tarjeta grande y verde).
   - Ese primer lugar puede llevar foto: campos `image` e `imageAlt`.
     Si no tiene `image` (o la imagen no carga), se muestra el diseño con emoji.
-  - Las imágenes de abajo son GENÉRICAS (picsum.photos) solo para evaluar el diseño.
-    Reemplazalas por fotos propias, por ejemplo "/img/nido-del-aguila.webp".
+  - Las fotos se importan arriba de todo (import ... from "../assets/img/...").
+    Para cambiar una foto, reemplazá el archivo o cambiá el import.
   - Los lugares están tomados de guías turísticas de Mina Clavero y Traslasierra.
   - Si querés agregar distancias, ponelas desde TU complejo, por ejemplo "A 10 min en auto".
   - En "Comercios" conviene poner nombres reales de tu zona (supermercado, panadería, farmacia, etc.).
@@ -25,7 +49,7 @@ const CATEGORIES = [
                 emoji: "🦅",
                 title: "Nido del Águila",
                 text: "Pozas profundas, saltos de agua y paredones de roca, un clásico para animarse a un clavado.",
-                image: "https://picsum.photos/seed/nido-del-aguila/1200/900",
+                image: nidoAguila,
                 imageAlt: "Pozas y paredones de roca en el Nido del Águila",
             },
             { emoji: "🛝", title: "La Toma", text: "Pequeñas cascadas y toboganes naturales formados por el agua. Ideal para ir con chicos." },
@@ -46,7 +70,7 @@ const CATEGORIES = [
                 emoji: "🛣️",
                 title: "Camino de las Altas Cumbres",
                 text: "Una de las rutas más escénicas de Córdoba, que pasa por el Parque Nacional Quebrada del Condorito.",
-                image: "https://picsum.photos/seed/altas-cumbres/1200/900",
+                image: altasCumbres,
                 imageAlt: "Ruta serrana del Camino de las Altas Cumbres",
             },
             { emoji: "💧", title: "Nacimiento del Río Mina Clavero", text: "Un parador sobre la RP 34 desde donde se accede al lugar donde nace el río." },
@@ -67,7 +91,7 @@ const CATEGORIES = [
                 emoji: "🏛️",
                 title: "Museo Rocsen (Nono)",
                 text: "Un museo polifacético con más de 18.000 piezas de distintas épocas y disciplinas.",
-                image: "https://picsum.photos/seed/museo-rocsen/1200/900",
+                image: rocsen,
                 imageAlt: "Salas del Museo Rocsen en Nono",
             },
             { emoji: "🌵", title: "Museo de Cactus", text: "Un jardín con cactus y suculentas para recorrer sin apuro." },
@@ -88,7 +112,7 @@ const CATEGORIES = [
                 emoji: "🛒",
                 title: "Supermercados y almacenes",
                 text: "Para hacer las compras del fin de semana y llegar con la heladera llena.",
-                image: "https://picsum.photos/seed/supermercado/1200/900",
+                image: supermercado,
                 imageAlt: "Compras de supermercado para la estadía",
             },
             { emoji: "🥖", title: "Panaderías y rotiserías", text: "Facturas, pan fresco y comida lista para cuando no querés cocinar." },
@@ -135,36 +159,30 @@ function FeaturedCard({ emoji, title, text, image, imageAlt, animate }) {
             className={`group sm:col-span-2 md:row-span-2 ${animate ? "zone-card-in" : "opacity-0"}`}
         >
             <article className="relative h-full min-h-64 md:min-h-80 flex flex-col justify-end gap-3 rounded-3xl p-6 md:p-8 text-left overflow-hidden bg-linear-to-br from-[#3E6143] via-[#34553A] to-[#2A4530] shadow-lg shadow-[#3E6143]/20 transition-all duration-300 group-hover:-translate-y-1.5 group-hover:shadow-xl group-hover:shadow-[#3E6143]/30">
-                {/* Foto de fondo (opcional) */}
-                {imgOk && (
+                {/* MODO EVALUACIÓN: foto pura, sin degradado, sin zoom, sin fade, sin círculos ni emoji */}
+                {imgOk ? (
+                    <img
+                        src={image}
+                        alt={imageAlt || title}
+                        loading="lazy"
+                        decoding="async"
+                        onLoad={() => setImgLoaded(true)}
+                        onError={() => setImgOk(false)}
+                        className="absolute inset-0 h-full w-full object-cover"
+                    />
+                ) : (
                     <>
-                        <img
-                            src={image}
-                            alt={imageAlt || title}
-                            loading="lazy"
-                            decoding="async"
-                            onLoad={() => setImgLoaded(true)}
-                            onError={() => setImgOk(false)}
-                            className={`absolute inset-0 h-full w-full object-cover transition-all duration-700 ease-out group-hover:scale-105 ${
-                                imgLoaded ? "opacity-100" : "opacity-0"
-                            }`}
-                        />
-                        {/* Degradado para que el texto se lea siempre */}
-                        <span className="pointer-events-none absolute inset-0 bg-linear-to-t from-[#1F3524] via-[#2A4530]/70 to-[#2A4530]/20" />
+                        {/* Decoración original (solo cuando no hay foto) */}
+                        <span className="pointer-events-none absolute -top-10 -right-10 h-40 w-40 rounded-full bg-white/10 transition-transform duration-700 group-hover:scale-125" />
+                        <span className="pointer-events-none absolute top-16 -right-4 h-20 w-20 rounded-full bg-[#6E9B72]/30 transition-transform duration-700 group-hover:scale-125" />
+                        <span
+                            className="pointer-events-none absolute top-5 right-6 md:top-6 md:right-8 text-[3.5rem] md:text-[5rem] leading-none opacity-90 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6"
+                            aria-hidden="true"
+                        >
+                            {emoji}
+                        </span>
                     </>
                 )}
-
-                {/* Decoración original: círculos + emoji (siempre visibles, con o sin foto) */}
-                <span className="pointer-events-none absolute -top-10 -right-10 h-40 w-40 rounded-full bg-white/10 transition-transform duration-700 group-hover:scale-125" />
-                <span className="pointer-events-none absolute top-16 -right-4 h-20 w-20 rounded-full bg-[#6E9B72]/30 transition-transform duration-700 group-hover:scale-125" />
-                <span
-                    className={`pointer-events-none absolute top-5 right-6 md:top-6 md:right-8 text-[3.5rem] md:text-[5rem] leading-none transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6 ${
-                        imgOk ? "opacity-95 drop-shadow-[0_4px_10px_rgba(0,0,0,.35)]" : "opacity-90"
-                    }`}
-                    aria-hidden="true"
-                >
-                    {emoji}
-                </span>
 
                 <span className="relative self-start inline-flex items-center gap-1.5 rounded-full bg-white/15 backdrop-blur-sm px-3 py-1 text-[.7rem] titles font-bold tracking-widest uppercase text-white">
                     <span aria-hidden="true">★</span> Imperdible
@@ -353,4 +371,4 @@ function QueHacer() {
     );
 }
 
-export default QueHacer;    
+export default QueHacer;
