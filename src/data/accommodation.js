@@ -1,16 +1,16 @@
 import complejoPhotoFrente from "../assets/images/frente.jpg";
 import complejoPhotoPatio from "../assets/images/patioBien.jpg";
 import complejoPhotoPileta from "../assets/images/piletaConDormis.jpg";
-import complejoPhotoAsador from "../assets/images/asador.jpg";
+import complejoPhotoAsador from "../assets/images/asador.webp";
 
 import cabaniaPhotoIndoor from "../assets/images/habitacion5Carrusel.jpg";
 import cabaniaPhotoIndoor2 from "../assets/images/habitacion4.2Carrusel.jpg";
-import cabaniaPhotoGarage from "../assets/images/cocheraCarrusel.jpg";
-import cabaniaPhotoIndoor3 from "../assets/images/cabania2.jpg";
+import cabaniaPhotoGarage from "../assets/images/cocheraCarrusel.webp";
+import cabaniaPhotoIndoor3 from "../assets/images/cabania2.webp";
 
 import dormiPhoto from "../assets/images/dormis3.jpeg";
-import dormiPhoto2 from "../assets/images/dormis1.jpg";
-import dormiPhoto3 from "../assets/images/dormi.jpg";
+import dormiPhoto2 from "../assets/images/dormis1.webp";
+import dormiPhoto3 from "../assets/images/dormi.webp";
 import quinchoPhoto from "../assets/images/quincho.jpg";
 
 import carIcon from "../assets/icons/CarIcon.svg";
