@@ -4,8 +4,8 @@ import MapEmbed from "../components/shared/MapEmbed";
 import WhatsAppFloatingButton from "../components/layout/WhatsAppButton";
 import useScrollImageEffect from "../hooks/useScrollImageEffect";
 
-import MinaClavero1 from "../assets/images/MinaClavero.jpg";
-import MinaClavero2 from "../assets/images/MinaClavero2.jpg";
+import MinaClavero1 from "../assets/images/MinaClavero.webp";
+import MinaClavero2 from "../assets/images/MinaClavero2.webp";
 
 const MinaClaveroPhotos = [MinaClavero1, MinaClavero2];
 

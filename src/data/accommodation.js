@@ -8,7 +8,7 @@ import cabaniaPhotoIndoor2 from "../assets/images/habitacion4.2Carrusel.jpg";
 import cabaniaPhotoGarage from "../assets/images/cocheraCarrusel.webp";
 import cabaniaPhotoIndoor3 from "../assets/images/cabania2.webp";
 
-import dormiPhoto from "../assets/images/dormis3.jpeg";
+import dormiPhoto from "../assets/images/dormis3.webp";
 import dormiPhoto2 from "../assets/images/dormis1.webp";
 import dormiPhoto3 from "../assets/images/dormi.webp";
 import quinchoPhoto from "../assets/images/quincho.jpg";
