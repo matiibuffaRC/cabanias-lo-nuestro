@@ -47,7 +47,8 @@ function ServiceItem({ service, index }) {
             <div className="relative flex h-14 w-14 items-center justify-center rounded-full bg-linear-to-br from-[#3E6143]/10 to-[#6E9B72]/25 ring-0 ring-[#3E6143]/10 transition-all duration-300 group-hover:scale-105 group-hover:ring-8 md:h-16 md:w-16">
                 <img
                     src={service.img}
-                    alt=""
+                    alt="
+                    ."
                     aria-hidden="true"
                     width={48}
                     height={48}
