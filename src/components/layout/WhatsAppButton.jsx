@@ -32,7 +32,11 @@ const readDismissed = () => {
     }
 };
 
-function WhatsAppFloatingButton({ bubbleLine1 = "¿Consultas y reservas?", bubbleLine2 = "¡Hablemos!" }) {
+function WhatsAppFloatingButton({
+    bubbleLine1 = "¿Consultas y reservas?",
+    bubbleLine2 = "¡Hablemos!",
+    bubbleDelayMs = BUBBLE_DELAY_MS,
+}) {
     const [openMenuWhatsapp, setOpenMenuWhatsapp] = useState(false);
     const [hasInteracted, setHasInteracted] = useState(false);
     const [bubbleDismissed, setBubbleDismissed] = useState(readDismissed);
@@ -60,9 +64,9 @@ function WhatsAppFloatingButton({ bubbleLine1 = "¿Consultas y reservas?", bubbl
     // La burbuja aparece unos segundos después de entrar (si no fue descartada).
     useEffect(() => {
         if (bubbleDismissed) return;
-        const timer = setTimeout(() => setBubbleReady(true), BUBBLE_DELAY_MS);
+        const timer = setTimeout(() => setBubbleReady(true), bubbleDelayMs);
         return () => clearTimeout(timer);
-    }, [bubbleDismissed]);
+    }, [bubbleDismissed, bubbleDelayMs]);
 
     useEffect(() => {
         if (!openMenuWhatsapp) return;

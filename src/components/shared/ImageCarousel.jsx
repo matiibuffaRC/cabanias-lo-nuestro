@@ -1,9 +1,9 @@
 import { IgrCarousel, IgrCarouselSlide } from "igniteui-react";
 import "igniteui-webcomponents/themes/light/bootstrap.css";
 
-function ImageCarousel({ images }) {
+function ImageCarousel({ images, className = "h-150 md:h-90 lg:h-155" }) {
     return (
-        <div className="h-150 w-full md:h-90 lg:h-155">
+        <div className={`w-full ${className}`}>
             <IgrCarousel
                 hideNavigation={true}
                 hideIndicators={true}

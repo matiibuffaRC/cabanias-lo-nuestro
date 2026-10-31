@@ -106,6 +106,7 @@ const DISTANCES = [
 const ROUTES = [
     {
         badge: "Entrada frontal",
+        variant: "front",
         title: "Cómo llegar a las cabañas",
         address: "Cruz del Eje 2080",
         steps: [
@@ -119,6 +120,7 @@ const ROUTES = [
     },
     {
         badge: "Entrada trasera",
+        variant: "rear",
         title: "Cómo llegar a los dormis",
         address: "Tanti 2085",
         steps: [
@@ -155,25 +157,38 @@ function MapPage() {
         <div className="pt-16.25 bg-[#F1F3EE] flex flex-col items-center">
             {/* Carrusel fijo: se oscurece y hace zoom mientras el contenido lo tapa */}
             <div ref={carouselRef} className="sticky top-16.25 z-0 w-full overflow-hidden">
-                <div
-                    className="scroll-image-effect"
-                >
-                    <ImageCarousel images={MinaClaveroPhotos} />
+                <div className="relative">
+                    <div className="scroll-image-effect">
+                        <ImageCarousel
+                            images={MinaClaveroPhotos}
+                            className="h-[min(68vh,38rem)] min-h-88"
+                        />
+                    </div>
+                    <div className="absolute inset-0 flex items-center justify-center bg-linear-to-t from-black/65 via-black/20 to-black/10 px-6 text-center">
+                        <div className="max-w-3xl text-white">
+                            <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/35 bg-black/20 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] backdrop-blur-sm">
+                                <PinIcon className="h-4 w-4" />
+                                Valle de Traslasierra · Córdoba
+                            </span>
+                            <h1 className="titles text-4xl font-bold leading-tight drop-shadow-md sm:text-5xl md:text-6xl">
+                                Cómo llegar a Lo Nuestro
+                            </h1>
+                            <a
+                                href="#mapa"
+                                className="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-bold text-[#3E6143] shadow-lg transition-all hover:-translate-y-0.5 hover:bg-[#F1F3EE] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                            >
+                                <PinIcon className="h-4 w-4" />
+                                Ver mapa y ubicación
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             {/* Panel que sube por encima del carrusel */}
             <div className="relative z-10 -mt-8 flex w-full flex-col items-center rounded-t-4xl bg-[#F1F3EE] shadow-[0_-14px_30px_-14px_rgba(0,0,0,0.3)]">
                 {/* Intro (arriba del todo: anima al cargar) */}
-                <section className="px-6 pt-12 pb-8 text-center max-w-3xl fade-down">
-                    <span className="inline-flex items-center gap-1.5 text-[.75rem] tracking-[0.2em] uppercase font-semibold text-[#3E6143]/70 mb-2">
-                        <PinIcon className="w-3.5 h-3.5" />
-                        Valle de Traslasierra · Córdoba
-                    </span>
-                    <h1 className="titles font-bold text-[#3E6143] text-[2rem] md:text-[2.5rem] leading-tight my-2">
-                        Cómo llegar a Mina Clavero
-                    </h1>
-                    <span className="block w-14 h-0.75 bg-[#3E6143]/40 rounded-full mx-auto my-4" />
+                <section className="max-w-3xl px-6 pb-8 pt-10 text-center fade-down">
                     <p className="text-defect text-[#757575] leading-relaxed md:text-[1.05rem]">
                         Mina Clavero está en el corazón del Valle de Traslasierra, al pie de las
                         Sierras Grandes. Se llega por el pintoresco camino de las Altas Cumbres
@@ -201,7 +216,7 @@ function MapPage() {
                 </section>
 
                 {/* Mapa general */}
-                <section className="w-full max-w-4xl px-4 mb-16">
+                <section id="mapa" className="w-full max-w-4xl scroll-mt-24 px-4 mb-16">
                     <Reveal>
                         <div className="rounded-3xl overflow-hidden bg-white border border-[#3E6143]/15 shadow-md p-2">
                             <div className="rounded-2xl overflow-hidden">
@@ -237,7 +252,7 @@ function MapPage() {
                         <Reveal key={route.title} delay={index * 0.15} className="h-full">
                             <article className="route-card group bg-white rounded-3xl border border-[#3E6143]/15 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden flex h-full flex-col">
                                 {/* Encabezado */}
-                                <div className="bg-linear-to-br from-[#3E6143] to-[#2f4c34] text-white px-6 py-5 flex items-center gap-4">
+                                <div className={`bg-linear-to-br ${route.variant === "rear" ? "from-[#3E6143] to-[#2f4c34]" : "from-[#3E6143] to-[#2f4c34]"} text-white px-6 py-5 flex items-center gap-4`}>
                                     <div className="h-12 w-12 rounded-full bg-white/15 ring-1 ring-white/20 flex items-center justify-center shrink-0">
                                         <MapIcon className="w-6 h-6" />
                                     </div>
@@ -296,16 +311,20 @@ function MapPage() {
                                 </div>
 
                                 {/* Pie con dirección y link */}
-                                <div className="px-6 pb-5 pt-1 flex items-center justify-between gap-3 flex-wrap">
-                                    <span className="inline-flex items-center gap-1.5 text-[.85rem] text-[#757575]">
-                                        <PinIcon className="w-4 h-4 text-[#3E6143]" />
-                                        <span className="font-semibold text-[#3E6143]">{route.address}</span>
-                                    </span>
+                                <div className="mx-4 mb-4 mt-1 flex items-center justify-between gap-3 rounded-2xl bg-[#F1F3EE] px-4 py-3">
+                                    <div className="min-w-0">
+                                        <span className="block text-[.7rem] font-semibold uppercase tracking-[0.12em] text-[#757575]">
+                                            Dirección de entrada
+                                        </span>
+                                        <span className="block truncate font-bold text-[#3E6143]">
+                                            {route.address}
+                                        </span>
+                                    </div>
                                     <a
                                         href={route.link}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-1.5 text-[.85rem] font-semibold text-[#3E6143] border border-[#3E6143]/30 rounded-full px-4 py-1.5 hover:bg-[#3E6143] hover:text-white hover:border-[#3E6143] transition-colors"
+                                        className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[#3E6143]/30 px-4 py-2 text-[.85rem] font-semibold text-[#3E6143] transition-colors hover:border-[#3E6143] hover:bg-[#3E6143] hover:text-white"
                                     >
                                         Abrir en Maps
                                         <ExternalIcon className="w-3.5 h-3.5" />
@@ -316,7 +335,11 @@ function MapPage() {
                     ))}
                 </div>
 
-                <WhatsAppFloatingButton bubbleLine1="¿Consultas y reservas?" bubbleLine2="¡Hablemos!" />
+                <WhatsAppFloatingButton
+                    bubbleLine1="¿Consultas y reservas?"
+                    bubbleLine2="¡Hablemos!"
+                    bubbleDelayMs={8000}
+                />
             </div>
         </div>
     );

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import Logo from "../../assets/images/Lo-Nuestro-logo.png";
 
 const LEFT_ITEMS = [
     { text: "Inicio", link: "/" },
@@ -83,9 +84,9 @@ function HeaderContent() {
                     {/* Logo: el padding da el mismo aire a ambos lados */}
                     <Link
                         to="/"
-                        className="titles relative z-30 text-xl font-bold pb-1 tracking-wider text-white drop-shadow-sm lg:px-10 lg:text-2xl"
+                        className="titles relative z-30 inline-flex items-center gap-2.5 pb-1 text-xl font-bold tracking-wider text-white drop-shadow-sm lg:px-10 lg:text-2xl"
                     >
-                        Lo nuestro
+                        <span>Lo nuestro</span>
                     </Link>
 
                     {/* Derecha (desktop): items pegados al logo, CTA al borde */}
