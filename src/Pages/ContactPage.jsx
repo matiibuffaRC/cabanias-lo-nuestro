@@ -1,75 +1,93 @@
-import { useState, useEffect, useRef } from "react";
+import { useId, useState } from "react";
 import presentationImage from "../assets/images/piletaConDormis.jpg";
 import WhatsAppFloatingButton from "../components/layout/WhatsAppButton.jsx";
+import Testimonials from "../components/layout/Testimonials.jsx";
+import ReglasCondiciones from "../components/layout/ReglasCondiciones.jsx";
+import Reveal from "../components/shared/Reveal";
+import SectionHeading from "../components/shared/SectionHeading";
+import MaskIcon from "../components/shared/MaskIcon";
 import useScrollImageEffect from "../hooks/useScrollImageEffect";
+import { FACEBOOK_URL, getWhatsAppUrl } from "../config/contact";
 
 import WhatsAppIcon from "../assets/icons/whatsappIcon.svg";
 import FacebookIcon from "../assets/icons/facebookIcon.svg";
-import Testimonials from "../components/layout/Testimonials.jsx";
-import ReglasCondiciones from "../components/layout/ReglasCondiciones.jsx";
-
 
 const CONTACTS = [
-    { icon: WhatsAppIcon, title: "WhatsApp", name: "Cristian", href: "https://wa.me/5493564507240" },
-    { icon: FacebookIcon, title: "Facebook", name: "Lo Nuestro", href: "https://www.facebook.com/p/Lo-Nuestro-100054220102040/" },
+    {
+        icon: WhatsAppIcon,
+        title: "WhatsApp",
+        detail: "Escribile a Cristian",
+        href: getWhatsAppUrl("Hola, quisiera hacer una consulta sobre Lo Nuestro"),
+        tone: "bg-[#2DB742] text-white",
+    },
+    {
+        icon: FacebookIcon,
+        title: "Facebook",
+        detail: "Lo Nuestro",
+        href: FACEBOOK_URL,
+        tone: "bg-[#1877F2] text-white",
+    },
 ];
 
-// ⚠️ Texto de ejemplo: reemplazalo por tus preguntas reales
+// ⚠️ Revisá que estas respuestas coincidan con tus condiciones reales
 const FAQS = [
-    { q: "¿En qué horarios atienden?", a: "Respondemos mensajes todos los días. Si no contestamos enseguida, es porque estamos ocupados; te escribimos apenas podamos." },
-    { q: "¿Qué medios de pago aceptan?", a: "Trabajamos con transferencias bancarias y entregas en efectivo, lo podemos coordinar una vez que nos contactemos." },
-    { q: "Seña y política de cancelación", a: "La reserva se confirma con una seña del 30%. Si cancelás con más de 15 días de anticipación, te devolvemos la seña. Con menos tiempo, la seña no es reembolsable pero podemos reprogramar tu fecha según disponibilidad.", },
-    { q: "Medios de pago", a: "Trabajamos con transferencias bancarias y entregas en efectivo. El saldo restante se abona al ingresar. Lo coordinamos con vos por WhatsApp.", },
-    { q: "Temporada alta y fines de semana largos", a: "En vacaciones de verano, invierno y fines de semana largos el mínimo de noches puede ser mayor y las tarifas cambian. Consultanos las fechas que tenés en mente.", },
+    {
+        q: "¿En qué horarios atienden?",
+        a: "Respondemos mensajes todos los días. Si no contestamos enseguida, es porque estamos ocupados; te escribimos apenas podamos.",
+    },
+    {
+        q: "Seña y política de cancelación",
+        a: "La reserva se confirma con una seña del 30%. Si cancelás con más de 15 días de anticipación, te devolvemos la seña. Con menos tiempo, la seña no es reembolsable pero podemos reprogramar tu fecha según disponibilidad.",
+    },
+    {
+        q: "¿Qué medios de pago aceptan?",
+        a: "Trabajamos con transferencias bancarias y efectivo. El saldo restante se abona al ingresar. Lo coordinamos con vos por WhatsApp.",
+    },
+    {
+        q: "Temporada alta y fines de semana largos",
+        a: "En vacaciones de verano, invierno y fines de semana largos el mínimo de noches puede ser mayor y las tarifas cambian. Consultanos las fechas que tenés en mente.",
+    },
 ];
-
-/* Hook: marca un elemento como visible cuando entra en pantalla */
-function useInView(threshold = 0.2) {
-    const ref = useRef(null);
-    const [visible, setVisible] = useState(false);
-
-    useEffect(() => {
-        const el = ref.current;
-        if (!el) return;
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setVisible(true);
-                    observer.disconnect();
-                }
-            },
-            { threshold }
-        );
-        observer.observe(el);
-        return () => observer.disconnect();
-    }, [threshold]);
-
-    return [ref, visible];
-}
 
 /* Un ítem del acordeón */
 function FaqItem({ q, a, open, onToggle }) {
+    const id = useId();
+
     return (
-        <div className="bg-white rounded-2xl border border-[#3E6143]/10 shadow-sm overflow-hidden">
-            <button
-                type="button"
-                onClick={onToggle}
-                aria-expanded={open}
-                className="w-full flex items-center justify-between gap-4 p-4 text-left cursor-pointer"
-            >
-                <span className="titles font-bold text-[1rem] text-[#3E6143]">{q}</span>
-                <svg
-                    className={`w-4 h-4 text-[#3E6143]/60 shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`}
-                    viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+        <div className={`overflow-hidden rounded-2xl border bg-white shadow-sm transition-colors duration-300 ${open ? "border-primary/30" : "border-primary/10"}`}>
+            <h3>
+                <button
+                    type="button"
+                    id={`${id}-btn`}
+                    onClick={onToggle}
+                    aria-expanded={open}
+                    aria-controls={`${id}-panel`}
+                    className="flex w-full cursor-pointer items-center justify-between gap-4 p-4 text-left md:px-5"
                 >
-                    <path d="M6 9l6 6 6-6" />
-                </svg>
-            </button>
+                    <span className="titles text-[1.02rem] font-bold text-primary">{q}</span>
+                    <span
+                        aria-hidden="true"
+                        className={`flex size-7 shrink-0 items-center justify-center rounded-full transition-[rotate,background-color,color] duration-300 ${
+                            open ? "rotate-180 bg-primary text-white" : "bg-primary/10 text-primary"
+                        }`}
+                    >
+                        <svg className="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M6 9l6 6 6-6" />
+                        </svg>
+                    </span>
+                </button>
+            </h3>
 
             {/* Truco grid-rows: anima la altura sin conocerla */}
-            <div className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
+            <div
+                id={`${id}-panel`}
+                role="region"
+                aria-labelledby={`${id}-btn`}
+                inert={!open}
+                className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+            >
                 <div className="overflow-hidden">
-                    <p className="px-4 pb-4 text-[.95rem] text-[#3E6143]/70 text-left">{a}</p>
+                    <p className="px-4 pb-4 text-left text-[.96rem] leading-relaxed text-muted md:px-5">{a}</p>
                 </div>
             </div>
         </div>
@@ -77,80 +95,69 @@ function FaqItem({ q, a, open, onToggle }) {
 }
 
 function ContactPage() {
-    const [openIndex, setOpenIndex] = useState(null);
-    const [scrollY, setScrollY] = useState(0);
-    const [faqRef, faqVisible] = useInView();
+    const [openIndex, setOpenIndex] = useState(0);
     const heroRef = useScrollImageEffect();
 
-    // Parallax suave del hero
-    useEffect(() => {
-        const onScroll = () => setScrollY(window.scrollY);
-        window.addEventListener("scroll", onScroll, { passive: true });
-        return () => window.removeEventListener("scroll", onScroll);
-    }, []);
-
     return (
-        <div className="pt-16.25 bg-[#F1F3EE]">
-            <div ref={heroRef} className="h-135 relative w-full overflow-hidden">
+        <div className="bg-surface pt-18">
+            <div ref={heroRef} className="relative h-[min(60vh,32rem)] min-h-72 w-full overflow-hidden">
                 <div className="scroll-image-effect absolute inset-0">
                     <img
                         src={presentationImage}
-                        alt="Patio de atrás"
-                        className="hero-image w-full h-full object-cover object-center will-change-transform"
-                        style={{ transform: `translateY(${Math.min(scrollY * 0.25, 120)}px) scale(1.1)` }}
+                        alt="Pileta del complejo Lo Nuestro"
+                        fetchPriority="high"
+                        className="hero-image h-full w-full object-cover object-center"
                     />
                 </div>
-                <div className="absolute inset-0 bg-linear-to-t from-[#2A4530]/25 via-transparent to-transparent" />
+                <div aria-hidden="true" className="absolute inset-0 bg-linear-to-t from-primary-dark/40 via-transparent to-transparent" />
             </div>
 
-            <div className="text-center py-10 px-5">
-                <h1 className="text-[2rem] titles font-bold text-[#3E6143] fade-down">Contactanos</h1>
-                <p className="text-[#3E6143]/70 max-w-md mx-auto mt-2 fade-down" style={{ animationDelay: "0.1s" }}>
-                    Escribinos por el medio que prefieras, te respondemos a la brevedad.
+            <div className="relative z-10 -mt-8 rounded-t-4xl bg-surface px-5 pb-16 pt-11 text-center">
+                <h1 className="titles fade-down text-[2.2rem] font-bold text-primary md:text-[2.6rem]">Contactanos</h1>
+                <p className="fade-down mx-auto mt-2 max-w-md text-[1.05rem] text-muted" style={{ animationDelay: "0.1s" }}>
+                    Escribinos por el medio que prefieras: te respondemos a la brevedad.
                 </p>
 
-                <div className="flex flex-col md:flex-row md:max-w-3xl md:justify-center gap-3 my-6 max-w-md mx-auto">
+                <ul className="mx-auto my-8 grid max-w-md gap-3 md:max-w-2xl md:grid-cols-2">
                     {CONTACTS.map((contact, index) => (
-                        <a
-                            key={contact.title}
-                            href={contact.href}
-                            target={contact.href.startsWith("http") ? "_blank" : undefined}
-                            rel={contact.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                            aria-label={`${contact.title} - ${contact.name}`}
-                            className="fade-down flex flex-row items-center gap-4 bg-white rounded-2xl p-4 hover:scale-102 shadow-sm border border-[#3E6143]/10 transition-transform duration-200 active:scale-[0.98]"
-                            style={{ animationDelay: `${0.2 + index * 0.15}s` }}
-                        >
-                            <div className="h-12 w-12 rounded-full bg-[#3E6143]/10 flex items-center justify-center shrink-0">
-                                <img src={contact.icon} alt="" className="w-6 h-6" />
-                            </div>
-                            <div className="flex flex-col text-left min-w-0">
-                                <h3 className="titles font-bold text-[1rem] text-[#3E6143] truncate">{contact.title}</h3>
-                                <h3 className="titles text-[.9rem] text-[#3E6143]/60 truncate">{contact.name}</h3>
-                            </div>
-                            <svg className="w-4 h-4 text-[#3E6143]/40 shrink-0 ml-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M9 18l6-6-6-6" />
-                            </svg>
-                        </a>
+                        <li key={contact.title} className="fade-down" style={{ animationDelay: `${0.2 + index * 0.12}s` }}>
+                            <a
+                                href={contact.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group flex items-center gap-4 rounded-2xl border border-primary/10 bg-white p-4 text-left shadow-sm transition-[translate,box-shadow,border-color] duration-300 hover:-translate-y-1 hover:border-primary/25 hover:shadow-lg hover:shadow-primary/10"
+                            >
+                                <span className={`flex size-12 shrink-0 items-center justify-center rounded-full ${contact.tone}`}>
+                                    <MaskIcon src={contact.icon} className="size-6" />
+                                </span>
+                                <span className="flex min-w-0 flex-col">
+                                    <span className="titles truncate text-[1.05rem] font-bold text-primary">{contact.title}</span>
+                                    <span className="truncate text-[.92rem] text-muted">{contact.detail}</span>
+                                </span>
+                                <span className="sr-only">(se abre en una pestaña nueva)</span>
+                                <svg aria-hidden="true" className="ml-auto size-4 shrink-0 text-primary/40 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M9 18l6-6-6-6" />
+                                </svg>
+                            </a>
+                        </li>
                     ))}
-                </div>
+                </ul>
+
                 <Testimonials />
                 <ReglasCondiciones />
+
                 {/* Preguntas frecuentes */}
-                <section ref={faqRef} className="max-w-md md:max-w-3xl mx-auto mt-14">
-                    <h2 className="text-[1.5rem] titles font-bold text-[#3E6143] mb-5">Preguntas frecuentes</h2>
+                <section aria-labelledby="faq-title" className="mx-auto mt-6 max-w-md md:max-w-3xl">
+                    <SectionHeading id="faq-title" title="Preguntas frecuentes" className="mb-8" />
                     <div className="flex flex-col gap-3">
                         {FAQS.map((item, i) => (
-                            <div
-                                key={item.q}
-                                className={`transition-all duration-700 ease-out ${faqVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
-                                style={{ transitionDelay: `${i * 100}ms` }}
-                            >
+                            <Reveal key={item.q} delay={i * 0.08}>
                                 <FaqItem
                                     {...item}
                                     open={openIndex === i}
                                     onToggle={() => setOpenIndex(openIndex === i ? null : i)}
                                 />
-                            </div>
+                            </Reveal>
                         ))}
                     </div>
                 </section>

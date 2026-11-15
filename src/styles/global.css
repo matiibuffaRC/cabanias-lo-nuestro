@@ -1,2 +1,58 @@
 @import "tailwindcss";
 
+/* Paleta del sitio como tokens de Tailwind: habilita bg-primary, text-muted, etc. */
+@theme {
+    --color-primary: #3E6143;
+    --color-primary-dark: #2A4530;
+    --color-primary-soft: #6E9B72;
+    --color-primary-wash: #E4EDE0;
+    --color-surface: #F1F3EE;
+    --color-surface-alt: #F7F8F5;
+    --color-sand: #E0A526;
+    --color-accent: #C97B3D;
+    /* Gris de texto: un poco más oscuro que #757575 para pasar contraste AA sobre el fondo */
+    --color-muted: #636663;
+
+    --font-display: "Commissioner", sans-serif;
+    --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background: var(--color-surface);
+    color: var(--color-primary-dark);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Foco por teclado visible en todo el sitio */
+:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+    border-radius: 6px;
+}
+.focus-light:focus-visible,
+.focus-light :focus-visible {
+    outline-color: #fff;
+}
+
+img {
+    user-select: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

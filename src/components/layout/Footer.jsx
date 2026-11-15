@@ -1,14 +1,15 @@
 import { Link } from "react-router-dom";
-import { useState, useRef, useEffect } from "react";
 
-import GmailIcon from "../../assets/icons/gmail.svg";
 import WhatsAppIcon from "../../assets/icons/whatsappIcon.svg";
 import FacebookIcon from "../../assets/icons/facebookIcon.svg";
+import MaskIcon from "../shared/MaskIcon";
+import useInView from "../../hooks/useInView";
+import { FACEBOOK_URL, getWhatsAppUrl } from "../../config/contact";
 
 // Datos fuera del componente: son estáticos, no dependen de props ni estado.
 const FOOTER_COLUMNS = [
     {
-        title: "Lo nuestro",
+        title: "Alojamientos",
         links: [
             { label: "Complejo", to: "/alojamiento/complejo" },
             { label: "Cabañas", to: "/alojamiento/cabins" },
@@ -16,7 +17,7 @@ const FOOTER_COLUMNS = [
         ],
     },
     {
-        title: "Sobre nosotros",
+        title: "Lo Nuestro",
         links: [
             { label: "Inicio", to: "/" },
             { label: "Cómo llegar", to: "/comoLlegar" },
@@ -26,85 +27,47 @@ const FOOTER_COLUMNS = [
 ];
 
 const SOCIALS = [
-    // {
-    //     icon: GmailIcon,
-    //     title: "Gmail",
-    //     href: "#",
-    // },
-    {
-        icon: WhatsAppIcon,
-        title: "WhatsApp",
-        href: "https://wa.me/5493564507240",
-    },
-    {
-        icon: FacebookIcon,
-        title: "Facebook",
-        href: "https://www.facebook.com/p/Lo-Nuestro-100054220102040/",
-    },
+    { icon: WhatsAppIcon, title: "WhatsApp", href: getWhatsAppUrl() },
+    { icon: FacebookIcon, title: "Facebook", href: FACEBOOK_URL },
 ];
 
 function FooterComponent() {
-    const [isVisible, setIsVisible] = useState(false);
-    const ref = useRef(null);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true);
-                    observer.unobserve(entry.target);
-                }
-            },
-            { threshold: 0.3 }
-        );
-
-        if (ref.current) observer.observe(ref.current);
-
-        return () => observer.disconnect();
-    }, []);
+    const [ref, isVisible] = useInView({ threshold: 0.2, rootMargin: "0px" });
 
     return (
-        <footer className="bg-linear-to-b from-[#3E6143] to-[#2f4c34] text-[#F1F3EE]" ref={ref}>
-            {/* Línea decorativa superior */}
-            <div className="h-1 w-full bg-linear-to-r from-transparent via-[#F1F3EE]/40 to-transparent" />
+        <footer className="focus-light bg-linear-to-b from-primary to-[#2f4c34] text-surface" ref={ref}>
+            <div aria-hidden="true" className="h-1 w-full bg-linear-to-r from-transparent via-surface/40 to-transparent" />
 
-            <div className="max-w-5xl mx-auto px-6 pt-10 pb-6">
+            <div className="mx-auto max-w-5xl px-6 pb-6 pt-12">
                 {/* Marca */}
-                <div className="text-center mb-8">
-                    <h2 className="titles font-bold text-[2rem] md:text-[2.4rem] leading-tight">
-                        Lo Nuestro
-                    </h2>
-                    <span className="block w-14 h-0.75 bg-[#F1F3EE]/40 rounded-full mx-auto mt-3" />
-                    <p className="text-defect text-[.9rem] text-[#F1F3EE]/75 mt-3">
-                        Cabañas y dormis en Mina Clavero, Córdoba
-                    </p>
+                <div className="mb-8 text-center">
+                    <p className="titles text-[2rem] font-bold leading-tight md:text-[2.4rem]">Lo Nuestro</p>
+                    <span aria-hidden="true" className="mx-auto mt-3 block h-0.75 w-14 rounded-full bg-surface/40" />
+                    <p className="mt-3 text-[.95rem] text-surface/85">Cabañas y dormis en Mina Clavero, Córdoba</p>
+                    <address className="mt-1 text-[.9rem] not-italic text-surface/75">
+                        Cruz del Eje 2080 y Tanti 2085, Mina Clavero
+                    </address>
                 </div>
 
                 {/* Enlaces */}
                 <nav
                     aria-label="Enlaces del sitio"
-                    className="grid grid-cols-2 md:gap-24 gap-6 md:max-w-xl mx-auto py-8 border-y border-[#F1F3EE]/20"
+                    className="mx-auto grid grid-cols-2 gap-6 border-y border-surface/20 py-8 md:max-w-xl md:gap-24"
                 >
                     {FOOTER_COLUMNS.map((column, index) => (
                         <div
                             key={column.title}
                             className={`text-center ${
-                                isVisible
-                                    ? index === 0
-                                        ? "fade-side-to-right"
-                                        : "fade-side-to-left"
-                                    : "opacity-0"
+                                isVisible ? (index === 0 ? "fade-side-to-right" : "fade-side-to-left") : "opacity-0"
                             }`}
                         >
-                            <h3 className="titles font-bold text-[1rem] md:text-[1.2rem] uppercase tracking-[0.12em] mb-3">
-                                {column.title}
-                            </h3>
+                            <h2 className="titles mb-3 text-[1.05rem] font-bold md:text-[1.2rem]">{column.title}</h2>
                             <ul className="flex flex-col gap-2">
                                 {column.links.map((link) => (
                                     <li key={link.label}>
                                         <Link
                                             to={link.to}
-                                            className="text-defect text-[.9rem] md:text-[1rem] text-[#F1F3EE]/80 hover:text-white hover:underline underline-offset-4 decoration-[#F1F3EE]/50 transition-colors cursor-pointer"
+                                            className="text-[.95rem] text-surface/85 decoration-surface/50 underline-offset-4 transition-colors hover:text-white hover:underline md:text-[1rem]"
                                         >
                                             {link.label}
                                         </Link>
@@ -117,26 +80,19 @@ function FooterComponent() {
 
                 {/* Redes */}
                 <div className="flex flex-col items-center pt-8">
-                    <h3 className="titles font-bold text-[1.2rem]">
-                        ¡Sigamos conectados!
-                    </h3>
-
-                    <div
-                        className={`flex flex-row justify-center gap-4 mt-4 ${
-                            isVisible ? "fade-top" : "opacity-0"
-                        }`}
-                    >
+                    <h2 className="titles text-[1.2rem] font-bold">¡Sigamos conectados!</h2>
+                    <div className={`mt-4 flex flex-row justify-center gap-4 ${isVisible ? "fade-top" : "opacity-0"}`}>
                         {SOCIALS.map((social) => (
                             <a
                                 key={social.title}
                                 href={social.href}
-                                target={social.href.startsWith("http") ? "_blank" : undefined}
-                                rel={social.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                                aria-label={social.title}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={`${social.title} (se abre en una pestaña nueva)`}
                                 title={social.title}
-                                className="footer-social-icon w-12 h-12 rounded-full flex items-center justify-center bg-[#F1F3EE]/10 border border-[#F1F3EE]/20 hover:bg-[#F1F3EE]/25 hover:-translate-y-1 hover:shadow-lg transition-all duration-300"
+                                className="flex size-12 items-center justify-center rounded-full border border-surface/20 bg-surface/10 text-white transition-[translate,background-color,box-shadow] duration-300 hover:-translate-y-1 hover:bg-surface/25 hover:shadow-lg"
                             >
-                                <img src={social.icon} alt="" className="w-5 h-5 invert" />
+                                <MaskIcon src={social.icon} className="size-5" />
                             </a>
                         ))}
                     </div>
@@ -144,14 +100,13 @@ function FooterComponent() {
             </div>
 
             {/* Barra inferior */}
-            <div className="border-t border-[#F1F3EE]/15 bg-black/10">
-                <div className="max-w-5xl mx-auto px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-1 text-center">
-                    <p className="text-[.75rem] text-[#F1F3EE]/60">
+            <div className="border-t border-surface/15 bg-black/10">
+                <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-1 px-6 py-4 text-center md:flex-row">
+                    <p className="text-[.8rem] text-surface/75">
                         © {new Date().getFullYear()} Lo Nuestro. Todos los derechos reservados.
                     </p>
-                    <p className="text-[.75rem] text-[#F1F3EE]/70">
-                        Sitio diseñado y desarrollado por{" "}
-                        <span className="font-semibold text-[#F1F3EE]/90">Matías Buffa</span>
+                    <p className="text-[.8rem] text-surface/75">
+                        Sitio diseñado y desarrollado por <span className="font-semibold text-surface/95">Matías Buffa</span>
                     </p>
                 </div>
             </div>

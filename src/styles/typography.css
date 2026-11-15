@@ -1,8 +1,12 @@
-.titles{
+.titles {
     font-family: "Commissioner", sans-serif;
-    
+    text-wrap: balance;
 }
 
-.text-defect{
+.text-defect {
     font-family: "Inter", sans-serif;
+}
+
+p {
+    text-wrap: pretty;
 }

@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import Reveal from "../components/shared/Reveal";
+import SectionHeading from "../components/shared/SectionHeading";
 import ImageCarousel from "../components/shared/ImageCarousel";
 import MapEmbed from "../components/shared/MapEmbed";
 import WhatsAppFloatingButton from "../components/layout/WhatsAppButton";
@@ -8,46 +9,6 @@ import MinaClavero1 from "../assets/images/MinaClavero.jpg";
 import MinaClavero2 from "../assets/images/MinaClavero2.jpg";
 
 const MinaClaveroPhotos = [MinaClavero1, MinaClavero2];
-
-/**
- * Aparece cuando entra en pantalla (no al montar la página), así los
- * bloques de más abajo animan recién cuando el usuario llega a ellos.
- */
-function Reveal({ children, delay = 0, className = "" }) {
-    const ref = useRef(null);
-    const [visible, setVisible] = useState(false);
-
-    useEffect(() => {
-        const element = ref.current;
-        if (!element) return;
-
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setVisible(true);
-                    observer.disconnect();
-                }
-            },
-            { threshold: 0.15, rootMargin: "0px 0px -8% 0px" }
-        );
-        observer.observe(element);
-        return () => observer.disconnect();
-    }, []);
-
-    return (
-        <div
-            ref={ref}
-            style={{ transitionDelay: visible ? `${delay}s` : "0s" }}
-            className={`transition-all duration-700 ease-out motion-reduce:transition-none ${
-                visible
-                    ? "translate-y-0 opacity-100"
-                    : "translate-y-8 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100"
-            } ${className}`}
-        >
-            {children}
-        </div>
-    );
-}
 
 /* ───────────── Íconos (estilo outline, 24x24, stroke) ───────────── */
 function Icon({ children, className = "w-5 h-5" }) {
@@ -136,46 +97,33 @@ const ROUTES = [
     },
 ];
 
-function SectionHeading({ eyebrow, title }) {
-    return (
-        <Reveal className="text-center">
-            <span className="inline-block text-[.75rem] tracking-[0.2em] uppercase font-semibold text-[#3E6143]/70 mb-2">
-                {eyebrow}
-            </span>
-            <h3 className="titles font-bold text-[#3E6143] text-[1.6rem] md:text-[1.9rem] leading-tight">
-                {title}
-            </h3>
-            <span className="block w-14 h-0.75 bg-[#3E6143]/40 rounded-full mx-auto mt-3" />
-        </Reveal>
-    );
-}
-
 function MapPage() {
     const carouselRef = useScrollImageEffect();
 
     return (
-        <div className="pt-16.25 bg-[#F1F3EE] flex flex-col items-center">
+        <div className="bg-surface pt-18 flex flex-col items-center">
             {/* Carrusel fijo: se oscurece y hace zoom mientras el contenido lo tapa */}
-            <div ref={carouselRef} className="sticky top-16.25 z-0 w-full overflow-hidden">
+            <div ref={carouselRef} className="sticky top-16 z-0 w-full overflow-hidden">
                 <div className="relative">
                     <div className="scroll-image-effect">
                         <ImageCarousel
                             images={MinaClaveroPhotos}
+                            alt="Paisajes de Mina Clavero"
                             className="h-[min(68vh,38rem)] min-h-[22rem]"
                         />
                     </div>
                     <div className="absolute inset-0 flex items-center justify-center bg-linear-to-t from-black/65 via-black/20 to-black/10 px-6 text-center">
                         <div className="max-w-3xl text-white">
-                            <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/35 bg-black/20 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] backdrop-blur-sm">
+                            <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/35 bg-black/20 px-4 py-1.5 text-[.85rem] font-semibold backdrop-blur-sm">
                                 <PinIcon className="h-4 w-4" />
-                                Valle de Traslasierra · Córdoba
+                                Valle de Traslasierra, Córdoba
                             </span>
                             <h1 className="titles text-4xl font-bold leading-tight drop-shadow-md sm:text-5xl md:text-6xl">
                                 Cómo llegar a Lo Nuestro
                             </h1>
                             <a
                                 href="#mapa"
-                                className="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-bold text-[#3E6143] shadow-lg transition-all hover:-translate-y-0.5 hover:bg-[#F1F3EE] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                                className="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 focus-light text-sm font-bold text-primary shadow-lg transition-all hover:-translate-y-0.5 hover:bg-surface"
                             >
                                 <PinIcon className="h-4 w-4" />
                                 Ver mapa y ubicación
@@ -186,10 +134,10 @@ function MapPage() {
             </div>
 
             {/* Panel que sube por encima del carrusel */}
-            <div className="relative z-10 -mt-8 flex w-full flex-col items-center rounded-t-4xl bg-[#F1F3EE] shadow-[0_-14px_30px_-14px_rgba(0,0,0,0.3)]">
+            <div className="relative z-10 -mt-8 flex w-full flex-col items-center rounded-t-4xl bg-surface shadow-[0_-14px_30px_-14px_rgba(0,0,0,0.3)]">
                 {/* Intro (arriba del todo: anima al cargar) */}
                 <section className="max-w-3xl px-6 pb-8 pt-10 text-center fade-down">
-                    <p className="text-defect text-[#757575] leading-relaxed md:text-[1.05rem]">
+                    <p className="text-muted leading-relaxed md:text-[1.05rem]">
                         Mina Clavero está en el corazón del Valle de Traslasierra, al pie de las
                         Sierras Grandes. Se llega por el pintoresco camino de las Altas Cumbres
                         (Ruta Provincial 34).
@@ -206,7 +154,7 @@ function MapPage() {
                                         <distance.Icon className="w-5 h-5" />
                                     </div>
                                     <div className="text-left leading-tight">
-                                        <p className="text-[.75rem] text-[#757575]">{distance.label}</p>
+                                        <p className="text-[.75rem] text-muted">{distance.label}</p>
                                         <p className="text-[#3E6143] font-bold text-[1rem]">{distance.value}</p>
                                     </div>
                                 </div>
@@ -224,7 +172,7 @@ function MapPage() {
                             </div>
                             {/* Barra propia: no depende del cartel interno del iframe de Google */}
                             <div className="flex items-center justify-between gap-3 flex-wrap px-4 pt-3 pb-2">
-                                <span className="inline-flex items-center gap-1.5 text-[.85rem] text-[#757575]">
+                                <span className="inline-flex items-center gap-1.5 text-[.85rem] text-muted">
                                     <PinIcon className="w-4 h-4 text-[#3E6143]" />
                                     <span className="font-semibold text-[#3E6143]">Mina Clavero, Córdoba</span>
                                 </span>
@@ -244,7 +192,7 @@ function MapPage() {
 
                 {/* Indicaciones detalladas */}
                 <section className="w-full max-w-5xl px-4 mb-8">
-                    <SectionHeading eyebrow="Último tramo" title="Indicaciones detalladas" />
+                    <SectionHeading title="Indicaciones detalladas" lead="El último tramo desde la entrada de Mina Clavero hasta cada puerta del complejo." />
                 </section>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16 px-4 max-w-5xl w-full">
@@ -260,9 +208,9 @@ function MapPage() {
                                         <span className="inline-block text-[.65rem] tracking-[0.18em] uppercase font-semibold bg-white/15 rounded-full px-2.5 py-0.5 mb-1">
                                             {route.badge}
                                         </span>
-                                        <h4 className="titles font-bold text-[1.15rem] leading-tight">
+                                        <h3 className="titles font-bold text-[1.15rem] leading-tight">
                                             {route.title}
-                                        </h4>
+                                        </h3>
                                     </div>
                                 </div>
 
@@ -287,7 +235,7 @@ function MapPage() {
                                                 >
                                                     {isLast ? <PinIcon className="w-3.5 h-3.5" /> : i + 1}
                                                 </span>
-                                                <p className="text-defect text-[.92rem] text-[#757575] leading-relaxed pt-0.5">
+                                                <p className="text-[.92rem] text-muted leading-relaxed pt-0.5">
                                                     {step}
                                                 </p>
                                             </li>
@@ -311,12 +259,12 @@ function MapPage() {
                                 </div>
 
                                 {/* Pie con dirección y link */}
-                                <div className="mx-4 mb-4 mt-1 flex items-center justify-between gap-3 rounded-2xl bg-[#F1F3EE] px-4 py-3">
+                                <div className="mx-4 mb-4 mt-1 flex flex-col items-start gap-3 rounded-2xl bg-surface px-4 py-3 min-[400px]:flex-row min-[400px]:items-center min-[400px]:justify-between">
                                     <div className="min-w-0">
-                                        <span className="block text-[.7rem] font-semibold uppercase tracking-[0.12em] text-[#757575]">
+                                        <span className="block text-[.7rem] font-semibold uppercase tracking-[0.12em] text-muted">
                                             Dirección de entrada
                                         </span>
-                                        <span className="block truncate font-bold text-[#3E6143]">
+                                        <span className="block font-bold text-[#3E6143]">
                                             {route.address}
                                         </span>
                                     </div>

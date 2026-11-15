@@ -1,11 +1,15 @@
-import { useState, useEffect, useRef } from "react";
+import { useRef, useState } from "react";
 
 import nidoAguila from "../../assets/images/nido_aguila.webp";
 import altasCumbres from "../../assets/images/altas_cumbres.webp";
 import rocsen from "../../assets/images/rocsen.webp";
 import supermercado from "../../assets/images/supermercado.webp";
 
-const WHATSAPP_URL = "https://wa.me/5493564507240";
+import useInView from "../../hooks/useInView";
+import SectionHeading from "../shared/SectionHeading";
+import { getWhatsAppUrl } from "../../config/contact";
+
+const WHATSAPP_URL = getWhatsAppUrl("Hola, ¿me recomiendan qué hacer en Mina Clavero?");
 
 const CATEGORIES = [
     {
@@ -94,95 +98,62 @@ const CATEGORIES = [
     },
 ];
 
-/* Hook: marca un elemento como visible cuando entra en pantalla */
-function useInView(threshold = 0.1) {
-    const ref = useRef(null);
-    const [visible, setVisible] = useState(false);
-
-    useEffect(() => {
-        const el = ref.current;
-        if (!el) return;
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setVisible(true);
-                    observer.disconnect();
-                }
-            },
-            { threshold }
-        );
-        observer.observe(el);
-        return () => observer.disconnect();
-    }, [threshold]);
-
-    return [ref, visible];
-}
-
 /* Tarjeta destacada (primer lugar de cada categoría) */
 function FeaturedCard({ emoji, title, text, image, imageAlt, animate }) {
     // Si la imagen falta o no carga, vuelve al diseño con emoji
     const [imgOk, setImgOk] = useState(Boolean(image));
-    const [imgLoaded, setImgLoaded] = useState(false);
 
     return (
-        <li
-            className={`group sm:col-span-2 md:row-span-2 ${animate ? "zone-card-in" : "opacity-0"}`}
-        >
-            <article className="relative h-full min-h-64 md:min-h-80 flex flex-col justify-end gap-3 rounded-3xl p-6 md:p-8 text-left overflow-hidden bg-linear-to-br from-[#3E6143] via-[#34553A] to-[#2A4530] shadow-lg shadow-[#3E6143]/20 transition-all duration-300 group-hover:-translate-y-1.5 group-hover:shadow-xl group-hover:shadow-[#3E6143]/30">
-                {/* MODO EVALUACIÓN: foto pura, sin degradado, sin zoom, sin fade, sin círculos ni emoji */}
+        <li className={`sm:col-span-2 md:row-span-2 ${animate ? "zone-card-in" : "opacity-0"}`}>
+            <article className="relative flex h-full min-h-72 flex-col justify-end gap-3 overflow-hidden rounded-3xl bg-linear-to-br from-primary via-[#34553A] to-primary-dark p-6 text-left shadow-lg shadow-primary/20 md:min-h-96 md:p-8">
                 {imgOk ? (
-                    <img
-                        src={image}
-                        alt={imageAlt || title}
-                        loading="lazy"
-                        decoding="async"
-                        onLoad={() => setImgLoaded(true)}
-                        onError={() => setImgOk(false)}
-                        className="absolute inset-0 h-full w-full object-cover"
-                    />
+                    <>
+                        <img
+                            src={image}
+                            alt={imageAlt || title}
+                            loading="lazy"
+                            decoding="async"
+                            onError={() => setImgOk(false)}
+                            className="absolute inset-0 h-full w-full object-cover"
+                        />
+                        {/* Degradé para que el texto blanco se lea sobre cualquier foto */}
+                        <span aria-hidden="true" className="absolute inset-0 bg-linear-to-t from-primary-dark/90 via-primary-dark/35 via-55% to-transparent" />
+                    </>
                 ) : (
                     <>
-                        {/* Decoración original (solo cuando no hay foto) */}
-                        <span className="pointer-events-none absolute -top-10 -right-10 h-40 w-40 rounded-full bg-white/10 transition-transform duration-700 group-hover:scale-125" />
-                        <span className="pointer-events-none absolute top-16 -right-4 h-20 w-20 rounded-full bg-[#6E9B72]/30 transition-transform duration-700 group-hover:scale-125" />
-                        <span
-                            className="pointer-events-none absolute top-5 right-6 md:top-6 md:right-8 text-[3.5rem] md:text-[5rem] leading-none opacity-90 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6"
-                            aria-hidden="true"
-                        >
+                        <span aria-hidden="true" className="pointer-events-none absolute -right-10 -top-10 size-40 rounded-full bg-white/10" />
+                        <span aria-hidden="true" className="pointer-events-none absolute right-6 top-5 text-[3.5rem] leading-none opacity-90 md:right-8 md:top-6 md:text-[5rem]">
                             {emoji}
                         </span>
                     </>
                 )}
 
-                <span className="relative self-start inline-flex items-center gap-1.5 rounded-full bg-white/15 backdrop-blur-sm px-3 py-1 text-[.7rem] titles font-bold tracking-widest uppercase text-white">
-                    <span aria-hidden="true">★</span> Imperdible
+                <span className="relative inline-flex items-center gap-1.5 self-start rounded-full bg-white/20 px-3 py-1 text-[.78rem] font-semibold text-white backdrop-blur-sm">
+                    <span aria-hidden="true" className="text-sand">★</span> Imperdible
                 </span>
-                <h4 className="relative titles font-bold text-[1.35rem] md:text-[1.6rem] leading-tight text-white max-w-[85%] drop-shadow-sm">
+                <h4 className="titles relative max-w-[90%] text-[1.4rem] font-bold leading-tight text-white md:text-[1.7rem]">
                     {title}
                 </h4>
-                <p className="relative text-[.92rem] md:text-[1rem] leading-relaxed text-white/90 max-w-md">{text}</p>
+                <p className="relative max-w-md text-[.95rem] leading-relaxed text-white/90 md:text-[1rem]">{text}</p>
             </article>
         </li>
     );
 }
 
-/* Tarjeta común */
+/* Tarjeta común: es informativa, no un botón, así que no reacciona al hover */
 function PlaceCard({ emoji, title, text, index, animate, wideOnSm }) {
     return (
         <li
-            className={`group ${wideOnSm ? "sm:col-span-2 md:col-span-1" : ""} ${animate ? "zone-card-in" : "opacity-0"}`}
+            className={`${wideOnSm ? "sm:col-span-2 md:col-span-1" : ""} ${animate ? "zone-card-in" : "opacity-0"}`}
             style={{ animationDelay: `${index * 70}ms` }}
         >
-            <article className="relative h-full flex flex-row items-start gap-3.5 sm:flex-col sm:gap-3 bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-[#3E6143]/10 text-left overflow-hidden transition-all duration-300 group-hover:-translate-y-1.5 group-hover:shadow-lg group-hover:shadow-[#3E6143]/10 group-hover:border-[#3E6143]/20">
-                {/* Franja de acento que se expande al pasar el mouse */}
-                <span className="absolute top-0 left-0 h-1 w-10 bg-linear-to-r from-[#3E6143] to-[#6E9B72] rounded-br-full transition-all duration-500 group-hover:w-full" />
-
-                <div className="h-11 w-11 shrink-0 rounded-xl bg-linear-to-br from-[#3E6143]/10 to-[#6E9B72]/20 flex items-center justify-center text-[1.4rem] transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+            <article className="flex h-full flex-row items-start gap-3.5 rounded-2xl border border-primary/10 bg-white p-4 text-left shadow-sm sm:flex-col sm:gap-3 sm:p-5">
+                <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary-wash text-[1.35rem]">
                     <span aria-hidden="true">{emoji}</span>
                 </div>
-                <div className="min-w-0 flex flex-col gap-1 sm:gap-2">
-                    <h4 className="titles font-bold text-[1rem] leading-snug text-[#3E6143]">{title}</h4>
-                    <p className="text-[.88rem] sm:text-[.9rem] leading-relaxed text-[#3E6143]/70">{text}</p>
+                <div className="flex min-w-0 flex-col gap-1 sm:gap-1.5">
+                    <h4 className="titles text-[1.02rem] font-bold leading-snug text-primary">{title}</h4>
+                    <p className="text-[.9rem] leading-relaxed text-muted">{text}</p>
                 </div>
             </article>
         </li>
@@ -190,13 +161,28 @@ function PlaceCard({ emoji, title, text, index, animate, wideOnSm }) {
 }
 
 function QueHacer() {
-    const [ref, visible] = useInView();
+    const [ref, visible] = useInView({ threshold: 0.1 });
     const [activeId, setActiveId] = useState(CATEGORIES[0].id);
+    const tabRefs = useRef([]);
+
+    // Teclado en las pestañas: flechas, Inicio y Fin (patrón ARIA de tabs)
+    const onTabKeyDown = (event, index) => {
+        const last = CATEGORIES.length - 1;
+        let next = null;
+        if (event.key === "ArrowRight") next = index === last ? 0 : index + 1;
+        if (event.key === "ArrowLeft") next = index === 0 ? last : index - 1;
+        if (event.key === "Home") next = 0;
+        if (event.key === "End") next = last;
+        if (next === null) return;
+        event.preventDefault();
+        setActiveId(CATEGORIES[next].id);
+        tabRefs.current[next]?.focus();
+    };
 
     return (
         <section
             ref={ref}
-            className="relative isolate max-w-md md:max-w-5xl mx-auto mt-16"
+            className="relative isolate mx-auto mt-20 w-full max-w-5xl px-1 md:mt-24"
             aria-labelledby="que-hacer-title"
         >
             <style>{`
@@ -209,66 +195,44 @@ function QueHacer() {
             `}</style>
 
             {/* Manchas de color de fondo, muy suaves */}
-            <div className="pointer-events-none absolute -z-10 top-0 left-0 h-56 w-56 rounded-full bg-[#6E9B72]/15 blur-3xl" />
-            <div className="pointer-events-none absolute -z-10 bottom-24 right-0 h-64 w-64 rounded-full bg-[#E0A526]/10 blur-3xl" />
+            <div aria-hidden="true" className="pointer-events-none absolute left-0 top-0 -z-10 size-56 rounded-full bg-primary-soft/15 blur-3xl" />
+            <div aria-hidden="true" className="pointer-events-none absolute bottom-24 right-0 -z-10 size-64 rounded-full bg-sand/10 blur-3xl" />
 
-            {/* Encabezado */}
-            <div
-                className={`mb-8 transition-all text-center duration-700 ease-out ${
-                    visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                }`}
-            >
-                <span className="inline-block text-[.75rem] titles font-bold tracking-widest uppercase text-[#6E9B72] mb-2">
-                    La zona
-                </span>
-                <h2 id="que-hacer-title" className="text-[1.5rem] md:text-[1.75rem] titles font-bold text-[#3E6143]">
-                    Qué hacer en Mina Clavero
-                </h2>
-                <div className="mx-auto mt-3 h-1 w-12 rounded-full bg-[#3E6143]/20 overflow-hidden">
-                    <div
-                        className={`h-full bg-[#3E6143] rounded-full transition-all duration-1000 ease-out ${
-                            visible ? "w-full" : "w-0"
-                        }`}
-                        style={{ transitionDelay: "300ms" }}
-                    />
-                </div>
-                <p className="text-[#3E6143]/70 max-w-xl mx-auto mt-3">
-                    Estamos a la entrada de Mina Clavero, en pleno Valle de Traslasierra: ríos, sierras y mucho para hacer
-                    a pocos minutos del complejo.
-                </p>
-            </div>
+            <SectionHeading
+                id="que-hacer-title"
+                title="Qué hacer en Mina Clavero"
+                lead="Estamos a la entrada de Mina Clavero, en pleno Valle de Traslasierra: ríos, sierras y mucho para hacer a pocos minutos del complejo."
+                className="mb-8 px-4"
+            />
 
             {/* Pestañas (control segmentado) */}
-            <div
-                className={`flex justify-center transition-all duration-700 delay-200 ${
-                    visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                }`}
-            >
+            <div className="flex justify-center px-4">
                 <div
                     role="tablist"
-                    aria-label="Categorías"
-                    className="w-full sm:w-auto grid grid-cols-2 sm:flex gap-1.5 p-1.5 rounded-3xl sm:rounded-full bg-white/80 backdrop-blur border border-[#3E6143]/10 shadow-sm"
+                    aria-label="Categorías de actividades"
+                    className="grid w-full grid-cols-2 gap-1.5 rounded-3xl border border-primary/10 bg-white/80 p-1.5 shadow-sm backdrop-blur sm:flex sm:w-auto sm:rounded-full"
                 >
-                    {CATEGORIES.map((cat) => {
+                    {CATEGORIES.map((cat, index) => {
                         const selected = cat.id === activeId;
                         return (
                             <button
                                 key={cat.id}
+                                ref={(el) => (tabRefs.current[index] = el)}
                                 type="button"
                                 role="tab"
                                 id={`tab-${cat.id}`}
                                 aria-selected={selected}
                                 aria-controls={`panel-${cat.id}`}
+                                tabIndex={selected ? 0 : -1}
                                 onClick={() => setActiveId(cat.id)}
-                                className={`flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 rounded-full titles font-bold text-[.88rem] cursor-pointer transition-all duration-300 active:scale-95 ${
+                                onKeyDown={(event) => onTabKeyDown(event, index)}
+                                className={`titles flex min-w-0 cursor-pointer items-center justify-center gap-1.5 rounded-full px-2 py-2.5 text-[.84rem] font-bold transition-colors duration-300 min-[380px]:gap-2 min-[380px]:px-3 min-[380px]:text-[.9rem] sm:px-5 ${
                                     selected
-                                        ? "bg-[#3E6143] text-white shadow-md shadow-[#3E6143]/25"
-                                        : "text-[#3E6143]/80 hover:bg-[#3E6143]/8 hover:text-[#3E6143]"
+                                        ? "bg-primary text-white shadow-md shadow-primary/25"
+                                        : "text-primary hover:bg-primary/8"
                                 }`}
                             >
-                                <span aria-hidden="true" className={`transition-transform duration-300 ${selected ? "scale-110" : ""}`}>
-                                    {cat.icon}
-                                </span>
+                                <span aria-hidden="true">{cat.icon}</span>
                                 {cat.label}
                             </button>
                         );
@@ -276,7 +240,7 @@ function QueHacer() {
                 </div>
             </div>
 
-            <div className="mt-8 text-center p-4">
+            <div className="mt-8 p-4 text-center">
                 {CATEGORIES.map((cat) => {
                     const [featured, ...rest] = cat.items;
                     const orphanIndex = rest.length % 2 === 1 ? rest.length - 1 : -1;
@@ -289,12 +253,10 @@ function QueHacer() {
                             aria-labelledby={`tab-${cat.id}`}
                             hidden={cat.id !== activeId}
                         >
-                            <h3 className="titles font-bold text-[1.15rem] text-[#3E6143]">{cat.title}</h3>
-                            <p className="text-[#3E6143]/70 max-w-2xl mx-auto mt-1 mb-6 text-[.9rem] sm:text-[.95rem]">
-                                {cat.intro}
-                            </p>
+                            <h3 className="titles text-[1.2rem] font-bold text-primary">{cat.title}</h3>
+                            <p className="mx-auto mb-6 mt-1 max-w-2xl text-[.95rem] text-muted">{cat.intro}</p>
 
-                            <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 list-none p-0 m-0">
+                            <ul className="m-0 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-2 sm:gap-4 md:grid-cols-3">
                                 <FeaturedCard {...featured} animate={visible} />
                                 {rest.map((item, i) => (
                                     <PlaceCard
@@ -312,27 +274,21 @@ function QueHacer() {
             </div>
 
             {/* Llamado a la acción */}
-            <div
-                className={`relative mt-10 overflow-hidden text-center m-4 rounded-3xl bg-linear-to-br from-[#3E6143] to-[#2A4530] px-6 py-8 shadow-lg shadow-[#3E6143]/20 transition-all duration-700 delay-500 ${
-                    visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-                }`}
-            >
-                <span className="pointer-events-none absolute -top-12 -left-12 h-40 w-40 rounded-full bg-white/10" />
-                <span className="pointer-events-none absolute -bottom-16 -right-10 h-48 w-48 rounded-full bg-[#6E9B72]/25" />
-                <h3 className="relative titles font-bold text-xl md:text-3xl text-white">¿Te ayudamos a armar tu plan?</h3>
-                <p className="relative text-white/80 mt-1 mb-5 max-w-md mx-auto text-[.95rem]">
+            <div className="focus-light relative m-4 mt-8 overflow-hidden rounded-3xl bg-linear-to-br from-primary to-primary-dark px-6 py-9 text-center shadow-lg shadow-primary/20">
+                <span aria-hidden="true" className="pointer-events-none absolute -left-12 -top-12 size-40 rounded-full bg-white/10" />
+                <span aria-hidden="true" className="pointer-events-none absolute -bottom-16 -right-10 size-48 rounded-full bg-primary-soft/25" />
+                <h3 className="titles relative text-xl font-bold text-white md:text-3xl">¿Te ayudamos a armar tu plan?</h3>
+                <p className="relative mx-auto mb-5 mt-1 max-w-md text-[.95rem] text-white/80">
                     Contanos con quién venís y cuántos días, y te recomendamos qué hacer.
                 </p>
                 <a
                     href={WHATSAPP_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="relative inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-[#3E6143] titles font-bold text-[.95rem] shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg active:scale-95"
+                    className="titles relative inline-flex max-w-full items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-center text-[.9rem] font-bold leading-tight text-primary shadow-md sm:px-6 sm:text-[.95rem] transition-[translate,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-lg"
                 >
                     Preguntanos por WhatsApp
-                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M9 18l6-6-6-6" />
-                    </svg>
+                    <span className="sr-only">(se abre en una pestaña nueva)</span>
                 </a>
             </div>
         </section>

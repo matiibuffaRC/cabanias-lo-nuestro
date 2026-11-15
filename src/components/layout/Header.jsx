@@ -1,6 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import Logo from "../../assets/images/Lo-Nuestro-logo.png";
+import { accommodation } from "../../data/accommodation";
+
+// Páginas que empiezan con una foto grande: ahí el header es translúcido.
+// En el resto va sólido para que el texto blanco tenga contraste.
+const HERO_ROUTES = new Set(["/", ...accommodation.map((item) => `/alojamiento/${item.slug}`)]);
 
 const LEFT_ITEMS = [
     { text: "Inicio", link: "/" },
@@ -18,12 +22,15 @@ const CTA = { text: "Contacto", link: "/contact" };
 function HeaderComponente() {
     const { pathname } = useLocation();
 
-    return <HeaderContent key={pathname} />;
+    return <HeaderContent key={pathname} overHero={HERO_ROUTES.has(pathname)} />;
 }
 
-function HeaderContent() {
+function HeaderContent({ overHero }) {
     const [menuOpen, setMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const firstLinkRef = useRef(null);
+    const toggleRef = useRef(null);
+    const wasOpen = useRef(false);
 
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 40);
@@ -33,11 +40,21 @@ function HeaderContent() {
     }, []);
 
     useEffect(() => {
-        if (!menuOpen) return;
+        if (!menuOpen) {
+            // Al cerrar, el foco vuelve al botón que abrió el menú
+            if (wasOpen.current) toggleRef.current?.focus();
+            return;
+        }
+        wasOpen.current = true;
         const onKey = (e) => e.key === "Escape" && setMenuOpen(false);
+        // Con el menú abierto, el teclado y el lector de pantalla no pueden irse a la página de atrás
+        const background = [document.getElementById("contenido"), document.querySelector("footer")];
+        background.forEach((el) => el && (el.inert = true));
         document.body.style.overflow = "hidden";
         window.addEventListener("keydown", onKey);
+        firstLinkRef.current?.focus();
         return () => {
+            background.forEach((el) => el && (el.inert = false));
             document.body.style.overflow = "";
             window.removeEventListener("keydown", onKey);
         };
@@ -49,7 +66,7 @@ function HeaderContent() {
     const desktopLink = (isActive) =>
         `titles block px-3 py-1 text-xs uppercase tracking-[0.18em] text-white transition-all duration-300
         before:invisible before:block before:h-0 before:overflow-hidden before:font-bold before:content-[attr(data-text)]
-        ${isActive ? "font-bold opacity-100" : "font-normal opacity-80 hover:opacity-100"}`;
+        ${isActive ? "font-bold opacity-100" : "font-normal opacity-90 hover:opacity-100"}`;
 
     // La altura depende SOLO del scroll (así el logo no salta al abrir el menú).
     // Con el menú abierto el header se vuelve transparente: el fondo lo da el menú.
@@ -58,12 +75,14 @@ function HeaderContent() {
         ? "border-transparent bg-transparent"
         : scrolled
         ? "border-transparent bg-[#3E6143] shadow-lg"
-        : "border-white/10 bg-[#3E6143]/60 backdrop-blur-md";
+        : overHero
+        ? "border-white/10 bg-primary-dark/55 backdrop-blur-md"
+        : "border-transparent bg-primary";
 
     return (
         <>
             <header
-                className={`fixed inset-x-0 top-0 z-250 border-b transition-all duration-500 ${headerHeight} ${headerSurface}`}
+                className={`focus-light fixed inset-x-0 top-0 z-250 border-b transition-all duration-500 ${headerHeight} ${headerSurface}`}
             >
                 <div className="mx-auto flex h-full max-w-6xl items-center justify-between px-5 lg:grid lg:grid-cols-[1fr_auto_1fr]">
                     {/* Izquierda (desktop): pegada al logo */}
@@ -81,17 +100,13 @@ function HeaderContent() {
                         ))}
                     </nav>
 
-                    {/* Logo: el padding da el mismo aire a ambos lados */}
+                    {/* Marca: el padding da el mismo aire a ambos lados */}
                     <Link
                         to="/"
-                        className="titles relative z-30 inline-flex items-center gap-2.5 pb-1 text-xl font-bold tracking-wider text-white drop-shadow-sm lg:px-10 lg:text-2xl"
+                        aria-label="Lo Nuestro, ir al inicio"
+                        className="titles relative z-30 inline-flex items-center pb-1 text-xl font-bold tracking-wider text-white drop-shadow-sm lg:px-10 lg:text-2xl"
                     >
-                        <img
-                            src={Logo}
-                            alt=""
-                            className="h-8 w-8 rounded-md border border-white/80 bg-white p-0.5 shadow-sm"
-                        />
-                        <span>Lo nuestro</span>
+                        Lo nuestro
                     </Link>
 
                     {/* Derecha (desktop): items pegados al logo, CTA al borde */}
@@ -118,6 +133,7 @@ function HeaderContent() {
 
                     {/* Botón mobile */}
                     <button
+                        ref={toggleRef}
                         type="button"
                         onClick={() => setMenuOpen((p) => !p)}
                         aria-expanded={menuOpen}
@@ -138,7 +154,7 @@ function HeaderContent() {
                 id="mobile-nav"
                 aria-label="Navegación principal"
                 aria-hidden={!menuOpen}
-                className={`fixed inset-0 z-240 flex flex-col justify-center bg-[#3E6143] px-10 transition-opacity duration-500 lg:hidden ${
+                className={`focus-light fixed inset-0 z-240 flex flex-col justify-center bg-[#3E6143] px-10 transition-opacity duration-500 lg:hidden ${
                     menuOpen ? "visible opacity-100" : "invisible opacity-0 delay-0"
                 }`}
             >
@@ -150,6 +166,7 @@ function HeaderContent() {
                             className={`transition-all duration-500 ${menuOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
                         >
                             <NavLink
+                                ref={i === 0 ? firstLinkRef : undefined}
                                 to={item.link}
                                 end={item.link === "/"}
                                 className={({ isActive }) =>

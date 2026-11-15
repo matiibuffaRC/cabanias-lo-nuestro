@@ -1,58 +1,44 @@
 import { Link } from "react-router-dom";
+import Reveal from "../shared/Reveal";
 
 function AccommodationCard({ section, index }) {
     const isLeft = index % 2 === 0;
-
-    const position = isLeft
-        ? "left-1/2 -translate-x-1/2 md:left-10 md:translate-x-0"
-        : "right-1/2 translate-x-1/2 md:right-10 md:translate-x-0";
+    const position = isLeft ? "md:left-10 lg:left-16" : "md:right-10 lg:right-16";
 
     return (
-        <div className="section-card h-135 lg:h-150 relative w-full overflow-hidden fade-down" style={{ animationDelay: `${index * 0.15}s` }} >
+        <Reveal as="article" className="section-card relative h-135 w-full overflow-hidden lg:h-150">
             <img
                 src={section.img}
                 alt={section.alt}
                 loading="lazy"
                 decoding="async"
-                className="section-card-img w-full h-full object-cover object-center transition-transform duration-700"
+                className="section-card-img h-full w-full object-cover object-center transition-transform duration-700 ease-out"
             />
-            <div className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent"/>
+            <div aria-hidden="true" className="absolute inset-0 bg-linear-to-t from-black/45 via-transparent to-transparent" />
 
-            <div className={`absolute w-[90%] top-10 lg:w-150 bg-[#3E6143]/50 backdrop-blur-[2px] p-5 text-white flex flex-col justify-center rounded-4xl md:max-w-1/2 shadow-lg  ${position}`} >
-                <h2 className="titles text-[1.8rem] lg:text-[2rem] font-bold pt-2">
-                    {section.title}
-                </h2>
+            <div
+                className={`absolute inset-x-4 bottom-6 flex flex-col rounded-[2rem] bg-primary-dark/70 p-6 text-white shadow-lg ring-1 ring-white/15 backdrop-blur-md md:inset-x-auto md:bottom-auto md:top-1/2 md:w-[min(32rem,46%)] md:-translate-y-1/2 md:p-8 ${position}`}
+            >
+                <h3 className="titles text-[1.8rem] font-bold leading-tight lg:text-[2.1rem]">{section.title}</h3>
+                <span aria-hidden="true" className="mb-3 mt-2.5 block h-0.75 w-12 rounded-full bg-white/60" />
+                <p className="text-[1rem] leading-relaxed text-white/90 md:text-[1.05rem]">{section.description}</p>
 
-                {/* Línea decorativa */}
-                <span className="block h-0.5 w-2/3 rounded-full bg-white/60 mb-3" aria-hidden="true" />
-
-                <p className="titles text-md md:text-lg lg:text-lg leading-relaxed">
-                    {section.description}
-                </p>
-
-                <div className="my-5 ">
-                    <Link
-                        to={`/alojamiento/${section.route}`}
-                        aria-label={`Saber más sobre ${section.title}`}
-                        className="group relative inline-flex items-center gap-2 overflow-hidden titles font-bold bg-primary-light border border-primary py-2 px-5 rounded-full shadow-md transition-all duration-300 hover:shadow-lg active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:border-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#3E6143]"
-                    >
-                        {/* Fondo que se completa de izquierda a derecha */}
-                        <span
-                            aria-hidden="true"
-                            className="absolute inset-0 bg-primary origin-left scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100"
-                        />
-
-                        <span className="relative z-10">Saber más</span>
-
-                        {/* Icono flecha */}
-                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="relative z-10 size-4 transition-transform duration-300 group-hover:translate-x-1" >
-                            <path d="M5 12h14" />
-                            <path d="m12 5 7 7-7 7" />
-                        </svg>
-                    </Link>
-                </div>
+                <Link
+                    to={`/alojamiento/${section.route}`}
+                    className="focus-light group/btn titles relative mt-5 inline-flex w-fit items-center gap-2 overflow-hidden rounded-full bg-white px-5 py-2.5 font-bold text-primary shadow-md transition-shadow duration-300 hover:shadow-lg"
+                >
+                    <span
+                        aria-hidden="true"
+                        className="absolute inset-0 origin-left scale-x-0 bg-primary-wash transition-transform duration-500 ease-out group-hover/btn:scale-x-100"
+                    />
+                    <span className="relative">{section.cta}</span>
+                    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="relative size-4 transition-transform duration-300 group-hover/btn:translate-x-1">
+                        <path d="M5 12h14" />
+                        <path d="m12 5 7 7-7 7" />
+                    </svg>
+                </Link>
             </div>
-        </div>
+        </Reveal>
     );
 }
 

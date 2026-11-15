@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import useInView from "../../hooks/useInView";
+import SectionHeading from "../shared/SectionHeading";
 
 const AUTOPLAY_MS = 5000;
 const GAP = 16; // gap-4 en px
@@ -44,30 +46,6 @@ const TESTIMONIALS = [
     },
 ];
 
-/* Hook: marca un elemento como visible cuando entra en pantalla */
-function useInView(threshold = 0.15) {
-    const ref = useRef(null);
-    const [visible, setVisible] = useState(false);
-
-    useEffect(() => {
-        const el = ref.current;
-        if (!el) return;
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setVisible(true);
-                    observer.disconnect();
-                }
-            },
-            { threshold }
-        );
-        observer.observe(el);
-        return () => observer.disconnect();
-    }, [threshold]);
-
-    return [ref, visible];
-}
-
 /* Estrellas que aparecen una por una */
 function Stars({ rating, visible, baseDelay }) {
     return (
@@ -91,13 +69,10 @@ function Stars({ rating, visible, baseDelay }) {
 
 function TestimonialCard({ name, place, text, rating, visible, delay }) {
     return (
-        <figure className="group relative h-full w-full flex flex-col gap-4 bg-white rounded-2xl p-6 shadow-sm border border-[#3E6143]/10 text-left overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:shadow-[#3E6143]/10">
-            {/* Franja de acento superior que se expande al pasar el mouse */}
-            <span className="absolute top-0 left-0 h-1 w-12 bg-linear-to-r from-[#3E6143] to-[#6E9B72] rounded-br-full transition-all duration-500 group-hover:w-full" />
-
+        <figure className="relative h-full w-full flex flex-col gap-4 bg-white rounded-2xl p-6 shadow-sm border border-primary/10 text-left overflow-hidden">
             {/* Comillas decorativas */}
             <svg
-                className="absolute top-4 right-4 w-10 h-10 text-[#3E6143]/8 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6"
+                className="absolute top-4 right-4 w-10 h-10 text-primary/8"
                 viewBox="0 0 24 24"
                 fill="currentColor"
                 aria-hidden="true"
@@ -107,17 +82,17 @@ function TestimonialCard({ name, place, text, rating, visible, delay }) {
 
             <Stars rating={rating} visible={visible} baseDelay={delay + 250} />
 
-            <blockquote className="relative text-[.95rem] leading-relaxed text-[#3E6143]/80 flex-1">
+            <blockquote className="relative text-[.98rem] leading-relaxed text-primary-dark/85 flex-1">
                 {text}
             </blockquote>
 
-            <figcaption className="flex items-center gap-3 pt-4 border-t border-[#3E6143]/10">
-                <div className="h-11 w-11 rounded-full bg-linear-to-br from-[#3E6143] to-[#6E9B72] flex items-center justify-center shrink-0 titles font-bold text-white shadow-sm transition-transform duration-300 group-hover:scale-105">
+            <figcaption className="flex items-center gap-3 pt-4 border-t border-primary/10">
+                <div aria-hidden="true" className="h-11 w-11 rounded-full bg-linear-to-br from-primary to-primary-soft flex items-center justify-center shrink-0 titles font-bold text-white shadow-sm">
                     {name.charAt(0)}
                 </div>
                 <div className="flex flex-col min-w-0">
-                    <span className="titles font-bold text-[.95rem] text-[#3E6143] truncate">{name}</span>
-                    <span className="titles text-[.85rem] text-[#3E6143]/60 truncate">{place}</span>
+                    <span className="titles font-bold text-[.95rem] text-primary truncate">{name}</span>
+                    <span className="text-[.85rem] text-muted truncate">{place}</span>
                 </div>
             </figcaption>
         </figure>
@@ -146,6 +121,10 @@ function Testimonials() {
     const [active, setActive] = useState(0);
     const [pages, setPages] = useState(TESTIMONIALS.length);
     const [paused, setPaused] = useState(false);
+    // Pausa elegida por el usuario con el botón (con "reducir movimiento" arranca pausado)
+    const [stopped, setStopped] = useState(
+        () => typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+    );
 
     // Ancho de un "paso" (tarjeta + gap) y cuántas tarjetas se ven a la vez
     const measure = useCallback(() => {
@@ -165,9 +144,12 @@ function Testimonials() {
 
     // Recalcular cantidad de "páginas" al cambiar el tamaño de pantalla
     useEffect(() => {
-        updatePages();
+        const frame = requestAnimationFrame(updatePages);
         window.addEventListener("resize", updatePages);
-        return () => window.removeEventListener("resize", updatePages);
+        return () => {
+            cancelAnimationFrame(frame);
+            window.removeEventListener("resize", updatePages);
+        };
     }, [updatePages]);
 
     // Detectar qué tarjeta está activa mientras se hace scroll (swipe, flechas o autoplay)
@@ -192,41 +174,24 @@ function Testimonials() {
 
     // Autoplay: se pausa con el mouse encima, al tocar, con foco por teclado o si el usuario prefiere menos movimiento
     useEffect(() => {
-        if (!visible || paused || pages <= 1) return;
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        if (!visible || paused || stopped || pages <= 1) return;
         const id = setInterval(() => goTo(active + 1), AUTOPLAY_MS);
         return () => clearInterval(id);
-    }, [visible, paused, pages, active, goTo]);
+    }, [visible, paused, stopped, pages, active, goTo]);
 
     return (
         <section
             ref={ref}
-            className="max-w-md md:max-w-5xl mx-auto mt-16"
+            className="max-w-md md:max-w-5xl mx-auto mt-10"
             aria-roledescription="carrusel"
-            aria-label="Testimonios de clientes"
+            aria-labelledby="testimonios-title"
         >
-            {/* Encabezado */}
-            <div
-                className={`mb-8 transition-all duration-700 ease-out ${
-                    visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                }`}
-            >
-                <span className="inline-block text-[.75rem] titles font-bold tracking-widest uppercase text-[#6E9B72] mb-2">
-                    Opiniones
-                </span>
-                <h2 className="text-[1.5rem] md:text-[1.75rem] titles font-bold text-[#3E6143]">
-                    Lo que dicen nuestros clientes
-                </h2>
-                <div className="mx-auto mt-3 h-1 w-12 rounded-full bg-[#3E6143]/20 overflow-hidden">
-                    <div
-                        className={`h-full bg-[#3E6143] rounded-full transition-all duration-1000 ease-out ${
-                            visible ? "w-full" : "w-0"
-                        }`}
-                        style={{ transitionDelay: "300ms" }}
-                    />
-                </div>
-                <p className="text-[#3E6143]/70 mt-3">Experiencias de quienes ya nos visitaron.</p>
-            </div>
+            <SectionHeading
+                id="testimonios-title"
+                title="Lo que dicen nuestros huéspedes"
+                lead="Experiencias de quienes ya nos visitaron."
+                className="mb-8"
+            />
 
             {/* Carrusel: swipe en celular, flechas y puntos en todas las pantallas */}
             <div
@@ -239,6 +204,9 @@ function Testimonials() {
                 <div
                     ref={trackRef}
                     onScroll={onScroll}
+                    tabIndex={0}
+                    role="region"
+                    aria-label="Testimonios (usá las flechas del teclado para desplazarte)"
                     className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-pl-5 md:scroll-pl-0 -mx-5 px-5 md:mx-0 md:px-0 pt-2 pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
                 >
                     {TESTIMONIALS.map((item, i) => (
@@ -270,7 +238,7 @@ function Testimonials() {
                                     type="button"
                                     onClick={() => goTo(i)}
                                     aria-label={`Ir al testimonio ${i + 1}`}
-                                    aria-current={i === active}
+                                    aria-current={i === active ? "true" : undefined}
                                     className="p-1 cursor-pointer"
                                 >
                                     <span
@@ -283,6 +251,17 @@ function Testimonials() {
                         </div>
 
                         <ArrowButton direction="next" onClick={() => goTo(active + 1)} />
+
+                        <button
+                            type="button"
+                            onClick={() => setStopped((s) => !s)}
+                            aria-label={stopped ? "Reanudar el pase automático" : "Pausar el pase automático"}
+                            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-primary transition-colors hover:bg-primary/10"
+                        >
+                            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" className="size-3.5">
+                                {stopped ? <path d="M8 5v14l11-7z" /> : <path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" />}
+                            </svg>
+                        </button>
                     </div>
                 )}
             </div>

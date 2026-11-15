@@ -7,51 +7,46 @@
     --color-whatsapp-dark: #229636;
     --shadow-soft: 0 8px 24px rgba(62, 97, 67, 0.12);
     --shadow-strong: 0 12px 32px rgba(62, 97, 67, 0.22);
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ===== Animaciones base (sin cambios de comportamiento) ===== */
+/* ===== Entradas al cargar (solo para lo que se ve apenas abre la página) ===== */
 
 .fade-down {
     opacity: 0;
     transform: translateY(-24px);
-    animation: fadeDown 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    will-change: transform, opacity;
+    animation: fadeDown 0.7s var(--ease-out-expo) forwards;
 }
 @keyframes fadeDown { to { opacity: 1; transform: translateY(0); } }
 
 .fade-top {
     opacity: 0;
     transform: translateY(24px);
-    animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    will-change: transform, opacity;
+    animation: fadeUp 0.7s var(--ease-out-expo) forwards;
 }
 @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
 .fade-side-to-right {
     opacity: 0;
     transform: translateX(-24px);
-    animation: fadeSideRight 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    will-change: transform, opacity;
+    animation: fadeSideRight 0.7s var(--ease-out-expo) forwards;
 }
 @keyframes fadeSideRight { to { opacity: 1; transform: translateX(0); } }
 
 .fade-side-to-left {
     opacity: 0;
     transform: translateX(24px);
-    animation: fadeSideLeft 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    will-change: transform, opacity;
+    animation: fadeSideLeft 0.7s var(--ease-out-expo) forwards;
 }
 @keyframes fadeSideLeft { to { opacity: 1; transform: translateX(0); } }
 
-/* Apertura del menú/burbuja: leve escala + blur para que se sienta
-   más "premium" que un simple slide, sin exagerar la duración. */
+/* Apertura del menú/burbuja de WhatsApp */
 .fade-top-menu {
     opacity: 0;
     transform: translateY(26px) scale(0.92);
     transform-origin: bottom right;
     filter: blur(4px);
     animation: fadeMenuIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    will-change: transform, opacity, filter;
 }
 @keyframes fadeMenuIn {
     to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
@@ -66,7 +61,7 @@
     to   { opacity: 0; transform: translateY(14px) scale(0.94); filter: blur(3px); }
 }
 
-/* ===== Hero: zoom lento tipo Ken Burns, 100% CSS ===== */
+/* ===== Hero: zoom lento tipo Ken Burns ===== */
 
 .hero-image {
     animation: heroZoom 8s ease-out forwards;
@@ -76,36 +71,24 @@
     to   { transform: scale(1.06); }
 }
 
+/* El hero se oscurece y acerca a medida que el contenido lo tapa (ver useScrollImageEffect) */
 .scroll-image-effect {
     transform: scale(calc(1 + var(--p, 0) * 0.08));
     filter: brightness(calc(1 - var(--p, 0) * 0.45));
     will-change: transform, filter;
 }
 
-/* ===== Tarjetas de contacto (WhatsApp / Facebook / Gmail) ===== */
+/* ===== Carrusel de fotos: fundido cruzado + zoom lento en la foto activa ===== */
 
-.contact-card {
-    padding: 1.25rem 1.75rem;
-    border-radius: 1rem;
-    background: white;
-    box-shadow: var(--shadow-soft);
-    border: 1px solid transparent;
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-                box-shadow 0.3s ease,
-                border-color 0.3s ease;
+.carousel-slide {
+    opacity: 0;
+    transition: opacity 1.2s ease;
 }
-.contact-card:hover,
-.contact-card:focus-visible {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-strong);
-    border-color: var(--color-accent);
+.carousel-slide[data-active="true"] {
+    opacity: 1;
 }
-.contact-card-icon {
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.contact-card:hover .contact-card-icon,
-.contact-card:focus-visible .contact-card-icon {
-    transform: scale(1.12);
+.carousel-slide[data-active="true"] img {
+    animation: heroZoom 7s ease-out forwards;
 }
 
 /* ===== Botón flotante de WhatsApp ===== */
@@ -117,23 +100,20 @@
 .whatsapp-btn:hover { transform: scale(1.08); box-shadow: var(--shadow-strong); }
 .whatsapp-btn:active { transform: scale(0.96); }
 
+/* Pulso para llamar la atención: solo unas pocas veces, no infinito */
 .whatsapp-pulse::after {
     content: '';
     position: absolute;
     inset: 0;
     border-radius: 50%;
     background: var(--color-whatsapp);
-    animation: pulseRing 2.2s ease-out infinite;
+    animation: pulseRing 2.2s ease-out 1.5s 4;
+    opacity: 0;
     z-index: -1;
 }
 @keyframes pulseRing {
     0%   { transform: scale(1);   opacity: 0.45; }
     100% { transform: scale(1.9); opacity: 0; }
-}
-
-.chat-bubble {
-    position: relative;
-    box-shadow: var(--shadow-soft);
 }
 
 /* ===== Menú de WhatsApp ===== */
@@ -153,14 +133,13 @@
     content: '';
     position: absolute;
     inset: 0;
+    pointer-events: none;
     background-image: radial-gradient(circle at 90% 0%, rgba(255,255,255,0.15) 0%, transparent 60%);
 }
 
 .wa-avatar { background: rgba(255,255,255,0.2); }
 
-/* Opciones del menú: sin ícono. La identidad de cada opción pasa a un
-   borde de acento a la izquierda que "despierta" en hover/focus, en vez
-   de una burbuja de color separada. Menos elementos, mismo lenguaje visual. */
+/* Opciones del menú: borde de acento a la izquierda que se activa en hover/focus */
 .wa-option {
     position: relative;
     transition: background 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -178,7 +157,6 @@
     border-radius: 0 3px 3px 0;
     opacity: 0.3;
     transform: scaleY(0.55);
-    transform-origin: center;
     transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     background: var(--color-primary);
 }
@@ -207,19 +185,24 @@
     opacity: 1;
 }
 
+/* ===== Tarjetas de alojamiento del inicio ===== */
+
+.section-card:hover .section-card-img,
+.section-card:focus-within .section-card-img {
+    transform: scale(1.04);
+}
+
 /* ===== Accesibilidad ===== */
 
 @media (prefers-reduced-motion: reduce) {
     .fade-down, .fade-top, .fade-top-menu, .fadeOutDown,
-    .fade-side-to-right, .fade-side-to-left, .hero-image {
+    .fade-side-to-right, .fade-side-to-left, .hero-image,
+    .carousel-slide[data-active="true"] img {
         animation: none !important;
         opacity: 1 !important;
         transform: none !important;
         filter: none !important;
     }
-    .whatsapp-pulse::after { animation: none !important; display: none !important; }
-}
-
-.section-card:hover .section-card-img {
-    transform: scale(1.04);
+    .scroll-image-effect { transform: none; filter: none; }
+    .whatsapp-pulse::after { display: none !important; }
 }

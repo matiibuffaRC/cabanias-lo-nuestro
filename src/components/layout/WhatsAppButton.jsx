@@ -1,17 +1,18 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import WhatsAppIcon from "../../assets/icons/whatsappIcon.svg";
 import crossIcon from "../../assets/icons/crossIcon.svg";
+import { getWhatsAppUrl } from "../../config/contact";
 
 const WHATSAPP_OPTIONS = [
     {
-        href: "https://wa.me/5493564507240?text=Hola%20quisiera%20consultar%20los%20precios%20de%20las%20caba%C3%B1as",
+        href: getWhatsAppUrl("Hola, quisiera consultar los precios de las cabañas y dormis"),
         title: "Consultar precios",
         subtitle: "Tarifas y promociones",
         variant: "accent",
         delay: "0.12s",
     },
     {
-        href: "https://wa.me/5493564507240?text=Hola%20quisiera%20consultar%20la%20disponibilidad",
+        href: getWhatsAppUrl("Hola, quisiera consultar la disponibilidad"),
         title: "Consultar disponibilidad",
         subtitle: "Fechas libres para tu estadía",
         variant: "primary",
@@ -82,14 +83,20 @@ function WhatsAppFloatingButton({
         };
 
         const handleKeyDown = (event) => {
-            if (event.key === "Escape") closeMenu();
+            if (event.key === "Escape") {
+                closeMenu();
+                buttonRef.current?.focus();
+            }
         };
 
         document.addEventListener("mousedown", handlePointerDown);
         document.addEventListener("keydown", handleKeyDown);
+        // Al abrir, el foco pasa a la primera opción (esperamos a que el menú deje de estar inert)
+        const focusTimer = setTimeout(() => menuRef.current?.querySelector("a")?.focus(), 50);
         return () => {
             document.removeEventListener("mousedown", handlePointerDown);
             document.removeEventListener("keydown", handleKeyDown);
+            clearTimeout(focusTimer);
         };
     }, [openMenuWhatsapp, closeMenu]);
 
@@ -113,17 +120,17 @@ function WhatsAppFloatingButton({
                     className={`chat-bubble group relative bg-white border border-[#3E6143]/10 shadow-lg pl-4 pr-3 py-2.5 rounded-2xl rounded-br-sm mb-1 ${bubbleTransitionClass}`}
                 >
                     <div className="pr-1">
-                        <h3 className="text-defect text-[.8rem] text-[#555] leading-tight">{bubbleLine1}</h3>
-                        <h3 className="text-defect text-[.85rem] font-bold text-[#3E6143] leading-tight mt-0.5">
+                        <p className="text-[.82rem] text-muted leading-tight">{bubbleLine1}</p>
+                        <p className="text-[.85rem] font-bold text-[#3E6143] leading-tight mt-0.5">
                             {bubbleLine2}
-                        </h3>
+                        </p>
                     </div>
 
                     <button
                         type="button"
                         onClick={dismissBubble}
                         aria-label="Cerrar mensaje"
-                        className="absolute -top-2 -left-2 h-5 w-5 rounded-full bg-white border border-[#3E6143]/20 shadow-sm flex items-center justify-center text-[#3E6143]/70 hover:text-white hover:bg-[#3E6143] transition-colors cursor-pointer"
+                        className="absolute -top-2.5 -left-2.5 h-6 w-6 rounded-full bg-white border border-[#3E6143]/20 shadow-sm flex items-center justify-center text-[#3E6143]/70 hover:text-white hover:bg-[#3E6143] transition-colors cursor-pointer"
                     >
                         <svg className="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M6 6l12 12M18 6L6 18" />
@@ -149,6 +156,7 @@ function WhatsAppFloatingButton({
             <div
                 ref={menuRef}
                 aria-hidden={!openMenuWhatsapp}
+                inert={!openMenuWhatsapp}
                 className={`wa-menu bg-white z-60 right-7.5 w-[85%] md:w-90 fixed bottom-20 overflow-hidden rounded-2xl shadow-2xl ${menuTransitionClass}`}
             >
                 <div className="wa-menu-header p-4 flex flex-row items-center gap-3">
@@ -156,7 +164,7 @@ function WhatsAppFloatingButton({
                         <img src={WhatsAppIcon} alt="" className="w-6 h-6 invert" />
                     </div>
                     <div className="flex flex-col text-white flex-1 min-w-0">
-                        <h3 className="font-bold text-[1.05rem] leading-tight">¡Hablemos!</h3>
+                        <p className="font-bold text-[1.05rem] leading-tight">¡Hablemos!</p>
                         <p className="text-[.75rem] text-white/80 leading-tight">
                             Normalmente respondemos rápido
                         </p>
@@ -186,10 +194,10 @@ function WhatsAppFloatingButton({
                             style={{ animationDelay: opt.delay }}
                         >
                             <div className="flex flex-col flex-1 min-w-0">
-                                <h3 className="text-defect text-[.95rem] font-bold text-[#2A4530] leading-tight truncate">
+                                <p className="text-[.95rem] font-bold text-[#2A4530] leading-tight truncate">
                                     {opt.title}
-                                </h3>
-                                <p className="text-[.78rem] text-[#3E6143]/60 leading-tight truncate">
+                                </p>
+                                <p className="text-[.78rem] text-muted leading-tight truncate">
                                     {opt.subtitle}
                                 </p>
                             </div>
