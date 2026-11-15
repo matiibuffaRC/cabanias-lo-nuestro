@@ -5,8 +5,8 @@ import MapEmbed from "../components/shared/MapEmbed";
 import WhatsAppFloatingButton from "../components/layout/WhatsAppButton";
 import useScrollImageEffect from "../hooks/useScrollImageEffect";
 
-import MinaClavero1 from "../assets/images/MinaClavero.jpg";
-import MinaClavero2 from "../assets/images/MinaClavero2.jpg";
+import MinaClavero1 from "../assets/images/MinaClavero.webp";
+import MinaClavero2 from "../assets/images/MinaClavero2.webp";
 
 const MinaClaveroPhotos = [MinaClavero1, MinaClavero2];
 
@@ -108,8 +108,12 @@ function MapPage() {
                     <div className="scroll-image-effect">
                         <ImageCarousel
                             images={MinaClaveroPhotos}
+<<<<<<< HEAD
                             alt="Paisajes de Mina Clavero"
                             className="h-[min(68vh,38rem)] min-h-[22rem]"
+=======
+                            className="h-[min(68vh,38rem)] min-h-88"
+>>>>>>> defb39038ee2da2dbba69aafcf4ad742a6b46b55
                         />
                     </div>
                     <div className="absolute inset-0 flex items-center justify-center bg-linear-to-t from-black/65 via-black/20 to-black/10 px-6 text-center">
@@ -200,7 +204,7 @@ function MapPage() {
                         <Reveal key={route.title} delay={index * 0.15} className="h-full">
                             <article className="route-card group bg-white rounded-3xl border border-[#3E6143]/15 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden flex h-full flex-col">
                                 {/* Encabezado */}
-                                <div className={`bg-linear-to-br ${route.variant === "rear" ? "from-[#8B5E34] to-[#70472A]" : "from-[#3E6143] to-[#2f4c34]"} text-white px-6 py-5 flex items-center gap-4`}>
+                                <div className={`bg-linear-to-br ${route.variant === "rear" ? "from-[#3E6143] to-[#2f4c34]" : "from-[#3E6143] to-[#2f4c34]"} text-white px-6 py-5 flex items-center gap-4`}>
                                     <div className="h-12 w-12 rounded-full bg-white/15 ring-1 ring-white/20 flex items-center justify-center shrink-0">
                                         <MapIcon className="w-6 h-6" />
                                     </div>

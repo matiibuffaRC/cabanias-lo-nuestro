@@ -106,7 +106,11 @@ function HeaderContent({ overHero }) {
                         aria-label="Lo Nuestro, ir al inicio"
                         className="titles relative z-30 inline-flex items-center pb-1 text-xl font-bold tracking-wider text-white drop-shadow-sm lg:px-10 lg:text-2xl"
                     >
+<<<<<<< HEAD
                         Lo nuestro
+=======
+                        <span>Lo nuestro</span>
+>>>>>>> defb39038ee2da2dbba69aafcf4ad742a6b46b55
                     </Link>
 
                     {/* Derecha (desktop): items pegados al logo, CTA al borde */}
