@@ -1,13 +1,17 @@
+import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
 import ScrollToTop from "../components/layout/ScrollToTop";
-import AccommodationsPage from "../Pages/AccommodationsPage";
-import ContactPage from "../Pages/ContactPage";
 import HomePage from "../Pages/HomePage";
-import MapPage from "../Pages/MapPage";
-import NotFoundPage from "../Pages/NotFoundPage";
 import PageMetadata from "../components/seo/PageMetadata";
+
+// El inicio va en el paquete principal (es la página más visitada).
+// El resto se descarga recién cuando alguien entra a esa página.
+const AccommodationsPage = lazy(() => import("../Pages/AccommodationsPage"));
+const ContactPage = lazy(() => import("../Pages/ContactPage"));
+const MapPage = lazy(() => import("../Pages/MapPage"));
+const NotFoundPage = lazy(() => import("../Pages/NotFoundPage"));
 
 function App() {
   return (
@@ -23,13 +27,15 @@ function App() {
       <Header />
       <ScrollToTop />
       <main id="contenido" tabIndex={-1} className="outline-none">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/alojamiento/:tipo" element={<AccommodationsPage />} />
-          <Route path="/comoLlegar" element={<MapPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
+        <Suspense fallback={<div className="min-h-screen bg-surface" />}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/alojamiento/:tipo" element={<AccommodationsPage />} />
+            <Route path="/comoLlegar" element={<MapPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </Suspense>
       </main>
       <Footer />
     </>

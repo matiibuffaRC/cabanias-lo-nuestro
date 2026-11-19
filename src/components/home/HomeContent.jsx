@@ -1,3 +1,4 @@
+import { HERO_IMAGE } from "../../config/hero";
 import AccommodationCard from "./AccommodationCard";
 import WhatsAppFloatingButton from "../layout/WhatsAppButton";
 import QueHacer from "../layout/QueHacer.jsx";
@@ -6,16 +7,19 @@ import SectionHeading from "../shared/SectionHeading";
 import useScrollImageEffect from "../../hooks/useScrollImageEffect";
 import ServicesBand from "./ServicesBand";
 
-import presentationImage from "../../assets/images/piletaConDormis.jpg";
 import frenteImage from "../../assets/images/frente21.jpg";
+import frenteSrcSet from "../../assets/images/frente21.jpg?w=640;960;1440&format=webp&quality=65&as=srcset";
 import patioImage from "../../assets/images/patioBien.jpg";
+import patioSrcSet from "../../assets/images/patioBien.jpg?w=640;960;1440&format=webp&quality=65&as=srcset";
 import patioImage2 from "../../assets/images/patio3.jpeg";
+import patio2SrcSet from "../../assets/images/patio3.jpeg?w=640;960;1440&format=webp&quality=65&as=srcset";
 
-import LogoMinaClavero from "../../assets/icons/MinaClaveroLogo.png";
+import LogoMinaClavero from "../../assets/icons/MinaClaveroLogo.png?w=576&format=webp";
 
 const SECTIONS = [
     {
         img: patioImage,
+        srcSet: patioSrcSet,
         alt: "Patio del complejo Lo Nuestro con parquizado y zona de descanso",
         title: "Complejo Lo Nuestro",
         description:
@@ -25,6 +29,7 @@ const SECTIONS = [
     },
     {
         img: frenteImage,
+        srcSet: frenteSrcSet,
         alt: "Frente de las cabañas de Lo Nuestro",
         title: "Cabañas",
         description:
@@ -34,6 +39,7 @@ const SECTIONS = [
     },
     {
         img: patioImage2,
+        srcSet: patio2SrcSet,
         alt: "Patio frente a los dormis de Lo Nuestro",
         title: "Dormis",
         description:
@@ -52,7 +58,9 @@ function HomeContent() {
             <div ref={heroRef} className="sticky top-0 z-0 h-[min(82vh,44rem)] min-h-[30rem] w-full overflow-hidden">
                 <div className="scroll-image-effect absolute inset-0">
                     <img
-                        src={presentationImage}
+                        src={HERO_IMAGE.src}
+                        srcSet={HERO_IMAGE.srcSet}
+                        sizes={HERO_IMAGE.sizes}
                         alt="Pileta del complejo Lo Nuestro con los dormis al fondo"
                         fetchPriority="high"
                         className="hero-image h-full w-full object-cover object-center"
@@ -109,7 +117,7 @@ function HomeContent() {
                 <ServicesBand />
 
                 {/* Alojamientos */}
-                <section id="alojamientos" aria-labelledby="alojamientos-title" className="mt-12 w-full scroll-mt-20 md:mt-16">
+                <section id="alojamientos" aria-labelledby="alojamientos-title" className="cv-auto mt-12 w-full scroll-mt-20 md:mt-16">
                     <SectionHeading
                         id="alojamientos-title"
                         title="Elegí tu alojamiento"
@@ -126,7 +134,7 @@ function HomeContent() {
                 <QueHacer />
 
                 {/* Cierre con logo */}
-                <Reveal as="section" aria-labelledby="cierre-title" className="flex w-full flex-col items-center px-5 pb-16 pt-6 text-center">
+                <Reveal as="section" aria-labelledby="cierre-title" className="cv-auto flex w-full flex-col items-center px-5 pb-16 pt-6 text-center">
                     <h2 id="cierre-title" className="titles mb-2 text-3xl font-bold text-primary lg:text-4xl">
                         En el corazón de Mina Clavero
                     </h2>

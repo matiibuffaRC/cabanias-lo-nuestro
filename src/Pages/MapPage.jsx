@@ -117,7 +117,7 @@ function MapPage() {
             {/* Panel que sube por encima del carrusel */}
             <div className="relative z-10 -mt-8 flex w-full flex-col items-center rounded-t-4xl bg-surface shadow-[0_-14px_30px_-14px_rgba(0,0,0,0.3)]">
                 <header className="fade-down flex w-full max-w-3xl flex-col items-center px-6 pb-8 pt-11 text-center">
-                    <p className="inline-flex items-center gap-1.5 text-sm font-semibold uppercase tracking-[0.12em] text-primary-soft">
+                    <p className="inline-flex items-center gap-1.5 text-sm font-semibold uppercase tracking-[0.12em] text-primary">
                         <PinIcon className="h-4 w-4" />
                         Valle de Traslasierra, Córdoba
                     </p>
@@ -180,7 +180,7 @@ function MapPage() {
                 </section>
 
                 {/* Indicaciones detalladas */}
-                <section aria-labelledby="indicaciones-title" className="flex w-full flex-col items-center">
+                <section aria-labelledby="indicaciones-title" className="cv-auto flex w-full flex-col items-center">
                 <div className="w-full max-w-5xl px-4 mb-8">
                     <SectionHeading id="indicaciones-title" title="Indicaciones detalladas" lead="El último tramo desde la entrada de Mina Clavero hasta cada puerta del complejo." />
                 </div>

@@ -50,10 +50,24 @@
         ]
       }
     </script>
+    <!-- Precarga la foto principal (inicio y contacto) antes de que cargue el JavaScript. Ver src/config/hero.js -->
+    <script>
+      if (location.pathname === "/" || location.pathname === "/contact") {
+        var l = document.createElement("link");
+        l.rel = "preload"; l.as = "image"; l.fetchPriority = "high";
+        l.href = "/hero/pileta-960.webp";
+        l.imageSrcset = "/hero/pileta-640.webp 640w, /hero/pileta-960.webp 960w, /hero/pileta-1280.webp 1280w, /hero/pileta-1600.webp 1600w";
+        l.imageSizes = "100vw";
+        document.head.appendChild(l);
+      }
+    </script>
     <title>Cabañas y dormis Lo Nuestro en Mina Clavero | Traslasierra</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <!-- Fuentes sin bloquear el primer dibujado de la página -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..800&family=Inter:opsz,wght@14..32,400..700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..800&family=Inter:opsz,wght@14..32,400..700&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..800&family=Inter:opsz,wght@14..32,400..700&display=swap"></noscript>
   </head>
   <body>
     <div id="root" class="min-h-screen"></div>

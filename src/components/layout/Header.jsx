@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { accommodation } from "../../data/accommodation";
-import logo from "../../assets/images/Lo-Nuestro-logo.png";
+import logo from "../../assets/images/Lo-Nuestro-logo.png?w=96&format=webp";
 
 // Páginas que empiezan con una foto grande: ahí el header es transparente.
 // En el resto va sólido para que el texto tenga contraste.

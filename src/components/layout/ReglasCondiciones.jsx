@@ -19,7 +19,7 @@ function ReglasCondiciones({ highlights = DEFAULT_HIGHLIGHTS }) {
             className="relative isolate w-full overflow-hidden px-0 py-14 text-center md:px-5"
             aria-labelledby="reglas-title"
         >
-            <div aria-hidden="true" className="pointer-events-none absolute right-0 top-0 -z-10 size-56 rounded-full bg-primary-soft/15 blur-3xl" />
+            <div aria-hidden="true" className="pointer-events-none absolute right-0 top-0 -z-10 size-80 bg-[radial-gradient(closest-side,rgb(110_155_114/0.18),transparent)]" />
 
             <div className="mx-auto max-w-md md:max-w-3xl">
                 <SectionHeading

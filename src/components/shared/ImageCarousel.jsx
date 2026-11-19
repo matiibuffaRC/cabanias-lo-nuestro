@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-
-const prefersReducedMotion = () =>
-    typeof window !== "undefined" &&
-    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+import usePrefersReducedMotion from "../../hooks/usePrefersReducedMotion";
 
 /**
  * Carrusel liviano de fotos con fundido cruzado (reemplaza a Ignite UI).
@@ -21,7 +18,9 @@ function ImageCarousel({
     const [active, setActive] = useState(0);
     const [paused, setPaused] = useState(false);
     // Pausa elegida por el usuario (botón). Con "reducir movimiento" arranca pausado.
-    const [stopped, setStopped] = useState(prefersReducedMotion);
+    const reducedMotion = usePrefersReducedMotion();
+    const [userStopped, setUserStopped] = useState(null);
+    const stopped = userStopped ?? reducedMotion;
     const count = images.length;
 
     useEffect(() => {
@@ -67,7 +66,7 @@ function ImageCarousel({
                 >
                     <button
                         type="button"
-                        onClick={() => setStopped((s) => !s)}
+                        onClick={() => setUserStopped(!stopped)}
                         aria-label={stopped ? "Reanudar el pase de fotos" : "Pausar el pase de fotos"}
                         className="focus-light mr-1 flex size-6 cursor-pointer items-center justify-center rounded-full bg-black/25 text-white backdrop-blur-sm transition-colors hover:bg-black/40"
                     >
@@ -82,7 +81,7 @@ function ImageCarousel({
                             onClick={() => setActive(index)}
                             aria-label={`Ver foto ${index + 1} de ${count}`}
                             aria-current={index === active ? "true" : undefined}
-                            className="focus-light flex h-6 items-center px-1 cursor-pointer"
+                            className="focus-light flex h-6 min-w-6 items-center justify-center px-1 cursor-pointer"
                         >
                             <span
                                 className={`block h-1.5 rounded-full shadow-sm transition-all duration-500 ${

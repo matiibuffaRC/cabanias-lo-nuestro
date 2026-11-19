@@ -78,3 +78,10 @@ img {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* Secciones de más abajo: el navegador no las dibuja hasta que se acercan a la pantalla.
+   Acelera mucho la primera carga. "auto" recuerda el alto real una vez dibujadas. */
+.cv-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 900px;
+}

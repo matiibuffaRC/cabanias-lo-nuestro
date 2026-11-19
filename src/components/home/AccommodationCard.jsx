@@ -9,6 +9,8 @@ function AccommodationCard({ section, index }) {
         <Reveal as="article" className="section-card relative h-135 w-full overflow-hidden lg:h-150">
             <img
                 src={section.img}
+                srcSet={section.srcSet}
+                sizes="100vw"
                 alt={section.alt}
                 loading="lazy"
                 decoding="async"

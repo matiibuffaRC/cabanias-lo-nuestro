@@ -1,5 +1,5 @@
+import { HERO_IMAGE } from "../config/hero";
 import { useId, useState } from "react";
-import presentationImage from "../assets/images/piletaConDormis.jpg";
 import WhatsAppFloatingButton from "../components/layout/WhatsAppButton.jsx";
 import Testimonials from "../components/layout/Testimonials.jsx";
 import ReglasCondiciones from "../components/layout/ReglasCondiciones.jsx";
@@ -103,7 +103,9 @@ function ContactPage() {
             <div ref={heroRef} className="relative h-[min(60vh,32rem)] min-h-72 w-full overflow-hidden">
                 <div className="scroll-image-effect absolute inset-0">
                     <img
-                        src={presentationImage}
+                        src={HERO_IMAGE.src}
+                        srcSet={HERO_IMAGE.srcSet}
+                        sizes={HERO_IMAGE.sizes}
                         alt="Pileta del complejo Lo Nuestro"
                         fetchPriority="high"
                         className="hero-image h-full w-full object-cover object-center"
@@ -147,7 +149,7 @@ function ContactPage() {
                 <ReglasCondiciones />
 
                 {/* Preguntas frecuentes */}
-                <section aria-labelledby="faq-title" className="mx-auto mt-6 max-w-md md:max-w-3xl">
+                <section aria-labelledby="faq-title" className="cv-auto mx-auto mt-6 max-w-md md:max-w-3xl">
                     <SectionHeading id="faq-title" title="Preguntas frecuentes" className="mb-8" />
                     <div className="flex flex-col gap-3">
                         {FAQS.map((item, i) => (

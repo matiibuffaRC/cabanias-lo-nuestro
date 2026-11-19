@@ -72,10 +72,19 @@
 }
 
 /* El hero se oscurece y acerca a medida que el contenido lo tapa (ver useScrollImageEffect) */
+/* Oscurece con una capa negra semitransparente en vez de filter: brightness(),
+   que es mucho más caro de pintar (sobre todo en celulares) y demoraba el primer dibujado. */
 .scroll-image-effect {
     transform: scale(calc(1 + var(--p, 0) * 0.08));
-    filter: brightness(calc(1 - var(--p, 0) * 0.45));
-    will-change: transform, filter;
+    will-change: transform;
+}
+.scroll-image-effect::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #000;
+    opacity: calc(var(--p, 0) * 0.45);
+    pointer-events: none;
 }
 
 /* ===== Carrusel de fotos: fundido cruzado + zoom lento en la foto activa ===== */

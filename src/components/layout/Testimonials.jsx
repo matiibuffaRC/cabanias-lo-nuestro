@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import useInView from "../../hooks/useInView";
+import usePrefersReducedMotion from "../../hooks/usePrefersReducedMotion";
 import SectionHeading from "../shared/SectionHeading";
 
 const AUTOPLAY_MS = 5000;
@@ -122,9 +123,9 @@ function Testimonials() {
     const [pages, setPages] = useState(TESTIMONIALS.length);
     const [paused, setPaused] = useState(false);
     // Pausa elegida por el usuario con el botón (con "reducir movimiento" arranca pausado)
-    const [stopped, setStopped] = useState(
-        () => typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
-    );
+    const reducedMotion = usePrefersReducedMotion();
+    const [userStopped, setUserStopped] = useState(null);
+    const stopped = userStopped ?? reducedMotion;
 
     // Ancho de un "paso" (tarjeta + gap) y cuántas tarjetas se ven a la vez
     const measure = useCallback(() => {
@@ -254,7 +255,7 @@ function Testimonials() {
 
                         <button
                             type="button"
-                            onClick={() => setStopped((s) => !s)}
+                            onClick={() => setUserStopped(!stopped)}
                             aria-label={stopped ? "Reanudar el pase automático" : "Pausar el pase automático"}
                             className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-primary transition-colors hover:bg-primary/10"
                         >

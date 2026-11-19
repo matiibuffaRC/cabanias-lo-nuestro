@@ -35,7 +35,7 @@ function FooterComponent() {
     const [ref, isVisible] = useInView({ threshold: 0.2, rootMargin: "0px" });
 
     return (
-        <footer className="focus-light bg-linear-to-b from-primary to-[#2f4c34] text-surface" ref={ref}>
+        <footer className="cv-auto focus-light bg-linear-to-b from-primary to-[#2f4c34] text-surface" ref={ref}>
             <div aria-hidden="true" className="h-1 w-full bg-linear-to-r from-transparent via-surface/40 to-transparent" />
 
             <div className="mx-auto max-w-5xl px-6 pb-6 pt-12">

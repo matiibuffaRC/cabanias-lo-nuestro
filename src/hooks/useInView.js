@@ -6,9 +6,8 @@ import { useEffect, useRef, useState } from "react";
  */
 function useInView({ threshold = 0.15, rootMargin = "0px 0px -8% 0px" } = {}) {
     const ref = useRef(null);
-    const [visible, setVisible] = useState(
-        () => typeof IntersectionObserver === "undefined"
-    );
+    // Arranca en false también en el HTML pre-renderizado, para que coincida al cargar.
+    const [visible, setVisible] = useState(false);
 
     useEffect(() => {
         const element = ref.current;

@@ -182,7 +182,7 @@ function QueHacer() {
     return (
         <section
             ref={ref}
-            className="relative isolate mx-auto mt-20 w-full max-w-5xl px-1 md:mt-24"
+            className="cv-auto relative isolate mx-auto mt-20 w-full max-w-5xl px-1 md:mt-24"
             aria-labelledby="que-hacer-title"
         >
             <style>{`
@@ -195,8 +195,8 @@ function QueHacer() {
             `}</style>
 
             {/* Manchas de color de fondo, muy suaves */}
-            <div aria-hidden="true" className="pointer-events-none absolute left-0 top-0 -z-10 size-56 rounded-full bg-primary-soft/15 blur-3xl" />
-            <div aria-hidden="true" className="pointer-events-none absolute bottom-24 right-0 -z-10 size-64 rounded-full bg-sand/10 blur-3xl" />
+            <div aria-hidden="true" className="pointer-events-none absolute left-0 top-0 -z-10 size-80 bg-[radial-gradient(closest-side,rgb(110_155_114/0.18),transparent)]" />
+            <div aria-hidden="true" className="pointer-events-none absolute bottom-24 right-0 -z-10 size-96 bg-[radial-gradient(closest-side,rgb(224_165_38/0.12),transparent)]" />
 
             <SectionHeading
                 id="que-hacer-title"

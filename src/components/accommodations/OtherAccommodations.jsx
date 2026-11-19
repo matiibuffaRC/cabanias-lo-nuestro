@@ -8,7 +8,7 @@ function OtherAccommodations({ currentSlug }) {
     const others = accommodation.filter((item) => item.slug !== currentSlug);
 
     return (
-        <section aria-labelledby="otros-title" className="w-full max-w-5xl px-5 pb-20 pt-4">
+        <section aria-labelledby="otros-title" className="cv-auto w-full max-w-5xl px-5 pb-20 pt-4">
             <SectionHeading id="otros-title" title="Otros alojamientos" />
 
             <ul className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
