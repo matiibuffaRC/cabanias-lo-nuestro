@@ -1,36 +1,48 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { accommodation } from "../../data/accommodation";
+import logo from "../../assets/images/Lo-Nuestro-logo.png";
 
-// Páginas que empiezan con una foto grande: ahí el header es translúcido.
-// En el resto va sólido para que el texto blanco tenga contraste.
+// Páginas que empiezan con una foto grande: ahí el header es transparente.
+// En el resto va sólido para que el texto tenga contraste.
 const HERO_ROUTES = new Set(["/", ...accommodation.map((item) => `/alojamiento/${item.slug}`)]);
 
-const LEFT_ITEMS = [
-    { text: "Inicio", link: "/" },
-    { text: "Complejo", link: "/alojamiento/complejo" },
-    { text: "Cabañas", link: "/alojamiento/cabins" },
-];
-const RIGHT_ITEMS = [
-    { text: "Dormis", link: "/alojamiento/dormis" },
-    { text: "Cómo llegar", link: "/comoLlegar" },
-];
-const ALL_ITEMS = [...LEFT_ITEMS, ...RIGHT_ITEMS];
+const HOME = { text: "Inicio", link: "/" };
+const MAP = { text: "Cómo llegar", link: "/comoLlegar" };
 const CTA = { text: "Contacto", link: "/contact" };
 
-// Transparente sobre el hero, logo centrado, menú mobile a pantalla completa
+// Bajada corta de cada alojamiento en el menú mobile
+const SUBTITLES = {
+    complejo: "Pileta, patio y parrillas",
+    cabins: "Hasta 4 personas · cochera propia",
+    dormis: "Hasta 4 personas · baño privado",
+};
+const STAYS = accommodation.map((item) => ({
+    text: item.shortTitle,
+    link: `/alojamiento/${item.slug}`,
+    img: item.cardImage,
+    subtitle: SUBTITLES[item.slug],
+}));
+
+const DESKTOP_ITEMS = [HOME, ...STAYS, MAP];
+
+// Desktop: logo a la izquierda, menú y botón a la derecha; transparente sobre la foto y blanco con scroll.
+// Mobile: barra con logo + hamburguesa; el menú agrupa los alojamientos en un acordeón con miniaturas.
 function HeaderComponente() {
     const { pathname } = useLocation();
 
-    return <HeaderContent key={pathname} overHero={HERO_ROUTES.has(pathname)} />;
+    return <HeaderContent key={pathname} pathname={pathname} overHero={HERO_ROUTES.has(pathname)} />;
 }
 
-function HeaderContent({ overHero }) {
+function HeaderContent({ pathname, overHero }) {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [staysOpen, setStaysOpen] = useState(true);
     const [scrolled, setScrolled] = useState(false);
     const firstLinkRef = useRef(null);
     const toggleRef = useRef(null);
     const wasOpen = useRef(false);
+
+    const inStay = pathname.startsWith("/alojamiento/");
 
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 40);
@@ -60,34 +72,57 @@ function HeaderContent({ overHero }) {
         };
     }, [menuOpen]);
 
-    // La opción activa va en negrita y a opacidad completa.
+    // ---------- Desktop ----------
+    // Sobre la foto: transparente con degradé y texto blanco.
+    // Con scroll o en páginas sin hero: barra blanca con texto verde.
+    const deskLight = scrolled || !overHero;
+    const deskSurface = deskLight
+        ? "bg-white shadow-[0_6px_20px_-10px_rgba(0,0,0,0.3)]"
+        : "bg-linear-to-b from-[#142318]/60 to-transparent";
+    const deskText = deskLight ? "text-primary-dark" : "focus-light text-white";
+    const deskCta = deskLight
+        ? "bg-primary text-white hover:bg-primary-dark"
+        : "bg-sand text-[#26402B] hover:brightness-105";
+
     // El pseudo-elemento ::before reserva el ancho del texto en negrita para que
-    // el menú no se desplace al cambiar de opción.
+    // el menú no se desplace al cambiar de opción. La activa lleva subrayado arena.
     const desktopLink = (isActive) =>
-        `titles block px-3 py-1 text-xs uppercase tracking-[0.18em] text-white transition-all duration-300
+        `titles block pb-1 text-[0.95rem] transition-opacity duration-300
         before:invisible before:block before:h-0 before:overflow-hidden before:font-bold before:content-[attr(data-text)]
-        ${isActive ? "font-bold opacity-100" : "font-normal opacity-90 hover:opacity-100"}`;
+        ${isActive ? "font-bold opacity-100 shadow-[inset_0_-2px_0_var(--color-sand)]" : "font-medium opacity-85 hover:opacity-100"}`;
+
+    // ---------- Mobile ----------
+    // Con el menú abierto la barra se vuelve blanca, igual que el panel.
+    const mobileSurface = menuOpen
+        ? "border-b border-primary-wash bg-white"
+        : scrolled
+        ? "bg-primary shadow-lg"
+        : overHero
+        ? "bg-linear-to-b from-[#142318]/55 to-transparent"
+        : "bg-primary";
+    const mobileText = menuOpen ? "text-primary-dark" : "focus-light text-white";
 
     // La altura depende SOLO del scroll (así el logo no salta al abrir el menú).
-    // Con el menú abierto el header se vuelve transparente: el fondo lo da el menú.
     const headerHeight = scrolled ? "h-16" : "h-18";
-    const headerSurface = menuOpen
-        ? "border-transparent bg-transparent"
-        : scrolled
-        ? "border-transparent bg-[#3E6143] shadow-lg"
-        : overHero
-        ? "border-white/10 bg-primary-dark/55 backdrop-blur-md"
-        : "border-transparent bg-primary";
+
+    const mobileRow = "titles flex items-center justify-between border-b border-primary-wash py-3.5 text-lg font-semibold";
 
     return (
         <>
-            <header
-                className={`focus-light fixed inset-x-0 top-0 z-250 border-b transition-all duration-500 ${headerHeight} ${headerSurface}`}
-            >
-                <div className="mx-auto flex h-full max-w-6xl items-center justify-between px-5 lg:grid lg:grid-cols-[1fr_auto_1fr]">
-                    {/* Izquierda (desktop): pegada al logo */}
-                    <nav aria-label="Navegación principal" className="hidden items-center justify-end gap-2 lg:flex">
-                        {LEFT_ITEMS.map((item) => (
+            <header className={`fixed inset-x-0 top-0 z-250 transition-[height] duration-500 ${headerHeight}`}>
+                {/* Fondos por separado para cada tamaño de pantalla */}
+                <div aria-hidden="true" className={`absolute inset-0 transition-all duration-500 lg:hidden ${mobileSurface}`} />
+                <div aria-hidden="true" className={`absolute inset-0 hidden transition-all duration-500 lg:block ${deskSurface}`} />
+
+                {/* ===== Desktop: logo a la izquierda, menú y botón a la derecha ===== */}
+                <div className={`relative mx-auto hidden h-full max-w-6xl items-center gap-3 px-8 transition-colors duration-300 lg:flex ${deskText}`}>
+                    <Link to="/" aria-label="Lo Nuestro, ir al inicio" className="titles flex items-center gap-3 text-[1.4rem] font-bold tracking-wide">
+                        <img src={logo} alt="" width="42" height="42" className="size-10.5 rounded-[3px]" />
+                        Lo nuestro
+                    </Link>
+
+                    <nav aria-label="Navegación principal" className="ml-auto flex items-center gap-7">
+                        {DESKTOP_ITEMS.map((item) => (
                             <NavLink
                                 key={item.link}
                                 to={item.link}
@@ -100,38 +135,21 @@ function HeaderContent({ overHero }) {
                         ))}
                     </nav>
 
-                    {/* Marca: el padding da el mismo aire a ambos lados */}
                     <Link
-                        to="/"
-                        aria-label="Lo Nuestro, ir al inicio"
-                        className="titles relative z-30 inline-flex items-center pb-1 text-xl font-bold tracking-wider text-white drop-shadow-sm lg:px-10 lg:text-2xl"
+                        to={CTA.link}
+                        className={`titles ml-7 rounded-full px-5.5 py-2.5 text-sm font-bold transition-all duration-300 hover:-translate-y-0.5 ${deskCta}`}
                     >
+                        {CTA.text}
+                    </Link>
+                </div>
+
+                {/* ===== Mobile ===== */}
+                <div className={`relative z-230 flex h-full items-center justify-between px-5 transition-colors duration-300 lg:hidden ${mobileText}`}>
+                    <Link to="/" aria-label="Lo Nuestro, ir al inicio" className="titles flex items-center gap-2.5 text-xl font-bold tracking-wide">
+                        <img src={logo} alt="" width="32" height="32" className="size-8 rounded-[3px]" />
                         Lo nuestro
                     </Link>
 
-                    {/* Derecha (desktop): items pegados al logo, CTA al borde */}
-                    <div className="hidden items-center justify-between lg:flex">
-                        <nav aria-label="Navegación secundaria" className="flex items-center gap-2">
-                            {RIGHT_ITEMS.map((item) => (
-                                <NavLink
-                                    key={item.link}
-                                    to={item.link}
-                                    data-text={item.text}
-                                    className={({ isActive }) => desktopLink(isActive)}
-                                >
-                                    {item.text}
-                                </NavLink>
-                            ))}
-                        </nav>
-                        <Link
-                            to={CTA.link}
-                            className="titles rounded-full border border-white px-5 py-1.5 text-[0.8rem] font-bold uppercase tracking-[0.18em] text-white transition-colors hover:bg-white hover:text-[#3E6143]"
-                        >
-                            {CTA.text}
-                        </Link>
-                    </div>
-
-                    {/* Botón mobile */}
                     <button
                         ref={toggleRef}
                         type="button"
@@ -139,12 +157,12 @@ function HeaderContent({ overHero }) {
                         aria-expanded={menuOpen}
                         aria-controls="mobile-nav"
                         aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
-                        className="relative z-230 -mr-2 flex h-10 w-10 items-center justify-center lg:hidden"
+                        className="-mr-2 flex h-10 w-10 items-center justify-center"
                     >
                         <span className="relative block h-3.5 w-6">
-                            <span className={`absolute right-0 h-0.5 w-full rounded-full bg-white transition-all duration-300 ${menuOpen ? "top-1/2 -translate-y-1/2 rotate-45" : "top-0"}`} />
-                            <span className={`absolute right-0 top-1/2 h-0.5 w-4 -translate-y-1/2 rounded-full bg-white transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`} />
-                            <span className={`absolute right-0 h-0.5 w-full rounded-full bg-white transition-all duration-300 ${menuOpen ? "top-1/2 -translate-y-1/2 -rotate-45" : "bottom-0"}`} />
+                            <span className={`absolute right-0 h-0.5 w-full rounded-full bg-current transition-all duration-300 ${menuOpen ? "top-1/2 -translate-y-1/2 rotate-45" : "top-0"}`} />
+                            <span className={`absolute right-0 top-1/2 h-0.5 w-4 -translate-y-1/2 rounded-full bg-current transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`} />
+                            <span className={`absolute right-0 h-0.5 w-full rounded-full bg-current transition-all duration-300 ${menuOpen ? "top-1/2 -translate-y-1/2 -rotate-45" : "bottom-0"}`} />
                         </span>
                     </button>
                 </div>
@@ -154,43 +172,96 @@ function HeaderContent({ overHero }) {
                 id="mobile-nav"
                 aria-label="Navegación principal"
                 aria-hidden={!menuOpen}
-                className={`focus-light fixed inset-0 z-240 flex flex-col justify-center bg-[#3E6143] px-10 transition-opacity duration-500 lg:hidden ${
-                    menuOpen ? "visible opacity-100" : "invisible opacity-0 delay-0"
+                className={`fixed inset-0 z-240 flex flex-col overflow-y-auto bg-white px-5 pb-8 pt-22 text-primary-dark transition-opacity duration-400 lg:hidden ${
+                    menuOpen ? "visible opacity-100" : "invisible opacity-0"
                 }`}
             >
-                <ul className="flex flex-col gap-2">
-                    {ALL_ITEMS.map((item, i) => (
-                        <li
-                            key={item.link}
-                            style={{ transitionDelay: menuOpen ? `${150 + i * 60}ms` : "0ms" }}
-                            className={`transition-all duration-500 ${menuOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
+                <ul className={`flex flex-col transition-all duration-500 ${menuOpen ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}>
+                    <li>
+                        <NavLink
+                            ref={firstLinkRef}
+                            to={HOME.link}
+                            end
+                            className={({ isActive }) => `${mobileRow} ${isActive ? "font-extrabold text-primary" : ""}`}
                         >
-                            <NavLink
-                                ref={i === 0 ? firstLinkRef : undefined}
-                                to={item.link}
-                                end={item.link === "/"}
-                                className={({ isActive }) =>
-                                    `titles block py-2 text-3xl font-bold text-white transition-opacity ${isActive ? "opacity-100" : "opacity-60 hover:opacity-100"}`
-                                }
-                            >
-                                {item.text}
-                            </NavLink>
-                        </li>
-                    ))}
-                    <li
-                        style={{ transitionDelay: menuOpen ? `${150 + ALL_ITEMS.length * 60}ms` : "0ms" }}
-                        className={`mt-6 transition-all duration-500 ${menuOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
-                    >
-                        <Link
-                            to={CTA.link}
-                            className="titles inline-flex w-fit items-center rounded-full border border-white/70 px-7 py-3 text-sm font-bold uppercase tracking-[0.16em] text-white transition-all duration-300 hover:bg-white hover:text-[#3E6143] active:scale-95"
+                            {HOME.text}
+                        </NavLink>
+                    </li>
+
+                    <li>
+                        <button
+                            type="button"
+                            onClick={() => setStaysOpen((p) => !p)}
+                            aria-expanded={staysOpen}
+                            aria-controls="mobile-stays"
+                            className={`${mobileRow} w-full text-left ${inStay ? "font-extrabold text-primary" : ""}`}
                         >
-                            {CTA.text}
-                        </Link>
+                            Alojamiento
+                            <ChevronIcon className={`size-4.5 transition-transform duration-300 ${staysOpen ? "rotate-180" : ""}`} />
+                        </button>
+
+                        {/* Acordeón con miniaturas: grid-rows anima la altura sin medirla */}
+                        <div
+                            id="mobile-stays"
+                            className={`grid transition-[grid-template-rows] duration-400 ${staysOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+                        >
+                            <div className="overflow-hidden" inert={!staysOpen}>
+                                <ul className="flex flex-col gap-1 border-b border-primary-wash py-2">
+                                    {STAYS.map((item) => (
+                                        <li key={item.link}>
+                                            <NavLink
+                                                to={item.link}
+                                                className={({ isActive }) =>
+                                                    `flex items-center gap-3.5 rounded-xl p-1.5 transition-colors hover:bg-surface ${isActive ? "bg-primary-wash" : ""}`
+                                                }
+                                            >
+                                                <img
+                                                    src={item.img}
+                                                    alt=""
+                                                    loading="lazy"
+                                                    className="h-12 w-16 flex-none rounded-lg object-cover"
+                                                />
+                                                <span className="min-w-0">
+                                                    <span className="titles block text-base font-bold">{item.text}</span>
+                                                    <span className="block text-[0.8rem] text-muted">{item.subtitle}</span>
+                                                </span>
+                                            </NavLink>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <NavLink
+                            to={MAP.link}
+                            className={({ isActive }) => `${mobileRow} ${isActive ? "font-extrabold text-primary" : ""}`}
+                        >
+                            {MAP.text}
+                            <ChevronIcon className="size-4.5 -rotate-90" />
+                        </NavLink>
                     </li>
                 </ul>
+
+                <Link
+                    to={CTA.link}
+                    className={`titles mt-auto block rounded-full bg-primary py-3.5 text-center font-bold text-white transition-all duration-500 hover:bg-primary-dark active:scale-[0.98] ${
+                        menuOpen ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
+                    }`}
+                >
+                    Contacto
+                </Link>
             </nav>
         </>
+    );
+}
+
+function ChevronIcon({ className }) {
+    return (
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+            <path d="M6 9l6 6 6-6" />
+        </svg>
     );
 }
 
