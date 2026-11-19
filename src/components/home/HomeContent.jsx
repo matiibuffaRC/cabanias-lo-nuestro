@@ -65,25 +65,25 @@ function HomeContent() {
 
                 <div className="absolute inset-x-0 bottom-16 flex flex-col items-center px-5 text-center md:bottom-20">
                     <p
-                        className="titles fade-down text-[.85rem] font-semibold tracking-[0.12em] text-white/95 [text-shadow:0_1px_8px_rgba(0,0,0,0.6)] md:text-[.95rem]"
+                        className="fade-down text-sm font-semibold tracking-[0.12em] text-white/95 [text-shadow:0_1px_8px_rgba(0,0,0,0.6)] md:text-base"
                     >
                         Mina Clavero, Traslasierra
                     </p>
                     <h1
-                        className="titles fade-down mt-2 text-[2.3rem] font-bold leading-[1.05] text-white [text-shadow:0_2px_14px_rgba(0,0,0,0.55)] sm:text-[3rem] md:text-[3.8rem]"
+                        className="titles fade-down mt-2 text-4xl font-bold leading-[1.05] text-white [text-shadow:0_2px_14px_rgba(0,0,0,0.55)] sm:text-5xl md:text-6xl"
                         style={{ animationDelay: "0.1s" }}
                     >
                         Tu descanso empieza acá
                     </h1>
                     <p
-                        className="fade-down mt-3 max-w-xl text-[1rem] font-medium leading-relaxed text-white/95 [text-shadow:0_1px_8px_rgba(0,0,0,0.6)] md:text-[1.1rem]"
+                        className="fade-down mt-3 max-w-xl text-base font-medium leading-relaxed text-white/95 [text-shadow:0_1px_8px_rgba(0,0,0,0.6)] md:text-lg"
                         style={{ animationDelay: "0.2s" }}
                     >
                         Cabañas y dormis con pileta, a 5 minutos del centro y de los ríos.
                     </p>
                     <a
                         href="#alojamientos"
-                        className="titles fade-down focus-light mt-6 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-[.95rem] font-bold text-primary shadow-lg transition-[translate,background-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:bg-surface hover:shadow-xl"
+                        className="fade-down focus-light mt-6 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-base font-bold text-primary shadow-lg transition-[translate,background-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:bg-surface hover:shadow-xl"
                         style={{ animationDelay: "0.3s" }}
                     >
                         Ver los alojamientos

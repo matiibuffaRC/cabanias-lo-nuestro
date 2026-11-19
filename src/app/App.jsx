@@ -15,7 +15,7 @@ function App() {
       {/* Accesibilidad: permite saltar el menú con el teclado */}
       <a
         href="#contenido"
-        className="titles fixed left-4 top-3 z-300 -translate-y-24 rounded-full bg-white px-5 py-2.5 font-bold text-primary shadow-lg transition-transform focus:translate-y-0"
+        className="fixed left-4 top-3 z-300 -translate-y-24 rounded-full bg-white px-5 py-2.5 font-bold text-primary shadow-lg transition-transform focus:translate-y-0"
       >
         Saltar al contenido
       </a>

@@ -1,5 +1,8 @@
+/* Títulos y nombre de la marca: serif que acompaña al logo LN.
+   Botones, menús y etiquetas van en Inter (la fuente del body). */
 .titles {
-    font-family: "Commissioner", sans-serif;
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
     text-wrap: balance;
 }
 

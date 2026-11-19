@@ -28,8 +28,8 @@ function OtherAccommodations({ currentSlug }) {
                             <span aria-hidden="true" className="absolute inset-0 bg-linear-to-t from-primary-dark/85 via-primary-dark/30 to-transparent" />
                             <span className="relative mt-auto flex w-full items-end justify-between gap-4 p-5 text-left text-white md:p-6">
                                 <span className="min-w-0">
-                                    <span className="titles block text-[1.4rem] font-bold leading-tight">{item.title}</span>
-                                    <span className="mt-1 block text-[.9rem] leading-snug text-white/85">{item.cardText}</span>
+                                    <span className="titles block text-xl font-bold leading-tight">{item.title}</span>
+                                    <span className="mt-1 block text-sm leading-snug text-white/85">{item.cardText}</span>
                                 </span>
                                 <span
                                     aria-hidden="true"

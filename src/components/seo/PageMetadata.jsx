@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { SITE_URL } from "../../config/site";
 
 const PAGE_METADATA = {
   "/": {
@@ -40,6 +41,20 @@ const NOT_FOUND_METADATA = {
   robots: "noindex, follow",
 };
 
+// Busca una etiqueta en <head> por sus atributos; si no existe, la crea.
+function upsertHeadTag(tagName, attributes, valueAttribute, value) {
+  const selector = `${tagName}${Object.entries(attributes)
+    .map(([key, val]) => `[${key}="${val}"]`)
+    .join("")}`;
+  let element = document.head.querySelector(selector);
+  if (!element) {
+    element = document.createElement(tagName);
+    Object.entries(attributes).forEach(([key, val]) => element.setAttribute(key, val));
+    document.head.appendChild(element);
+  }
+  element.setAttribute(valueAttribute, value);
+}
+
 function PageMetadata() {
   const { pathname } = useLocation();
 
@@ -65,6 +80,13 @@ function PageMetadata() {
     document
       .querySelector('meta[name="twitter:description"]')
       ?.setAttribute("content", metadata.description);
+
+    // URL canónica y og:url (solo si está configurada la dirección del sitio)
+    if (SITE_URL) {
+      const url = `${SITE_URL}${pathname === "/" ? "/" : pathname}`;
+      upsertHeadTag("link", { rel: "canonical" }, "href", url);
+      upsertHeadTag("meta", { property: "og:url" }, "content", url);
+    }
   }, [pathname]);
 
   return null;

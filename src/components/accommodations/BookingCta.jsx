@@ -14,7 +14,7 @@ function BookingCta({ title, message }) {
             <span aria-hidden="true" className="pointer-events-none absolute -left-14 -top-14 -z-10 size-48 rounded-full bg-white/10" />
             <span aria-hidden="true" className="pointer-events-none absolute -bottom-20 -right-12 -z-10 size-56 rounded-full bg-primary-soft/25" />
 
-            <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-[.8rem] font-semibold text-white">
+            <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white">
                 <span className="relative flex size-2" aria-hidden="true">
                     <span className="absolute inline-flex size-full rounded-full bg-[#8FE0A0] opacity-75 motion-safe:animate-ping" />
                     <span className="relative inline-flex size-2 rounded-full bg-[#8FE0A0]" />
@@ -22,10 +22,10 @@ function BookingCta({ title, message }) {
                 Respondemos todos los días
             </p>
 
-            <h2 id="cta-title" className="titles text-[1.6rem] font-bold leading-tight text-white md:text-[2.1rem]">
+            <h2 id="cta-title" className="titles text-2xl font-bold leading-tight text-white md:text-3xl">
                 {title}
             </h2>
-            <p className="mt-3 max-w-md text-[1rem] leading-relaxed text-white/80">
+            <p className="mt-3 max-w-md text-base leading-relaxed text-white/80">
                 Escribinos y te contamos disponibilidad, precios y todo lo que necesites saber.
             </p>
 
@@ -33,7 +33,7 @@ function BookingCta({ title, message }) {
                 href={getWhatsAppUrl(message)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative mt-8 inline-flex max-w-full items-center justify-center gap-2.5 overflow-hidden rounded-full bg-white px-6 py-3.5 text-center titles font-bold leading-tight text-primary sm:px-8 shadow-lg shadow-black/20 transition-[translate,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-2xl active:translate-y-0"
+                className="group relative mt-8 inline-flex max-w-full items-center justify-center gap-2.5 overflow-hidden rounded-full bg-white px-6 py-3.5 text-center font-bold leading-tight text-primary sm:px-8 shadow-lg shadow-black/20 transition-[translate,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-2xl active:translate-y-0"
             >
                 <span
                     aria-hidden="true"
@@ -46,7 +46,7 @@ function BookingCta({ title, message }) {
                 <span className="sr-only">(se abre en una pestaña nueva)</span>
             </a>
 
-            <ul className="mt-7 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[.85rem] text-white/75">
+            <ul className="mt-7 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-white/75">
                 {CHECKS.map((item) => (
                     <li key={item} className="inline-flex items-center gap-1.5">
                         <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="size-3.5 text-[#8FE0A0]">

@@ -5,7 +5,7 @@ import logo from "../../assets/images/Lo-Nuestro-logo.png";
 
 // Páginas que empiezan con una foto grande: ahí el header es transparente.
 // En el resto va sólido para que el texto tenga contraste.
-const HERO_ROUTES = new Set(["/", ...accommodation.map((item) => `/alojamiento/${item.slug}`)]);
+const HERO_ROUTES = new Set(["/", "/comoLlegar", "/contact", ...accommodation.map((item) => `/alojamiento/${item.slug}`)]);
 
 const HOME = { text: "Inicio", link: "/" };
 const MAP = { text: "Cómo llegar", link: "/comoLlegar" };
@@ -26,7 +26,7 @@ const STAYS = accommodation.map((item) => ({
 
 const DESKTOP_ITEMS = [HOME, ...STAYS, MAP];
 
-// Desktop: logo a la izquierda, menú y botón a la derecha; transparente sobre la foto y blanco con scroll.
+// Desktop: barra flotante rectangular con bordes redondeados; vidrio sobre la foto y blanca con scroll.
 // Mobile: barra con logo + hamburguesa; el menú agrupa los alojamientos en un acordeón con miniaturas.
 function HeaderComponente() {
     const { pathname } = useLocation();
@@ -73,26 +73,24 @@ function HeaderContent({ pathname, overHero }) {
     }, [menuOpen]);
 
     // ---------- Desktop ----------
-    // Sobre la foto: transparente con degradé y texto blanco.
-    // Con scroll o en páginas sin hero: barra blanca con texto verde.
+
     const deskLight = scrolled || !overHero;
-    const deskSurface = deskLight
-        ? "bg-white shadow-[0_6px_20px_-10px_rgba(0,0,0,0.3)]"
-        : "bg-linear-to-b from-[#142318]/60 to-transparent";
-    const deskText = deskLight ? "text-primary-dark" : "focus-light text-white";
+    const deskBar = deskLight
+        ? "top-3 h-16 border-primary-wash bg-white/95 text-primary-dark shadow-[0_10px_30px_-12px_rgba(0,0,0,0.3)]"
+        : "focus-light top-5 h-15 border-white/30 bg-white/15 text-white";
+    const deskActive = deskLight ? "bg-primary-wash" : "bg-white/20";
+    const deskHover = deskLight ? "hover:bg-surface" : "hover:bg-white/10";
     const deskCta = deskLight
         ? "bg-primary text-white hover:bg-primary-dark"
-        : "bg-sand text-[#26402B] hover:brightness-105";
+        : "bg-white text-primary hover:bg-surface";
 
-    // El pseudo-elemento ::before reserva el ancho del texto en negrita para que
-    // el menú no se desplace al cambiar de opción. La activa lleva subrayado arena.
     const desktopLink = (isActive) =>
-        `titles block pb-1 text-[0.95rem] transition-opacity duration-300
-        before:invisible before:block before:h-0 before:overflow-hidden before:font-bold before:content-[attr(data-text)]
-        ${isActive ? "font-bold opacity-100 shadow-[inset_0_-2px_0_var(--color-sand)]" : "font-medium opacity-85 hover:opacity-100"}`;
+        `block rounded-xl px-4 py-2 text-sm transition-colors duration-250
+        before:invisible before:block before:h-0 before:overflow-hidden before:font-semibold before:content-[attr(data-text)]
+        ${isActive ? `font-semibold ${deskActive}` : `font-medium ${deskHover}`}`;
 
     // ---------- Mobile ----------
-    // Con el menú abierto la barra se vuelve blanca, igual que el panel.
+    
     const mobileSurface = menuOpen
         ? "border-b border-primary-wash bg-white"
         : scrolled
@@ -109,19 +107,20 @@ function HeaderContent({ pathname, overHero }) {
 
     return (
         <>
-            <header className={`fixed inset-x-0 top-0 z-250 transition-[height] duration-500 ${headerHeight}`}>
+            <header className={`fixed inset-x-0 top-0 z-250 transition-[height] duration-350 ${headerHeight}`}>
                 {/* Fondos por separado para cada tamaño de pantalla */}
-                <div aria-hidden="true" className={`absolute inset-0 transition-all duration-500 lg:hidden ${mobileSurface}`} />
-                <div aria-hidden="true" className={`absolute inset-0 hidden transition-all duration-500 lg:block ${deskSurface}`} />
+                <div aria-hidden="true" className={`absolute inset-0 transition-all duration-350 lg:hidden ${mobileSurface}`} />
 
-                {/* ===== Desktop: logo a la izquierda, menú y botón a la derecha ===== */}
-                <div className={`relative mx-auto hidden h-full max-w-6xl items-center gap-3 px-8 transition-colors duration-300 lg:flex ${deskText}`}>
-                    <Link to="/" aria-label="Lo Nuestro, ir al inicio" className="titles flex items-center gap-3 text-[1.4rem] font-bold tracking-wide">
-                        <img src={logo} alt="" width="42" height="42" className="size-10.5 rounded-[3px]" />
+                {/* ===== Desktop: barra flotante ===== */}
+                <div
+                    className={`absolute inset-x-8 mx-auto hidden max-w-6xl items-center rounded-2xl border pl-8 pr-3 backdrop-blur-md transition-all duration-350 lg:flex ${deskBar}`}
+                >
+                    <Link to="/" aria-label="Lo Nuestro, ir al inicio" className="titles text-xl font-bold tracking-wide">
                         Lo nuestro
                     </Link>
 
-                    <nav aria-label="Navegación principal" className="ml-auto flex items-center gap-7">
+                    {/* Menú centrado entre la marca y el botón */}
+                    <nav aria-label="Navegación principal" className="mx-auto flex items-center gap-1.5 px-6">
                         {DESKTOP_ITEMS.map((item) => (
                             <NavLink
                                 key={item.link}
@@ -137,14 +136,14 @@ function HeaderContent({ pathname, overHero }) {
 
                     <Link
                         to={CTA.link}
-                        className={`titles ml-7 rounded-full px-5.5 py-2.5 text-sm font-bold transition-all duration-300 hover:-translate-y-0.5 ${deskCta}`}
+                        className={`rounded-xl px-6 py-2 text-sm font-semibold transition-colors duration-250 ${deskCta}`}
                     >
                         {CTA.text}
                     </Link>
                 </div>
 
                 {/* ===== Mobile ===== */}
-                <div className={`relative z-230 flex h-full items-center justify-between px-5 transition-colors duration-300 lg:hidden ${mobileText}`}>
+                <div className={`relative z-230 flex h-full items-center justify-between px-6 transition-colors duration-250 lg:hidden ${mobileText}`}>
                     <Link to="/" aria-label="Lo Nuestro, ir al inicio" className="titles flex items-center gap-2.5 text-xl font-bold tracking-wide">
                         <img src={logo} alt="" width="32" height="32" className="size-8 rounded-[3px]" />
                         Lo nuestro
@@ -160,9 +159,9 @@ function HeaderContent({ pathname, overHero }) {
                         className="-mr-2 flex h-10 w-10 items-center justify-center"
                     >
                         <span className="relative block h-3.5 w-6">
-                            <span className={`absolute right-0 h-0.5 w-full rounded-full bg-current transition-all duration-300 ${menuOpen ? "top-1/2 -translate-y-1/2 rotate-45" : "top-0"}`} />
-                            <span className={`absolute right-0 top-1/2 h-0.5 w-4 -translate-y-1/2 rounded-full bg-current transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`} />
-                            <span className={`absolute right-0 h-0.5 w-full rounded-full bg-current transition-all duration-300 ${menuOpen ? "top-1/2 -translate-y-1/2 -rotate-45" : "bottom-0"}`} />
+                            <span className={`absolute right-0 h-0.5 w-full rounded-full bg-current transition-all duration-250 ${menuOpen ? "top-1/2 -translate-y-1/2 rotate-45" : "top-0"}`} />
+                            <span className={`absolute right-0 top-1/2 h-0.5 w-4 -translate-y-1/2 rounded-full bg-current transition-all duration-250 ${menuOpen ? "opacity-0" : ""}`} />
+                            <span className={`absolute right-0 h-0.5 w-full rounded-full bg-current transition-all duration-250 ${menuOpen ? "top-1/2 -translate-y-1/2 -rotate-45" : "bottom-0"}`} />
                         </span>
                     </button>
                 </div>
@@ -172,11 +171,11 @@ function HeaderContent({ pathname, overHero }) {
                 id="mobile-nav"
                 aria-label="Navegación principal"
                 aria-hidden={!menuOpen}
-                className={`fixed inset-0 z-240 flex flex-col overflow-y-auto bg-white px-5 pb-8 pt-22 text-primary-dark transition-opacity duration-400 lg:hidden ${
+                className={`fixed inset-0 z-240 flex flex-col overflow-y-auto bg-white px-5 pb-8 pt-22 text-primary-dark transition-opacity duration-300 lg:hidden ${
                     menuOpen ? "visible opacity-100" : "invisible opacity-0"
                 }`}
             >
-                <ul className={`flex flex-col transition-all duration-500 ${menuOpen ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}>
+                <ul className={`flex flex-col transition-all duration-350 ${menuOpen ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}>
                     <li>
                         <NavLink
                             ref={firstLinkRef}
@@ -197,13 +196,13 @@ function HeaderContent({ pathname, overHero }) {
                             className={`${mobileRow} w-full text-left ${inStay ? "font-extrabold text-primary" : ""}`}
                         >
                             Alojamiento
-                            <ChevronIcon className={`size-4.5 transition-transform duration-300 ${staysOpen ? "rotate-180" : ""}`} />
+                            <ChevronIcon className={`size-4.5 transition-transform duration-250 ${staysOpen ? "rotate-180" : ""}`} />
                         </button>
 
                         {/* Acordeón con miniaturas: grid-rows anima la altura sin medirla */}
                         <div
                             id="mobile-stays"
-                            className={`grid transition-[grid-template-rows] duration-400 ${staysOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+                            className={`grid transition-[grid-template-rows] duration-300 ${staysOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
                         >
                             <div className="overflow-hidden" inert={!staysOpen}>
                                 <ul className="flex flex-col gap-1 border-b border-primary-wash py-2">
@@ -223,7 +222,7 @@ function HeaderContent({ pathname, overHero }) {
                                                 />
                                                 <span className="min-w-0">
                                                     <span className="titles block text-base font-bold">{item.text}</span>
-                                                    <span className="block text-[0.8rem] text-muted">{item.subtitle}</span>
+                                                    <span className="block text-sm text-muted">{item.subtitle}</span>
                                                 </span>
                                             </NavLink>
                                         </li>
@@ -246,7 +245,7 @@ function HeaderContent({ pathname, overHero }) {
 
                 <Link
                     to={CTA.link}
-                    className={`titles mt-auto block rounded-full bg-primary py-3.5 text-center font-bold text-white transition-all duration-500 hover:bg-primary-dark active:scale-[0.98] ${
+                    className={`mt-auto block rounded-full bg-primary py-3.5 text-center font-bold text-white transition-all duration-350 hover:bg-primary-dark active:scale-[0.98] ${
                         menuOpen ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
                     }`}
                 >

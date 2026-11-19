@@ -12,7 +12,7 @@ function SectionHeading({ as = "h2", id, title, lead, align = "center", light = 
         <Reveal className={`${centered ? "text-center" : "text-left"} ${className}`}>
             <Heading
                 id={id}
-                className={`titles text-[1.65rem] font-bold leading-tight md:text-[2rem] ${
+                className={`titles text-2xl font-bold leading-tight md:text-3xl ${
                     light ? "text-white" : "text-primary"
                 }`}
             >
@@ -26,7 +26,7 @@ function SectionHeading({ as = "h2", id, title, lead, align = "center", light = 
             />
             {lead && (
                 <p
-                    className={`mt-4 max-w-xl text-[1rem] leading-relaxed md:text-[1.05rem] ${
+                    className={`mt-4 max-w-xl text-base leading-relaxed md:text-lg ${
                         light ? "text-white/80" : "text-muted"
                     } ${centered ? "mx-auto" : ""}`}
                 >

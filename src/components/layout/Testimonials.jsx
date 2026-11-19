@@ -54,7 +54,7 @@ function Stars({ rating, visible, baseDelay }) {
                 <svg
                     key={i}
                     className={`w-4.5 h-4.5 transition-all duration-500 ease-out ${
-                        i < rating ? "text-[#E0A526]" : "text-[#3E6143]/15"
+                        i < rating ? "text-[#E0A526]" : "text-primary/15"
                     } ${visible ? "opacity-100 scale-100" : "opacity-0 scale-50"}`}
                     style={{ transitionDelay: `${baseDelay + i * 80}ms` }}
                     viewBox="0 0 24 24"
@@ -82,7 +82,7 @@ function TestimonialCard({ name, place, text, rating, visible, delay }) {
 
             <Stars rating={rating} visible={visible} baseDelay={delay + 250} />
 
-            <blockquote className="relative text-[.98rem] leading-relaxed text-primary-dark/85 flex-1">
+            <blockquote className="relative text-base leading-relaxed text-primary-dark/85 flex-1">
                 {text}
             </blockquote>
 
@@ -91,8 +91,8 @@ function TestimonialCard({ name, place, text, rating, visible, delay }) {
                     {name.charAt(0)}
                 </div>
                 <div className="flex flex-col min-w-0">
-                    <span className="titles font-bold text-[.95rem] text-primary truncate">{name}</span>
-                    <span className="text-[.85rem] text-muted truncate">{place}</span>
+                    <span className="titles font-bold text-base text-primary truncate">{name}</span>
+                    <span className="text-sm text-muted truncate">{place}</span>
                 </div>
             </figcaption>
         </figure>
@@ -106,7 +106,7 @@ function ArrowButton({ direction, onClick }) {
             type="button"
             onClick={onClick}
             aria-label={isPrev ? "Testimonio anterior" : "Testimonio siguiente"}
-            className="h-10 w-10 rounded-full bg-white border border-[#3E6143]/10 shadow-sm flex items-center justify-center text-[#3E6143] cursor-pointer transition-all duration-200 hover:bg-[#3E6143] hover:text-white hover:shadow-md active:scale-90"
+            className="h-10 w-10 rounded-full bg-white border border-primary/10 shadow-sm flex items-center justify-center text-primary cursor-pointer transition-all duration-200 hover:bg-primary hover:text-white hover:shadow-md active:scale-90"
         >
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d={isPrev ? "M15 18l-6-6 6-6" : "M9 18l6-6-6-6"} />
@@ -243,7 +243,7 @@ function Testimonials() {
                                 >
                                     <span
                                         className={`block h-2 rounded-full transition-all duration-300 ${
-                                            i === active ? "w-6 bg-[#3E6143]" : "w-2 bg-[#3E6143]/25 hover:bg-[#3E6143]/50"
+                                            i === active ? "w-6 bg-primary" : "w-2 bg-primary/25 hover:bg-primary/50"
                                         }`}
                                     />
                                 </button>

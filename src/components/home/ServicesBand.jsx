@@ -19,7 +19,7 @@ function ServicesBand() {
             <span aria-hidden="true" className="pointer-events-none absolute -bottom-24 -right-10 -z-10 size-72 rounded-full bg-primary-soft/20" />
 
             <div className="mx-auto max-w-6xl">
-                <h2 id="ofrecemos-band-title" className="titles text-center text-[1.65rem] font-bold md:text-[2rem]">
+                <h2 id="ofrecemos-band-title" className="titles text-center text-2xl font-bold md:text-3xl">
                     Lo que ofrecemos
                 </h2>
                 <span aria-hidden="true" className="mx-auto mb-9 mt-2 block h-0.75 w-12 rounded-full bg-white/45" />
@@ -41,10 +41,10 @@ function ServicesBand() {
                             >
                                 <MaskIcon src={service.img} className="size-6.5 text-white" />
                             </span>
-                            <span className="titles w-full text-[.92rem] font-bold leading-tight [overflow-wrap:anywhere] hyphens-auto min-[380px]:text-[1rem]">
+                            <span className="titles w-full text-sm font-bold leading-tight [overflow-wrap:anywhere] hyphens-auto min-[380px]:text-base">
                                 {service.title}
                             </span>
-                            <span className="-mt-1 text-[.8rem] leading-snug text-white/75 md:text-[.85rem]">
+                            <span className="-mt-1 text-xs leading-snug text-white/75 md:text-sm">
                                 {service.description}
                             </span>
                         </li>

@@ -30,11 +30,11 @@ function AmenityGrid({ items, columns = 3, className = "" }) {
                         <MaskIcon src={item.img} className="size-6" />
                     </span>
                     <span className="flex min-w-0 flex-col">
-                        <span className="titles text-[.98rem] font-bold leading-snug text-primary-dark">
+                        <span className="titles text-base font-bold leading-snug text-primary-dark">
                             {item.title}
                         </span>
                         {item.note && (
-                            <span className="text-[.85rem] leading-snug text-muted">{item.note}</span>
+                            <span className="text-sm leading-snug text-muted">{item.note}</span>
                         )}
                     </span>
                 </li>

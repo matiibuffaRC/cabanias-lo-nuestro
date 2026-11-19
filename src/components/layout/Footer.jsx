@@ -41,10 +41,10 @@ function FooterComponent() {
             <div className="mx-auto max-w-5xl px-6 pb-6 pt-12">
                 {/* Marca */}
                 <div className="mb-8 text-center">
-                    <p className="titles text-[2rem] font-bold leading-tight md:text-[2.4rem]">Lo Nuestro</p>
+                    <p className="titles text-3xl font-bold leading-tight md:text-4xl">Lo Nuestro</p>
                     <span aria-hidden="true" className="mx-auto mt-3 block h-0.75 w-14 rounded-full bg-surface/40" />
-                    <p className="mt-3 text-[.95rem] text-surface/85">Cabañas y dormis en Mina Clavero, Córdoba</p>
-                    <address className="mt-1 text-[.9rem] not-italic text-surface/75">
+                    <p className="mt-3 text-base text-surface/85">Cabañas y dormis en Mina Clavero, Córdoba</p>
+                    <address className="mt-1 text-sm not-italic text-surface/75">
                         Cruz del Eje 2080 y Tanti 2085, Mina Clavero
                     </address>
                 </div>
@@ -61,13 +61,13 @@ function FooterComponent() {
                                 isVisible ? (index === 0 ? "fade-side-to-right" : "fade-side-to-left") : "opacity-0"
                             }`}
                         >
-                            <h2 className="titles mb-3 text-[1.05rem] font-bold md:text-[1.2rem]">{column.title}</h2>
+                            <h2 className="titles mb-3 text-lg font-bold md:text-lg">{column.title}</h2>
                             <ul className="flex flex-col gap-2">
                                 {column.links.map((link) => (
                                     <li key={link.label}>
                                         <Link
                                             to={link.to}
-                                            className="text-[.95rem] text-surface/85 decoration-surface/50 underline-offset-4 transition-colors hover:text-white hover:underline md:text-[1rem]"
+                                            className="text-base text-surface/85 decoration-surface/50 underline-offset-4 transition-colors hover:text-white hover:underline md:text-base"
                                         >
                                             {link.label}
                                         </Link>
@@ -80,7 +80,7 @@ function FooterComponent() {
 
                 {/* Redes */}
                 <div className="flex flex-col items-center pt-8">
-                    <h2 className="titles text-[1.2rem] font-bold">¡Sigamos conectados!</h2>
+                    <h2 className="titles text-lg font-bold">¡Sigamos conectados!</h2>
                     <div className={`mt-4 flex flex-row justify-center gap-4 ${isVisible ? "fade-top" : "opacity-0"}`}>
                         {SOCIALS.map((social) => (
                             <a
@@ -102,10 +102,10 @@ function FooterComponent() {
             {/* Barra inferior */}
             <div className="border-t border-surface/15 bg-black/10">
                 <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-1 px-6 py-4 text-center md:flex-row">
-                    <p className="text-[.8rem] text-surface/75">
+                    <p className="text-xs text-surface/75">
                         © {new Date().getFullYear()} Lo Nuestro. Todos los derechos reservados.
                     </p>
-                    <p className="text-[.8rem] text-surface/75">
+                    <p className="text-xs text-surface/75">
                         Sitio diseñado y desarrollado por <span className="font-semibold text-surface/95">Matías Buffa</span>
                     </p>
                 </div>

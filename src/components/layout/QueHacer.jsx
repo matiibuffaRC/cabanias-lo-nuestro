@@ -128,13 +128,13 @@ function FeaturedCard({ emoji, title, text, image, imageAlt, animate }) {
                     </>
                 )}
 
-                <span className="relative inline-flex items-center gap-1.5 self-start rounded-full bg-white/20 px-3 py-1 text-[.78rem] font-semibold text-white backdrop-blur-sm">
+                <span className="relative inline-flex items-center gap-1.5 self-start rounded-full bg-white/20 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
                     <span aria-hidden="true" className="text-sand">★</span> Imperdible
                 </span>
-                <h4 className="titles relative max-w-[90%] text-[1.4rem] font-bold leading-tight text-white md:text-[1.7rem]">
+                <h4 className="titles relative max-w-[90%] text-xl font-bold leading-tight text-white md:text-2xl">
                     {title}
                 </h4>
-                <p className="relative max-w-md text-[.95rem] leading-relaxed text-white/90 md:text-[1rem]">{text}</p>
+                <p className="relative max-w-md text-base leading-relaxed text-white/90 md:text-base">{text}</p>
             </article>
         </li>
     );
@@ -148,12 +148,12 @@ function PlaceCard({ emoji, title, text, index, animate, wideOnSm }) {
             style={{ animationDelay: `${index * 70}ms` }}
         >
             <article className="flex h-full flex-row items-start gap-3.5 rounded-2xl border border-primary/10 bg-white p-4 text-left shadow-sm sm:flex-col sm:gap-3 sm:p-5">
-                <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary-wash text-[1.35rem]">
+                <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary-wash text-xl">
                     <span aria-hidden="true">{emoji}</span>
                 </div>
                 <div className="flex min-w-0 flex-col gap-1 sm:gap-1.5">
-                    <h4 className="titles text-[1.02rem] font-bold leading-snug text-primary">{title}</h4>
-                    <p className="text-[.9rem] leading-relaxed text-muted">{text}</p>
+                    <h4 className="titles text-base font-bold leading-snug text-primary">{title}</h4>
+                    <p className="text-sm leading-relaxed text-muted">{text}</p>
                 </div>
             </article>
         </li>
@@ -226,7 +226,7 @@ function QueHacer() {
                                 tabIndex={selected ? 0 : -1}
                                 onClick={() => setActiveId(cat.id)}
                                 onKeyDown={(event) => onTabKeyDown(event, index)}
-                                className={`titles flex min-w-0 cursor-pointer items-center justify-center gap-1.5 rounded-full px-2 py-2.5 text-[.84rem] font-bold transition-colors duration-300 min-[380px]:gap-2 min-[380px]:px-3 min-[380px]:text-[.9rem] sm:px-5 ${
+                                className={`flex min-w-0 cursor-pointer items-center justify-center gap-1.5 rounded-full px-2 py-2.5 text-xs font-bold transition-colors duration-300 min-[380px]:gap-2 min-[380px]:px-3 min-[380px]:text-sm sm:px-5 ${
                                     selected
                                         ? "bg-primary text-white shadow-md shadow-primary/25"
                                         : "text-primary hover:bg-primary/8"
@@ -253,8 +253,8 @@ function QueHacer() {
                             aria-labelledby={`tab-${cat.id}`}
                             hidden={cat.id !== activeId}
                         >
-                            <h3 className="titles text-[1.2rem] font-bold text-primary">{cat.title}</h3>
-                            <p className="mx-auto mb-6 mt-1 max-w-2xl text-[.95rem] text-muted">{cat.intro}</p>
+                            <h3 className="titles text-lg font-bold text-primary">{cat.title}</h3>
+                            <p className="mx-auto mb-6 mt-1 max-w-2xl text-base text-muted">{cat.intro}</p>
 
                             <ul className="m-0 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-2 sm:gap-4 md:grid-cols-3">
                                 <FeaturedCard {...featured} animate={visible} />
@@ -278,14 +278,14 @@ function QueHacer() {
                 <span aria-hidden="true" className="pointer-events-none absolute -left-12 -top-12 size-40 rounded-full bg-white/10" />
                 <span aria-hidden="true" className="pointer-events-none absolute -bottom-16 -right-10 size-48 rounded-full bg-primary-soft/25" />
                 <h3 className="titles relative text-xl font-bold text-white md:text-3xl">¿Te ayudamos a armar tu plan?</h3>
-                <p className="relative mx-auto mb-5 mt-1 max-w-md text-[.95rem] text-white/80">
+                <p className="relative mx-auto mb-5 mt-1 max-w-md text-base text-white/80">
                     Contanos con quién venís y cuántos días, y te recomendamos qué hacer.
                 </p>
                 <a
                     href={WHATSAPP_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="titles relative inline-flex max-w-full items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-center text-[.9rem] font-bold leading-tight text-primary shadow-md sm:px-6 sm:text-[.95rem] transition-[translate,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-lg"
+                    className="relative inline-flex max-w-full items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-center text-sm font-bold leading-tight text-primary shadow-md sm:px-6 sm:text-base transition-[translate,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-lg"
                 >
                     Preguntanos por WhatsApp
                     <span className="sr-only">(se abre en una pestaña nueva)</span>

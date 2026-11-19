@@ -101,88 +101,77 @@ function MapPage() {
     const carouselRef = useScrollImageEffect();
 
     return (
-        <div className="bg-surface pt-18 flex flex-col items-center">
-            {/* Carrusel fijo: se oscurece y hace zoom mientras el contenido lo tapa */}
-            <div ref={carouselRef} className="sticky top-16 z-0 w-full overflow-hidden">
-                <div className="relative">
-                    <div className="scroll-image-effect">
-                        <ImageCarousel
-                            images={MinaClaveroPhotos}
-                            alt="Paisajes de Mina Clavero"
-                            className="h-[min(68vh,38rem)] min-h-[22rem]"
-                        />
-                    </div>
-                    <div className="absolute inset-0 flex items-center justify-center bg-linear-to-t from-black/65 via-black/20 to-black/10 px-6 text-center">
-                        <div className="max-w-3xl text-white">
-                            <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/35 bg-black/20 px-4 py-1.5 text-[.85rem] font-semibold backdrop-blur-sm">
-                                <PinIcon className="h-4 w-4" />
-                                Valle de Traslasierra, Córdoba
-                            </span>
-                            <h1 className="titles text-4xl font-bold leading-tight drop-shadow-md sm:text-5xl md:text-6xl">
-                                Cómo llegar a Lo Nuestro
-                            </h1>
-                            <a
-                                href="#mapa"
-                                className="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 focus-light text-sm font-bold text-primary shadow-lg transition-all hover:-translate-y-0.5 hover:bg-surface"
-                            >
-                                <PinIcon className="h-4 w-4" />
-                                Ver mapa y ubicación
-                            </a>
-                        </div>
-                    </div>
+        <div className="flex flex-col items-center bg-surface">
+            {/* Carrusel: igual que en las páginas de alojamiento, arranca debajo del header
+                transparente y queda fijo mientras el contenido lo tapa al scrollear */}
+            <div ref={carouselRef} className="sticky top-0 z-0 w-full overflow-hidden">
+                <div className="scroll-image-effect">
+                    <ImageCarousel
+                        images={MinaClaveroPhotos}
+                        alt="Paisajes de Mina Clavero"
+                        className="h-[min(72vh,40rem)] min-h-[24rem]"
+                    />
                 </div>
             </div>
 
             {/* Panel que sube por encima del carrusel */}
             <div className="relative z-10 -mt-8 flex w-full flex-col items-center rounded-t-4xl bg-surface shadow-[0_-14px_30px_-14px_rgba(0,0,0,0.3)]">
-                {/* Intro (arriba del todo: anima al cargar) */}
-                <section className="max-w-3xl px-6 pb-8 pt-10 text-center fade-down">
-                    <p className="text-muted leading-relaxed md:text-[1.05rem]">
+                <header className="fade-down flex w-full max-w-3xl flex-col items-center px-6 pb-8 pt-11 text-center">
+                    <p className="inline-flex items-center gap-1.5 text-sm font-semibold uppercase tracking-[0.12em] text-primary-soft">
+                        <PinIcon className="h-4 w-4" />
+                        Valle de Traslasierra, Córdoba
+                    </p>
+                    <h1 className="titles mt-2 text-3xl font-bold leading-tight text-primary md:text-5xl">
+                        Cómo llegar a Lo Nuestro
+                    </h1>
+                    <span aria-hidden="true" className="my-4 block h-0.75 w-14 rounded-full bg-primary/35" />
+                    <p className="text-lg font-medium leading-relaxed text-muted">
                         Mina Clavero está en el corazón del Valle de Traslasierra, al pie de las
                         Sierras Grandes. Se llega por el pintoresco camino de las Altas Cumbres
                         (Ruta Provincial 34).
                     </p>
-                </section>
+                </header>
 
                 {/* Chips de distancia */}
-                <section className="w-full max-w-4xl px-4 mb-10">
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <section aria-label="Distancias" className="w-full max-w-4xl px-4 mb-10">
+                    <ul className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         {DISTANCES.map((distance, index) => (
-                            <Reveal key={distance.label} delay={index * 0.1} className="h-full">
-                                <div className="group flex h-full items-center gap-3 bg-white rounded-2xl border border-[#3E6143]/10 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 px-4 py-3">
-                                    <div className="h-11 w-11 rounded-full bg-[#3E6143]/10 text-[#3E6143] group-hover:bg-[#3E6143] group-hover:text-white transition-colors duration-300 flex items-center justify-center shrink-0">
+                            <Reveal as="li" key={distance.label} delay={index * 0.1} className="h-full">
+                                <div className="group flex h-full items-center gap-3 bg-white rounded-2xl border border-primary/10 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 px-4 py-3">
+                                    <div className="h-11 w-11 rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300 flex items-center justify-center shrink-0">
                                         <distance.Icon className="w-5 h-5" />
                                     </div>
                                     <div className="text-left leading-tight">
-                                        <p className="text-[.75rem] text-muted">{distance.label}</p>
-                                        <p className="text-[#3E6143] font-bold text-[1rem]">{distance.value}</p>
+                                        <p className="text-xs text-muted">{distance.label}</p>
+                                        <p className="text-primary font-bold text-base">{distance.value}</p>
                                     </div>
                                 </div>
                             </Reveal>
                         ))}
-                    </div>
+                    </ul>
                 </section>
 
                 {/* Mapa general */}
-                <section id="mapa" className="w-full max-w-4xl scroll-mt-24 px-4 mb-16">
+                <section id="mapa" aria-label="Mapa de la zona" className="w-full max-w-4xl scroll-mt-24 px-4 mb-16">
                     <Reveal>
-                        <div className="rounded-3xl overflow-hidden bg-white border border-[#3E6143]/15 shadow-md p-2">
+                        <div className="rounded-3xl overflow-hidden bg-white border border-primary/15 shadow-md p-2">
                             <div className="rounded-2xl overflow-hidden">
                                 <MapEmbed />
                             </div>
                             {/* Barra propia: no depende del cartel interno del iframe de Google */}
                             <div className="flex items-center justify-between gap-3 flex-wrap px-4 pt-3 pb-2">
-                                <span className="inline-flex items-center gap-1.5 text-[.85rem] text-muted">
-                                    <PinIcon className="w-4 h-4 text-[#3E6143]" />
-                                    <span className="font-semibold text-[#3E6143]">Mina Clavero, Córdoba</span>
+                                <span className="inline-flex items-center gap-1.5 text-sm text-muted">
+                                    <PinIcon className="w-4 h-4 text-primary" />
+                                    <span className="font-semibold text-primary">Mina Clavero, Córdoba</span>
                                 </span>
                                 <a
                                     href={MAIN_MAP_LINK}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-1.5 text-[.85rem] font-semibold text-white bg-[#3E6143] rounded-full px-4 py-1.5 hover:bg-[#2f4c34] transition-colors"
+                                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-white bg-primary rounded-full px-4 py-1.5 hover:bg-[#2f4c34] transition-colors"
                                 >
                                     Ver en Google Maps
+                                    <span className="sr-only">(se abre en una pestaña nueva)</span>
                                     <ExternalIcon className="w-3.5 h-3.5" />
                                 </a>
                             </div>
@@ -191,24 +180,25 @@ function MapPage() {
                 </section>
 
                 {/* Indicaciones detalladas */}
-                <section className="w-full max-w-5xl px-4 mb-8">
-                    <SectionHeading title="Indicaciones detalladas" lead="El último tramo desde la entrada de Mina Clavero hasta cada puerta del complejo." />
-                </section>
+                <section aria-labelledby="indicaciones-title" className="flex w-full flex-col items-center">
+                <div className="w-full max-w-5xl px-4 mb-8">
+                    <SectionHeading id="indicaciones-title" title="Indicaciones detalladas" lead="El último tramo desde la entrada de Mina Clavero hasta cada puerta del complejo." />
+                </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16 px-4 max-w-5xl w-full">
                     {ROUTES.map((route, index) => (
                         <Reveal key={route.title} delay={index * 0.15} className="h-full">
-                            <article className="route-card group bg-white rounded-3xl border border-[#3E6143]/15 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden flex h-full flex-col">
+                            <article className="route-card group bg-white rounded-3xl border border-primary/15 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden flex h-full flex-col">
                                 {/* Encabezado */}
-                                <div className={`bg-linear-to-br ${route.variant === "rear" ? "from-[#8B5E34] to-[#70472A]" : "from-[#3E6143] to-[#2f4c34]"} text-white px-6 py-5 flex items-center gap-4`}>
+                                <div className={`bg-linear-to-br ${route.variant === "rear" ? "from-[#8B5E34] to-[#70472A]" : "from-primary to-[#2f4c34]"} text-white px-6 py-5 flex items-center gap-4`}>
                                     <div className="h-12 w-12 rounded-full bg-white/15 ring-1 ring-white/20 flex items-center justify-center shrink-0">
                                         <MapIcon className="w-6 h-6" />
                                     </div>
                                     <div className="text-left min-w-0">
-                                        <span className="inline-block text-[.65rem] tracking-[0.18em] uppercase font-semibold bg-white/15 rounded-full px-2.5 py-0.5 mb-1">
+                                        <span className="inline-block text-xs tracking-[0.18em] uppercase font-semibold bg-white/15 rounded-full px-2.5 py-0.5 mb-1">
                                             {route.badge}
                                         </span>
-                                        <h3 className="titles font-bold text-[1.15rem] leading-tight">
+                                        <h3 className="titles font-bold text-lg leading-tight">
                                             {route.title}
                                         </h3>
                                     </div>
@@ -223,19 +213,21 @@ function MapPage() {
                                                 {!isLast && (
                                                     <span
                                                         aria-hidden="true"
-                                                        className="absolute left-3.5 top-7 bottom-0 w-px -translate-x-1/2 bg-[#3E6143]/20"
+                                                        className="absolute left-3.5 top-7 bottom-0 w-px -translate-x-1/2 bg-primary/20"
                                                     />
                                                 )}
+                                                {/* El número es visual: la lista ordenada ya lo anuncia */}
                                                 <span
-                                                    className={`relative z-10 h-7 w-7 rounded-full text-[.8rem] font-bold flex items-center justify-center shrink-0 ${
+                                                    aria-hidden="true"
+                                                    className={`relative z-10 h-7 w-7 rounded-full text-xs font-bold flex items-center justify-center shrink-0 ${
                                                         isLast
-                                                            ? "bg-[#3E6143] text-white"
-                                                            : "bg-[#3E6143]/10 text-[#3E6143]"
+                                                            ? "bg-primary text-white"
+                                                            : "bg-primary/10 text-primary"
                                                     }`}
                                                 >
                                                     {isLast ? <PinIcon className="w-3.5 h-3.5" /> : i + 1}
                                                 </span>
-                                                <p className="text-[.92rem] text-muted leading-relaxed pt-0.5">
+                                                <p className="text-sm text-muted leading-relaxed pt-0.5">
                                                     {step}
                                                 </p>
                                             </li>
@@ -249,22 +241,22 @@ function MapPage() {
                                         src={route.mapSrc}
                                         width="350"
                                         height="250"
-                                        className="rounded-2xl w-full h-56 md:h-60 lg:h-64 border border-[#3E6143]/10"
+                                        className="rounded-2xl w-full h-56 md:h-60 lg:h-64 border border-primary/10"
                                         style={{ border: 0 }}
                                         allowFullScreen
                                         loading="lazy"
                                         referrerPolicy="no-referrer-when-downgrade"
-                                        title={route.title}
+                                        title={`Mapa de la entrada en ${route.address}`}
                                     />
                                 </div>
 
                                 {/* Pie con dirección y link */}
                                 <div className="mx-4 mb-4 mt-1 flex flex-col items-start gap-3 rounded-2xl bg-surface px-4 py-3 min-[400px]:flex-row min-[400px]:items-center min-[400px]:justify-between">
                                     <div className="min-w-0">
-                                        <span className="block text-[.7rem] font-semibold uppercase tracking-[0.12em] text-muted">
+                                        <span className="block text-xs font-semibold uppercase tracking-[0.12em] text-muted">
                                             Dirección de entrada
                                         </span>
-                                        <span className="block font-bold text-[#3E6143]">
+                                        <span className="block font-bold text-primary">
                                             {route.address}
                                         </span>
                                     </div>
@@ -272,9 +264,10 @@ function MapPage() {
                                         href={route.link}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[#3E6143]/30 px-4 py-2 text-[.85rem] font-semibold text-[#3E6143] transition-colors hover:border-[#3E6143] hover:bg-[#3E6143] hover:text-white"
+                                        className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-primary/30 px-4 py-2 text-sm font-semibold text-primary transition-colors hover:border-primary hover:bg-primary hover:text-white"
                                     >
                                         Abrir en Maps
+                                        <span className="sr-only"> la entrada de {route.address} (se abre en una pestaña nueva)</span>
                                         <ExternalIcon className="w-3.5 h-3.5" />
                                     </a>
                                 </div>
@@ -282,6 +275,7 @@ function MapPage() {
                         </Reveal>
                     ))}
                 </div>
+                </section>
 
                 <WhatsAppFloatingButton
                     bubbleLine1="¿Consultas y reservas?"

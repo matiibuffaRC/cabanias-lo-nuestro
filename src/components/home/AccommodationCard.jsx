@@ -19,13 +19,13 @@ function AccommodationCard({ section, index }) {
             <div
                 className={`absolute inset-x-4 bottom-6 flex flex-col rounded-[2rem] bg-primary-dark/70 p-6 text-white shadow-lg ring-1 ring-white/15 backdrop-blur-md md:inset-x-auto md:bottom-auto md:top-1/2 md:w-[min(32rem,46%)] md:-translate-y-1/2 md:p-8 ${position}`}
             >
-                <h3 className="titles text-[1.8rem] font-bold leading-tight lg:text-[2.1rem]">{section.title}</h3>
+                <h3 className="titles text-2xl font-bold leading-tight lg:text-3xl">{section.title}</h3>
                 <span aria-hidden="true" className="mb-3 mt-2.5 block h-0.75 w-12 rounded-full bg-white/60" />
-                <p className="text-[1rem] leading-relaxed text-white/90 md:text-[1.05rem]">{section.description}</p>
+                <p className="text-base leading-relaxed text-white/90 md:text-lg">{section.description}</p>
 
                 <Link
                     to={`/alojamiento/${section.route}`}
-                    className="focus-light group/btn titles relative mt-5 inline-flex w-fit items-center gap-2 overflow-hidden rounded-full bg-white px-5 py-2.5 font-bold text-primary shadow-md transition-shadow duration-300 hover:shadow-lg"
+                    className="focus-light group/btn relative mt-5 inline-flex w-fit items-center gap-2 overflow-hidden rounded-full bg-white px-5 py-2.5 font-bold text-primary shadow-md transition-shadow duration-300 hover:shadow-lg"
                 >
                     <span
                         aria-hidden="true"

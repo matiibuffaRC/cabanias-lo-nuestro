@@ -8,7 +8,7 @@ function MapEmbed() {
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Mapa de la región"
+                title="Mapa de Mina Clavero, Córdoba"
             />
         </div>
     );

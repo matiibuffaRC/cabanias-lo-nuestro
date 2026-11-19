@@ -38,12 +38,12 @@ function ReglasCondiciones({ highlights = DEFAULT_HIGHLIGHTS }) {
                                 visible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100"
                             }`}
                         >
-                            <span aria-hidden="true" className="mb-1 flex size-11 items-center justify-center rounded-full bg-primary-wash text-[1.3rem]">
+                            <span aria-hidden="true" className="mb-1 flex size-11 items-center justify-center rounded-full bg-primary-wash text-xl">
                                 {item.emoji}
                             </span>
-                            <dt className="text-[.85rem] font-medium text-muted">{item.label}</dt>
-                            <dd className="titles text-[1.2rem] font-bold leading-tight text-primary md:text-[1.3rem]">{item.value}</dd>
-                            <dd className="text-[.82rem] leading-snug text-muted">{item.note}</dd>
+                            <dt className="text-sm font-medium text-muted">{item.label}</dt>
+                            <dd className="titles text-lg font-bold leading-tight text-primary md:text-xl">{item.value}</dd>
+                            <dd className="text-xs leading-snug text-muted">{item.note}</dd>
                         </div>
                     ))}
                 </dl>

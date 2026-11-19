@@ -35,11 +35,11 @@ function HighlightBlock({ item, index }) {
             </div>
 
             <div className="w-full px-1 text-center md:flex-2 md:text-left">
-                <h3 className="titles text-[1.5rem] font-bold leading-tight text-primary md:text-[1.65rem]">
+                <h3 className="titles text-xl font-bold leading-tight text-primary md:text-2xl">
                     {item.title}
                 </h3>
                 <span aria-hidden="true" className="mx-auto my-3 block h-0.75 w-10 rounded-full bg-accent/70 md:mx-0" />
-                <p className="mx-auto max-w-prose text-[1.05rem] leading-relaxed text-muted md:mx-0 md:text-lg">
+                <p className="mx-auto max-w-prose text-lg leading-relaxed text-muted md:mx-0 md:text-lg">
                     {item.text}
                 </p>
             </div>

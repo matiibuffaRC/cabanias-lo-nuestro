@@ -117,11 +117,11 @@ function WhatsAppFloatingButton({
             {/* Burbuja de invitación (se puede cerrar) */}
             {bubbleReady && !bubbleDismissed && (
                 <div
-                    className={`chat-bubble group relative bg-white border border-[#3E6143]/10 shadow-lg pl-4 pr-3 py-2.5 rounded-2xl rounded-br-sm mb-1 ${bubbleTransitionClass}`}
+                    className={`chat-bubble group relative bg-white border border-primary/10 shadow-lg pl-4 pr-3 py-2.5 rounded-2xl rounded-br-sm mb-1 ${bubbleTransitionClass}`}
                 >
                     <div className="pr-1">
-                        <p className="text-[.82rem] text-muted leading-tight">{bubbleLine1}</p>
-                        <p className="text-[.85rem] font-bold text-[#3E6143] leading-tight mt-0.5">
+                        <p className="text-xs text-muted leading-tight">{bubbleLine1}</p>
+                        <p className="text-sm font-bold text-primary leading-tight mt-0.5">
                             {bubbleLine2}
                         </p>
                     </div>
@@ -130,9 +130,9 @@ function WhatsAppFloatingButton({
                         type="button"
                         onClick={dismissBubble}
                         aria-label="Cerrar mensaje"
-                        className="absolute -top-2.5 -left-2.5 h-6 w-6 rounded-full bg-white border border-[#3E6143]/20 shadow-sm flex items-center justify-center text-[#3E6143]/70 hover:text-white hover:bg-[#3E6143] transition-colors cursor-pointer"
+                        className="absolute -top-2.5 -left-2.5 h-6 w-6 rounded-full bg-white border border-primary/20 shadow-sm flex items-center justify-center text-primary/70 hover:text-white hover:bg-primary transition-colors cursor-pointer"
                     >
-                        <svg className="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                        <svg aria-hidden="true" className="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M6 6l12 12M18 6L6 18" />
                         </svg>
                     </button>
@@ -164,8 +164,8 @@ function WhatsAppFloatingButton({
                         <img src={WhatsAppIcon} alt="" className="w-6 h-6 invert" />
                     </div>
                     <div className="flex flex-col text-white flex-1 min-w-0">
-                        <p className="font-bold text-[1.05rem] leading-tight">¡Hablemos!</p>
-                        <p className="text-[.75rem] text-white/80 leading-tight">
+                        <p className="font-bold text-lg leading-tight">¡Hablemos!</p>
+                        <p className="text-xs text-white/80 leading-tight">
                             Normalmente respondemos rápido
                         </p>
                     </div>
@@ -176,7 +176,7 @@ function WhatsAppFloatingButton({
                         aria-label="Cerrar menú"
                         className="relative z-10 pointer-events-auto h-9 w-9 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/15 transition-colors cursor-pointer shrink-0"
                     >
-                        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <svg aria-hidden="true" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M6 6l12 12M18 6L6 18" />
                         </svg>
                     </button>
@@ -194,15 +194,16 @@ function WhatsAppFloatingButton({
                             style={{ animationDelay: opt.delay }}
                         >
                             <div className="flex flex-col flex-1 min-w-0">
-                                <p className="text-[.95rem] font-bold text-[#2A4530] leading-tight truncate">
+                                <p className="text-base font-bold text-primary-dark leading-tight truncate">
                                     {opt.title}
                                 </p>
-                                <p className="text-[.78rem] text-muted leading-tight truncate">
+                                <p className="text-xs text-muted leading-tight truncate">
                                     {opt.subtitle}
                                 </p>
                             </div>
+                            <span className="sr-only">(se abre en WhatsApp)</span>
 
-                            <svg className="wa-chevron w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <svg aria-hidden="true" className="wa-chevron w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M9 18l6-6-6-6" />
                             </svg>
                         </a>

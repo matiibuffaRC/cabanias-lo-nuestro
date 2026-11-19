@@ -64,7 +64,7 @@ function FaqItem({ q, a, open, onToggle }) {
                     aria-controls={`${id}-panel`}
                     className="flex w-full cursor-pointer items-center justify-between gap-4 p-4 text-left md:px-5"
                 >
-                    <span className="titles text-[1.02rem] font-bold text-primary">{q}</span>
+                    <span className="titles text-base font-bold text-primary">{q}</span>
                     <span
                         aria-hidden="true"
                         className={`flex size-7 shrink-0 items-center justify-center rounded-full transition-[rotate,background-color,color] duration-300 ${
@@ -87,7 +87,7 @@ function FaqItem({ q, a, open, onToggle }) {
                 className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
             >
                 <div className="overflow-hidden">
-                    <p className="px-4 pb-4 text-left text-[.96rem] leading-relaxed text-muted md:px-5">{a}</p>
+                    <p className="px-4 pb-4 text-left text-base leading-relaxed text-muted md:px-5">{a}</p>
                 </div>
             </div>
         </div>
@@ -99,7 +99,7 @@ function ContactPage() {
     const heroRef = useScrollImageEffect();
 
     return (
-        <div className="bg-surface pt-18">
+        <div className="bg-surface">
             <div ref={heroRef} className="relative h-[min(60vh,32rem)] min-h-72 w-full overflow-hidden">
                 <div className="scroll-image-effect absolute inset-0">
                     <img
@@ -113,8 +113,8 @@ function ContactPage() {
             </div>
 
             <div className="relative z-10 -mt-8 rounded-t-4xl bg-surface px-5 pb-16 pt-11 text-center">
-                <h1 className="titles fade-down text-[2.2rem] font-bold text-primary md:text-[2.6rem]">Contactanos</h1>
-                <p className="fade-down mx-auto mt-2 max-w-md text-[1.05rem] text-muted" style={{ animationDelay: "0.1s" }}>
+                <h1 className="titles fade-down text-3xl font-bold text-primary md:text-4xl">Contactanos</h1>
+                <p className="fade-down mx-auto mt-2 max-w-md text-lg text-muted" style={{ animationDelay: "0.1s" }}>
                     Escribinos por el medio que prefieras: te respondemos a la brevedad.
                 </p>
 
@@ -131,8 +131,8 @@ function ContactPage() {
                                     <MaskIcon src={contact.icon} className="size-6" />
                                 </span>
                                 <span className="flex min-w-0 flex-col">
-                                    <span className="titles truncate text-[1.05rem] font-bold text-primary">{contact.title}</span>
-                                    <span className="truncate text-[.92rem] text-muted">{contact.detail}</span>
+                                    <span className="titles truncate text-lg font-bold text-primary">{contact.title}</span>
+                                    <span className="truncate text-sm text-muted">{contact.detail}</span>
                                 </span>
                                 <span className="sr-only">(se abre en una pestaña nueva)</span>
                                 <svg aria-hidden="true" className="ml-auto size-4 shrink-0 text-primary/40 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
