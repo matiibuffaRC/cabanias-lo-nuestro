@@ -6,7 +6,7 @@ import OtherAccommodations from "../components/accommodations/OtherAccommodation
 import AmenityGrid from "../components/shared/AmenityGrid";
 import ImageCarousel from "../components/shared/ImageCarousel";
 import Reveal from "../components/shared/Reveal";
-import WhatsAppFloatingButton from "../components/layout/WhatsAppButton";
+import WhatsAppFloatingButton from "../components/shared/WhatsAppButton";
 import useScrollImageEffect from "../hooks/useScrollImageEffect";
 import NotFoundPage from "./NotFoundPage";
 
@@ -115,6 +115,7 @@ function AccommodationContent({ data }) {
                 <BookingCta
                     title={ctaTitle}
                     message={`Hola, quisiera consultar por ${data.title.toLowerCase()} de Lo Nuestro`}
+                    stay={data.slug === "complejo" ? "" : data.slug}
                 />
 
                 <OtherAccommodations currentSlug={data.slug} />

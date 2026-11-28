@@ -3,17 +3,20 @@ import { Route, Routes } from "react-router-dom";
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
 import ScrollToTop from "../components/layout/ScrollToTop";
-import HomePage from "../Pages/HomePage";
+import HomePage from "../pages/HomePage";
 import PageMetadata from "../components/seo/PageMetadata";
+import usePageTracking from "../hooks/usePageTracking";
 
 // El inicio va en el paquete principal (es la página más visitada).
 // El resto se descarga recién cuando alguien entra a esa página.
-const AccommodationsPage = lazy(() => import("../Pages/AccommodationsPage"));
-const ContactPage = lazy(() => import("../Pages/ContactPage"));
-const MapPage = lazy(() => import("../Pages/MapPage"));
-const NotFoundPage = lazy(() => import("../Pages/NotFoundPage"));
+const AccommodationsPage = lazy(() => import("../pages/AccommodationsPage"));
+const ContactPage = lazy(() => import("../pages/ContactPage"));
+const MapPage = lazy(() => import("../pages/MapPage"));
+const NotFoundPage = lazy(() => import("../pages/NotFoundPage"));
 
 function App() {
+  usePageTracking();
+
   return (
     <>
       {/* Accesibilidad: permite saltar el menú con el teclado */}

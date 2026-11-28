@@ -27,7 +27,7 @@ const STAYS = accommodation.map((item) => ({
 const DESKTOP_ITEMS = [HOME, ...STAYS, MAP];
 
 // Desktop: barra flotante rectangular con bordes redondeados; vidrio sobre la foto y blanca con scroll.
-// Mobile: barra con logo + hamburguesa; el menú agrupa los alojamientos en un acordeón con miniaturas.
+// Mobile: barra con logo + hamburguesa; el menú agrupa los alojamientos en un acordeón con miniaturas (cerrado al abrir el menú).
 function HeaderComponente() {
     const { pathname } = useLocation();
 
@@ -36,7 +36,7 @@ function HeaderComponente() {
 
 function HeaderContent({ pathname, overHero }) {
     const [menuOpen, setMenuOpen] = useState(false);
-    const [staysOpen, setStaysOpen] = useState(true);
+    const [staysOpen, setStaysOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const firstLinkRef = useRef(null);
     const toggleRef = useRef(null);
@@ -152,7 +152,11 @@ function HeaderContent({ pathname, overHero }) {
                     <button
                         ref={toggleRef}
                         type="button"
-                        onClick={() => setMenuOpen((p) => !p)}
+                        onClick={() => {
+                            // Cada vez que se abre el menú, el acordeón de alojamientos arranca cerrado
+                            if (!menuOpen) setStaysOpen(false);
+                            setMenuOpen((p) => !p);
+                        }}
                         aria-expanded={menuOpen}
                         aria-controls="mobile-nav"
                         aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}

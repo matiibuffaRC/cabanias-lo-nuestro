@@ -1,6 +1,6 @@
 import MaskIcon from "../shared/MaskIcon";
 import useInView from "../../hooks/useInView";
-import { HOME_SERVICES } from "./homeServices";
+import { HOME_SERVICES } from "../../data/homeServices";
 
 /**
  * "Lo que ofrecemos" del inicio: banda verde de lado a lado con los servicios en fila.

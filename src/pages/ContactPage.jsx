@@ -1,11 +1,12 @@
 import { HERO_IMAGE } from "../config/hero";
 import { useId, useState } from "react";
-import WhatsAppFloatingButton from "../components/layout/WhatsAppButton.jsx";
-import Testimonials from "../components/layout/Testimonials.jsx";
-import ReglasCondiciones from "../components/layout/ReglasCondiciones.jsx";
+import WhatsAppFloatingButton from "../components/shared/WhatsAppButton";
+import Testimonials from "../components/contact/Testimonials";
+import ReglasCondiciones from "../components/contact/ReglasCondiciones";
 import Reveal from "../components/shared/Reveal";
 import SectionHeading from "../components/shared/SectionHeading";
 import MaskIcon from "../components/shared/MaskIcon";
+import BookingForm from "../components/shared/BookingForm";
 import useScrollImageEffect from "../hooks/useScrollImageEffect";
 import { FACEBOOK_URL, getWhatsAppUrl } from "../config/contact";
 
@@ -144,6 +145,19 @@ function ContactPage() {
                         </li>
                     ))}
                 </ul>
+
+                {/* Consulta armada: fechas, personas y alojamiento en un mensaje de WhatsApp */}
+                <section aria-labelledby="consulta-title" className="mx-auto mb-16 mt-4 max-w-xl">
+                    <SectionHeading
+                        id="consulta-title"
+                        title="Armá tu consulta"
+                        lead="Completá las fechas y cuántos son, y te llega a WhatsApp un mensaje listo para enviar."
+                        className="mb-8"
+                    />
+                    <Reveal>
+                        <BookingForm className="border border-primary/10 shadow-[0_20px_40px_-28px_rgba(42,69,48,0.45)]" />
+                    </Reveal>
+                </section>
 
                 <Testimonials />
                 <ReglasCondiciones />

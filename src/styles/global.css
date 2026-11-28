@@ -61,6 +61,11 @@ body {
 .focus-light :focus-visible {
     outline-color: #fff;
 }
+/* Tarjeta blanca dentro de un bloque con focus-light (ej: el formulario de consulta) */
+.focus-light .focus-dark :focus-visible,
+.focus-dark :focus-visible {
+    outline-color: var(--color-primary);
+}
 
 img {
     user-select: none;

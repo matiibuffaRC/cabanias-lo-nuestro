@@ -1,9 +1,9 @@
-import homeIcon from "../../assets/icons/HomeIcon.svg";
-import carIcon from "../../assets/icons/CarIcon.svg";
-import wifiIcon from "../../assets/icons/WifiIcon.svg";
-import tvIcon from "../../assets/icons/TvIcon.svg";
-import grillIcon from "../../assets/icons/GrillIcon.svg";
-import airIcon from "../../assets/icons/AirIcon.svg";
+import homeIcon from "../assets/icons/HomeIcon.svg";
+import carIcon from "../assets/icons/CarIcon.svg";
+import wifiIcon from "../assets/icons/WifiIcon.svg";
+import tvIcon from "../assets/icons/TvIcon.svg";
+import grillIcon from "../assets/icons/GrillIcon.svg";
+import airIcon from "../assets/icons/AirIcon.svg";
 
 // Ítems de "Lo que ofrecemos" del inicio (ver ServicesBand.jsx)
 export const HOME_SERVICES = [

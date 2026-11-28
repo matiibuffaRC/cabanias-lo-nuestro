@@ -2,7 +2,7 @@ import Reveal from "../components/shared/Reveal";
 import SectionHeading from "../components/shared/SectionHeading";
 import ImageCarousel from "../components/shared/ImageCarousel";
 import MapEmbed from "../components/shared/MapEmbed";
-import WhatsAppFloatingButton from "../components/layout/WhatsAppButton";
+import WhatsAppFloatingButton from "../components/shared/WhatsAppButton";
 import useScrollImageEffect from "../hooks/useScrollImageEffect";
 
 import MinaClavero1 from "../assets/images/MinaClavero.webp";

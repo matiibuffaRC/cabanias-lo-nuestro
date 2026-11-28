@@ -1,7 +1,7 @@
 import { HERO_IMAGE } from "../../config/hero";
 import AccommodationCard from "./AccommodationCard";
-import WhatsAppFloatingButton from "../layout/WhatsAppButton";
-import QueHacer from "../layout/QueHacer.jsx";
+import WhatsAppFloatingButton from "../shared/WhatsAppButton";
+import QueHacer from "./QueHacer";
 import Reveal from "../shared/Reveal";
 import SectionHeading from "../shared/SectionHeading";
 import useScrollImageEffect from "../../hooks/useScrollImageEffect";
